@@ -1,20 +1,9 @@
-SRIVARI COOKIES PREMIUM V2
-==========================
-This package is a redesigned customer-facing store inspired by the structure of the reference site the owner provided, while using SRIVARI COOKIES branding.
+SRIVARI COOKIES — PREMIUM CLEAN BUILD
 
-Included:
-- Large product photography cards
-- Product price + MRP + automatic discount badge
-- 8 local fallback products with distinct images
-- Supabase active-product loading when configured
-- Cart and quantity controls
-- Customer name, mobile, email, address, pincode
-- Razorpay payment-link checkout
-- WhatsApp ordering to 7989816250
-- Email contact: chiluverushyam8790@gmail.com
+This build uses the exact SRIVARI COOKIES logo supplied by the owner.
+Product photos have been cleaned so the old baked-in NEW/BESTSELLER badges are not shown; website badges are separate UI.
+Mobile uses large two-column card layout for clearer product photography.
 
-IMPORTANT:
-The fallback MRP/price values for products beyond the four currently visible in the owner's screenshot are provisional catalogue values from the earlier site setup. For the final production catalogue, update the Supabase products table with the owner's exact product names, prices, MRP, weights, images and descriptions.
+IMPORTANT: The displayed MRP/discount values are design defaults carried from the earlier prototype and should be replaced with the owner's confirmed prices before public launch.
 
-GitHub Pages:
-Upload/replace the files in the existing SRIVARI-COOKIES repository's main branch. The current ChatGPT GitHub connector has returned HTTP 403 for write operations, so this ZIP is prepared for manual upload if that permission remains blocked.
+Config included: Supabase, Razorpay payment-link fallback, WhatsApp 7989816250, email chiluverushyam8790@gmail.com.
