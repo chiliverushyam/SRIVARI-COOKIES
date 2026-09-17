@@ -1,116 +1,100 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Srivari Cookies — Pure, Fresh, Delicious homemade cookies made with devotion.">
-  <title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
-  <link rel="icon" type="image/jpeg" href="assets/srivari-logo.jpg">
-  <link rel="stylesheet" href="style.css">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="SRIVARI COOKIES — Pure • Fresh • Delicious">
+<title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
+<link rel="icon" href="assets/srivari-logo.jpg">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
-  <header class="site-header">
-    <a class="brand" href="#home" aria-label="Srivari Cookies home">
-      <img src="assets/srivari-logo.jpg" alt="Srivari Cookies logo">
-      <span>SRIVARI COOKIES</span>
-    </a>
-    <nav>
-      <a href="#home">Home</a>
-      <a href="#cookies">Cookies</a>
-      <a href="#about">About</a>
-      <a href="#contact">Contact</a>
-    </nav>
-    <a class="order-btn" href="#cookies">Order Now</a>
-  </header>
+<div class="topbar">🍪 Freshly baked treats • Premium ingredients • Home delivery</div>
 
-  <main>
-    <section id="home" class="hero">
-      <div class="hero-copy">
-        <p class="eyebrow">HOMEMADE WITH DEVOTION</p>
-        <h1>Pure. Fresh.<br><span>Delicious.</span></h1>
-        <p class="lead">Freshly baked cookies crafted with care, quality ingredients and a touch of devotion.</p>
-        <div class="hero-actions">
-          <a class="primary-btn" href="#cookies">Explore Cookies</a>
-          <a class="text-btn" href="#about">Our Story →</a>
-        </div>
-        <div class="trust-row">
-          <span>✦ Freshly Baked</span>
-          <span>✦ Quality Ingredients</span>
-          <span>✦ Made With Care</span>
-        </div>
-      </div>
-      <div class="hero-logo">
-        <div class="logo-ring"></div>
-        <img src="assets/srivari-logo.jpg" alt="Srivari Cookies original logo">
-      </div>
-    </section>
+<header class="nav">
+  <a class="brand" href="#top">
+    <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES">
+    <div><b>SRIVARI COOKIES</b><small>PURE • FRESH • DELICIOUS</small></div>
+  </a>
+  <nav>
+    <a href="#shop">Shop</a><a href="#why">Why Us</a><a href="#about">About</a><a href="#contact">Contact</a>
+  </nav>
+  <div class="navActions">
+    <button class="cartBtn" onclick="openCart()">🛒 <span id="cartCount">0</span></button>
+    <a class="orderNow" href="#shop">Order Now</a>
+  </div>
+</header>
 
-    <section id="cookies" class="section">
-      <div class="section-heading">
-        <p class="eyebrow">OUR COLLECTION</p>
-        <h2>Cookies made to <span>delight.</span></h2>
-        <p>Choose your favourite flavour and place your order with us.</p>
-      </div>
-      <div class="products">
-        <article class="product-card">
-          <div class="cookie-art chocolate">🍪</div>
-          <div><span class="tag">Classic</span><h3>Classic Chocolate Chip</h3><p>Golden, buttery and loaded with chocolate chips.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Classic Chocolate Chip')">Order</button></div></div>
-        </article>
-        <article class="product-card">
-          <div class="cookie-art cashew">🍪</div>
-          <div><span class="tag">Favourite</span><h3>Almond Cashew</h3><p>Crunchy nuts with a rich, buttery cookie base.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Almond Cashew')">Order</button></div></div>
-        </article>
-        <article class="product-card">
-          <div class="cookie-art double">🍪</div>
-          <div><span class="tag">Rich</span><h3>Double Chocolate</h3><p>Deep cocoa flavour for true chocolate lovers.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Double Chocolate')">Order</button></div></div>
-        </article>
-        <article class="product-card">
-          <div class="cookie-art oats">🍪</div>
-          <div><span class="tag">Wholesome</span><h3>Oats & Raisin</h3><p>Comforting oats, sweet raisins and a soft bake.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Oats & Raisin')">Order</button></div></div>
-        </article>
-        <article class="product-card">
-          <div class="cookie-art coconut">🍪</div>
-          <div><span class="tag">Crispy</span><h3>Coconut</h3><p>A delicate coconut cookie with a warm aroma.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Coconut')">Order</button></div></div>
-        </article>
-        <article class="product-card">
-          <div class="cookie-art red">🍪</div>
-          <div><span class="tag">Special</span><h3>Red Velvet</h3><p>Soft, indulgent and made for special moments.</p><div class="product-bottom"><strong>Freshly baked</strong><button onclick="order('Red Velvet')">Order</button></div></div>
-        </article>
-      </div>
-    </section>
+<main id="top">
+<section class="hero">
+  <div class="heroText">
+    <span class="eyebrow">HOMEMADE • PREMIUM • MADE WITH DEVOTION</span>
+    <h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1>
+    <p>Fresh, delicious cookies for everyday cravings, celebrations and gifting.</p>
+    <div class="heroBtns"><a class="btn" href="#shop">Shop Cookies</a><a class="link" href="#about">Our Story →</a></div>
+    <div class="heroTrust"><span>🌿 Freshly Baked</span><span>♥ Quality Ingredients</span><span>✦ Made With Care</span></div>
+  </div>
+  <div class="heroPhoto"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES original logo"></div>
+</section>
 
-    <section id="about" class="about section">
-      <div class="about-logo"><img src="assets/srivari-logo.jpg" alt="Srivari Cookies"></div>
-      <div>
-        <p class="eyebrow">THE SRIVARI PROMISE</p>
-        <h2>A little sweetness, made with <span>devotion.</span></h2>
-        <p>SRIVARI COOKIES brings together the warmth of homemade baking and a devotion to quality. Every batch is prepared with care so every bite feels fresh, comforting and special.</p>
-        <div class="promise-grid">
-          <div><b>01</b><strong>Pure</strong><small>Carefully selected ingredients.</small></div>
-          <div><b>02</b><strong>Fresh</strong><small>Baked with freshness in mind.</small></div>
-          <div><b>03</b><strong>Delicious</strong><small>Made for memorable moments.</small></div>
-        </div>
-      </div>
-    </section>
+<section id="shop" class="section">
+  <div class="sectionHead">
+    <div><span class="eyebrow">OUR COLLECTION</span><h2>Cookies worth craving</h2><p class="sectionSub">Live products and prices are loaded from your Supabase catalog.</p></div>
+    <div id="status" class="status">Connecting…</div>
+  </div>
+  <div id="products" class="products"></div>
+</section>
 
-    <section id="contact" class="contact section">
-      <div>
-        <p class="eyebrow">READY TO TASTE?</p>
-        <h2>Bring home a box of <span>SRIVARI COOKIES.</span></h2>
-        <p>For orders and enquiries, contact us directly.</p>
-      </div>
-      <a class="primary-btn" href="https://wa.me/?text=Hi%20SRIVARI%20COOKIES%2C%20I%20would%20like%20to%20place%20an%20order." target="_blank" rel="noopener">Order on WhatsApp</a>
-    </section>
-  </main>
+<section id="why" class="why">
+  <span class="eyebrow">WHY SRIVARI COOKIES</span><h2>Small bites. Big happiness.</h2>
+  <div class="features">
+    <article><div>🌿</div><h3>Freshly Baked</h3><p>Prepared with care for a fresh, satisfying bite.</p></article>
+    <article><div>♥</div><h3>Quality Ingredients</h3><p>Thoughtful ingredients and rich flavours in every pack.</p></article>
+    <article><div>🎁</div><h3>Perfect for Gifting</h3><p>Sweet treats for birthdays, celebrations and surprises.</p></article>
+    <article><div>🚚</div><h3>Home Delivery</h3><p>Easy ordering with convenient delivery to your door.</p></article>
+  </div>
+</section>
 
-  <footer>
-    <div class="footer-brand">
-      <img src="assets/srivari-logo.jpg" alt="">
-      <div><strong>SRIVARI COOKIES</strong><small>Pure • Fresh • Delicious</small></div>
+<section id="about" class="about">
+  <div><span class="eyebrow">OUR STORY</span><h2>A little sweetness, made with <em>devotion.</em></h2>
+    <p>SRIVARI COOKIES brings the warmth of homemade baking together with careful ingredients and a devotion to quality.</p>
+    <p>Choose your favourites, add them to your cart and complete your delivery details in a few taps.</p>
+  </div>
+  <div class="aboutLogo"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo"></div>
+</section>
+
+<section id="contact" class="contact">
+  <span class="eyebrow">GET IN TOUCH</span><h2>Ready for a cookie?</h2>
+  <p>Place your order online or contact SRIVARI COOKIES for delivery questions.</p>
+  <div class="contactBtns"><a class="btn light" href="#shop">Order Cookies</a><a class="outline" href="mailto:hello@srivaricookies.store">Email Us</a></div>
+</section>
+</main>
+
+<footer><div class="footerBrand"><img src="assets/srivari-logo.jpg" alt=""><b>SRIVARI COOKIES</b></div><p>© <span id="year"></span> SRIVARI COOKIES. Pure • Fresh • Delicious.</p></footer>
+
+<div id="cartOverlay" class="overlay" onclick="closeCart(event)">
+  <aside class="drawer" onclick="event.stopPropagation()">
+    <button class="close" onclick="closeCart()">×</button>
+    <h2>Your Cart 🛒</h2>
+    <div id="cartItems"></div>
+    <div class="cartTotal"><span>Total</span><b id="cartTotal">₹0</b></div>
+    <div class="checkoutBox">
+      <h3>Customer & delivery details</h3>
+      <input id="customerName" placeholder="Full name" autocomplete="name">
+      <input id="customerPhone" placeholder="Mobile number" inputmode="tel" autocomplete="tel">
+      <textarea id="customerAddress" placeholder="Full delivery address" rows="3" autocomplete="street-address"></textarea>
+      <input id="customerPincode" placeholder="Pincode" inputmode="numeric" autocomplete="postal-code">
+      <button class="payBtn" onclick="checkoutAndPay()">Save Order & Pay →</button>
+      <p class="note">Your cart total and customer details are saved to Supabase as an order. Payment is started only after the order is created.</p>
+      <button class="orderBtn" onclick="sendOrderWhatsApp()">Send Order Details on WhatsApp</button>
+      <p id="checkoutStatus" class="checkoutStatus"></p>
     </div>
-    <p>© <span id="year"></span> SRIVARI COOKIES. All rights reserved.</p>
-  </footer>
+  </aside>
+</div>
 
-  <script src="script.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js?v=10"></script>
+<script src="supabase-client.js?v=10"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>
