@@ -1,9 +1,12 @@
-SRIVARI COOKIES — PREMIUM CLEAN BUILD
+SRIVARI COOKIES — CLEAN RELEASE CANDIDATE
 
-This build uses the exact SRIVARI COOKIES logo supplied by the owner.
-Product photos have been cleaned so the old baked-in NEW/BESTSELLER badges are not shown; website badges are separate UI.
-Mobile uses large two-column card layout for clearer product photography.
+IMPORTANT
+- This package uses the supplied SRIVARI COOKIES logo.
+- Product images have the baked-in NEW/BESTSELLER/W labels cropped out and have been sharpened/upscaled.
+- Mobile product cards are one per row for clearer product photos.
+- The website stores a new order as payment_status = awaiting_payment.
 
-IMPORTANT: The displayed MRP/discount values are design defaults carried from the earlier prototype and should be replaced with the owner's confirmed prices before public launch.
+PAYMENT STATUS
+The current configuration uses a generic Razorpay Payment Link. A static website cannot reliably know whether a customer completed that payment unless a Razorpay API/webhook flow is connected. Therefore this build does NOT falsely mark an order as paid. Connect a Razorpay webhook/server-side verification flow before treating orders as paid automatically.
 
-Config included: Supabase, Razorpay payment-link fallback, WhatsApp 7989816250, email chiluverushyam8790@gmail.com.
+Do not send customers the old live URL until this release is actually deployed and payment verification is connected.
