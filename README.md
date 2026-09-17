@@ -43,3 +43,6 @@ Upload all files/folders to the GitHub repository root:
 - supabase_orders.sql
 - razorpay-edge-function.ts
 - assets/srivari-logo.jpg
+
+## Product visuals
+The product cards use cropped cookie photography from the original project, with the old package-label area cropped out so the customer-facing cards do not display the old brand name.
