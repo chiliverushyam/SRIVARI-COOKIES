@@ -1,22 +1,106 @@
 const products=[
-{id:'almond',name:'Almond Cashew Cookies',weight:'250g',price:299,mrp:399,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
-{id:'butter',name:'Butter Cookies',weight:'250g',price:199,mrp:299,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
-{id:'chip',name:'Classic Choco Chip Cookies',weight:'250g',price:249,mrp:349,image:'assets/classic-chip.jpg',badge:'POPULAR'},
-{id:'coconut',name:'Coconut Cookies',weight:'250g',price:229,mrp:329,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
-{id:'double',name:'Double Chocolate Cookies',weight:'250g',price:249,mrp:399,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
-{id:'dry',name:'Dry Fruit Cookies',weight:'250g',price:299,mrp:399,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
-{id:'oats',name:'Oats Raisin Cookies',weight:'250g',price:249,mrp:349,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
-{id:'red',name:'Red Velvet Cookies',weight:'250g',price:279,mrp:379,image:'assets/red-velvet.jpg',badge:'NEW'}];
+{id:'almond',name:'Almond Cashew Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
+{id:'butter',name:'Butter Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
+{id:'chip',name:'Classic Choco Chip Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/classic-chip.jpg',badge:'POPULAR'},
+{id:'coconut',name:'Coconut Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
+{id:'double',name:'Double Chocolate Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
+{id:'dry',name:'Dry Fruit Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
+{id:'oats',name:'Oats Raisin Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
+{id:'red',name:'Red Velvet Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/red-velvet.jpg',badge:'NEW'}];
+
 let cart=JSON.parse(localStorage.getItem('srivariCart')||'[]');
 const grid=document.getElementById('productGrid');
-function off(p){return Math.round((1-p.price/p.mrp)*100)}
-function renderProducts(){grid.innerHTML=products.map(p=>`<article class="card"><div class="photo"><img src="${p.image}" alt="${p.name}" loading="lazy"><span class="badge">${p.badge}</span></div><div class="info"><h3>${p.name}</h3><div class="weight">${p.weight}</div><div class="priceRow"><div class="price">₹${p.price}<span class="mrp">₹${p.mrp}</span></div><span class="off">${off(p)}% OFF</span></div><button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button></div></article>`).join('')}
-function addToCart(id){const x=cart.find(i=>i.id===id);if(x)x.qty++;else cart.push({id,qty:1});saveCart();openDrawer()}
+const configuredProducts=products.map(p=>({...p}));
+
+function priceFor(p,w){return w===200?p.price200:p.price400}
+function mrpFor(p,w){return w===200?p.mrp200:p.mrp400}
+function discount(p,w){const price=priceFor(p,w),mrp=mrpFor(p,w);return price&&mrp?Math.round((1-price/mrp)*100):null}
+
+function renderProducts(){
+ grid.innerHTML=configuredProducts.map(p=>`
+ <article class="card" data-product="${p.id}">
+   <div class="photo"><img src="${p.image}" alt="${p.name}" loading="lazy"><span class="badge">${p.badge}</span></div>
+   <div class="info">
+    <h3>${p.name}</h3>
+    <div class="weightChoices" role="group" aria-label="Choose pack size">
+      <button type="button" class="weightBtn active" data-weight="200" onclick="selectWeight('${p.id}',200)">200g</button>
+      <button type="button" class="weightBtn" data-weight="400" onclick="selectWeight('${p.id}',400)">400g</button>
+    </div>
+    <div class="priceArea" id="price-${p.id}">${priceBlock(p,200)}</div>
+    <button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>
+   </div>
+ </article>`).join('');
+}
+
+function priceBlock(p,w){
+ const price=priceFor(p,w),mrp=mrpFor(p,w),off=discount(p,w);
+ if(!price) return `<div class="pricePending">Price coming soon</div><div class="priceHint">Select 200g / 400g • Price will update when configured</div>`;
+ return `<div class="priceRow"><div class="price">₹${price}<span class="mrp">₹${mrp}</span></div>${off?`<span class="off">${off}% OFF</span>`:''}</div>`;
+}
+function selectWeight(id,w){
+ const p=configuredProducts.find(x=>x.id===id); if(!p)return;
+ const card=document.querySelector(`[data-product="${id}"]`);
+ card.querySelectorAll('.weightBtn').forEach(b=>b.classList.toggle('active',Number(b.dataset.weight)===w));
+ card.querySelector(`#price-${id}`).innerHTML=priceBlock(p,w);
+}
+function addToCart(id){
+ const p=configuredProducts.find(x=>x.id===id);
+ const card=document.querySelector(`[data-product="${id}"]`);
+ const w=Number(card.querySelector('.weightBtn.active').dataset.weight);
+ if(!priceFor(p,w)){alert('This pack price is being updated. Please contact SRIVARI COOKIES on WhatsApp.');return}
+ const key=`${id}-${w}`,x=cart.find(i=>i.key===key);
+ if(x)x.qty++; else cart.push({key,id,weight:w,qty:1});
+ saveCart();openDrawer();
+}
 function saveCart(){localStorage.setItem('srivariCart',JSON.stringify(cart));renderCart();document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0)}
-function renderCart(){const box=document.getElementById('cartItems');if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Add some cookies ❤️</div>';document.getElementById('cartTotal').textContent='₹0';return}let total=0;box.innerHTML=cart.map(i=>{const p=products.find(x=>x.id===i.id);total+=p.price*i.qty;return `<div class="cartLine"><img src="${p.image}"><div><b>${p.name}</b><small>₹${p.price} × ${i.qty}</small></div><div class="qty"><button onclick="changeQty('${p.id}',-1)">−</button> ${i.qty} <button onclick="changeQty('${p.id}',1)">+</button></div></div>`}).join('');document.getElementById('cartTotal').textContent='₹'+total}
-function changeQty(id,d){const x=cart.find(i=>i.id===id);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.id!==id);saveCart()}
-function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('shade').classList.add('open')}
-function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('shade').classList.remove('open')}
-document.getElementById('openCart').onclick=openDrawer;document.getElementById('closeCart').onclick=closeDrawer;document.getElementById('shade').onclick=closeDrawer;
-document.getElementById('checkout').addEventListener('submit',async e=>{e.preventDefault();if(!cart.length)return alert('Please add cookies to cart.');const name=document.getElementById('cname').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),address=document.getElementById('address').value.trim(),pincode=document.getElementById('pincode').value.trim();const total=cart.reduce((s,i)=>{const p=products.find(x=>x.id===i.id);return s+p.price*i.qty},0);let saved=false;try{if(window.supabaseClient){const r=await window.supabaseClient.from('orders').insert({customer_name:name,customer_phone:phone,customer_address:address,customer_pincode:pincode,total_amount:total,payment_status:'awaiting_payment',order_status:'new',notes:email}).select().single();if(!r.error){for(const i of cart){const p=products.find(x=>x.id===i.id);await window.supabaseClient.from('order_items').insert({order_id:r.data.id,product_id:p.id,product_name:p.name,weight:p.weight,quantity:i.qty,unit_price:p.price,line_total:p.price*i.qty})}saved=true}}}catch(err){}const lines=cart.map(i=>{const p=products.find(x=>x.id===i.id);return `${p.name} (${p.weight}) x${i.qty} = ₹${p.price*i.qty}`}).join('\n');const msg=`SRIVARI COOKIES ORDER\n\nName: ${name}\nMobile: ${phone}\nEmail: ${email}\nAddress: ${address}\nPincode: ${pincode}\n\n${lines}\n\nTotal: ₹${total}\nOrder saved: ${saved?'Yes':'WhatsApp only'}`;window.open('https://wa.me/'+window.SRIVARI_CONFIG.WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg),'_blank');alert('Order saved as Awaiting Payment. Complete payment through the Razorpay link; payment status will require verification until a Razorpay webhook is connected.');if(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK)window.open(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK,'_blank')});
+function renderCart(){
+ const box=document.getElementById('cartItems');
+ if(!cart.length){box.innerHTML='<div class="empty">Your cart is empty.<br>Add some cookies ❤️</div>';updateSummary(0);return}
+ let subtotal=0;
+ box.innerHTML=cart.map(i=>{
+  const p=configuredProducts.find(x=>x.id===i.id),price=priceFor(p,i.weight);
+  subtotal+=(price||0)*i.qty;
+  return `<div class="cartLine"><img src="${p.image}" alt=""><div><b>${p.name}</b><small>${i.weight} • ₹${price} × ${i.qty}</small></div><div class="qty"><button onclick="changeQty('${i.key}',-1)">−</button><span>${i.qty}</span><button onclick="changeQty('${i.key}',1)">+</button></div></div>`
+ }).join('');
+ updateSummary(subtotal);
+}
+function changeQty(key,d){const x=cart.find(i=>i.key===key);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);saveCart()}
+function updateSummary(subtotal){
+ const charge=window.SRIVARI_CONFIG.DELIVERY_CHARGE;
+ document.getElementById('cartSubtotal').textContent='₹'+subtotal;
+ document.getElementById('cartDelivery').textContent=charge==null?'—':'₹'+charge;
+ document.getElementById('cartTotal').textContent=charge==null?'₹'+subtotal:'₹'+(subtotal+charge);
+ document.getElementById('deliveryNote').textContent=charge==null?'Delivery charge will be shown here once configured.':'Delivery charge: ₹'+charge;
+}
+function openDrawer(){document.getElementById('drawer').classList.add('open');document.getElementById('shade').classList.add('open');document.body.classList.add('noScroll')}
+function closeDrawer(){document.getElementById('drawer').classList.remove('open');document.getElementById('shade').classList.remove('open');document.body.classList.remove('noScroll')}
+document.getElementById('openCart').onclick=openDrawer;
+document.getElementById('closeCart').onclick=closeDrawer;
+document.getElementById('shade').onclick=closeDrawer;
+
+document.getElementById('checkout').addEventListener('submit',async e=>{
+ e.preventDefault();
+ if(!cart.length)return alert('Please add cookies to cart.');
+ const name=document.getElementById('cname').value.trim(),phone=document.getElementById('phone').value.trim(),email=document.getElementById('email').value.trim(),address=document.getElementById('address').value.trim(),pincode=document.getElementById('pincode').value.trim();
+ const charge=window.SRIVARI_CONFIG.DELIVERY_CHARGE;
+ if(charge==null){alert('Delivery charge is not configured yet. Please set the exact delivery charge before accepting customer payments.');return}
+ let subtotal=0;
+ for(const i of cart){const p=configuredProducts.find(x=>x.id===i.id);subtotal+=priceFor(p,i.weight)*i.qty}
+ const total=subtotal+charge;
+ let saved=false;
+ try{
+  if(window.supabaseClient){
+   const r=await window.supabaseClient.from('orders').insert({customer_name:name,customer_phone:phone,customer_address:address,customer_pincode:pincode,total_amount:total,payment_status:'awaiting_payment',order_status:'new',notes:email}).select().single();
+   if(!r.error){
+    for(const i of cart){const p=configuredProducts.find(x=>x.id===i.id);await window.supabaseClient.from('order_items').insert({order_id:r.data.id,product_id:p.id,product_name:p.name,weight:i.weight+'g',quantity:i.qty,unit_price:priceFor(p,i.weight),line_total:priceFor(p,i.weight)*i.qty})}
+    saved=true
+   }
+  }
+ }catch(err){}
+ const lines=cart.map(i=>{const p=configuredProducts.find(x=>x.id===i.id);return `${p.name} (${i.weight}g) x${i.qty} = ₹${priceFor(p,i.weight)*i.qty}`}).join('\n');
+ const msg=`SRIVARI COOKIES ORDER\n\nName: ${name}\nMobile: ${phone}\nEmail: ${email||'Not provided'}\nAddress: ${address}\nPincode: ${pincode}\n\n${lines}\n\nSubtotal: ₹${subtotal}\nDelivery: ₹${charge}\nTotal: ₹${total}\nOrder saved: ${saved?'Yes':'WhatsApp only'}`;
+ window.open('https://wa.me/'+window.SRIVARI_CONFIG.WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
+ if(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK)window.open(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK,'_blank');
+ alert('Order details sent to WhatsApp. Payment status remains Awaiting Payment until Razorpay verification/webhook is connected.');
+});
 renderProducts();saveCart();
