@@ -1,12 +1,12 @@
 const products=[
-{id:'almond',name:'Almond Cashew Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
-{id:'butter',name:'Butter Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
-{id:'chip',name:'Classic Choco Chip Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/classic-chip.jpg',badge:'POPULAR'},
-{id:'coconut',name:'Coconut Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
-{id:'double',name:'Double Chocolate Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
-{id:'dry',name:'Dry Fruit Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
-{id:'oats',name:'Oats Raisin Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
-{id:'red',name:'Red Velvet Cookies',price200:null,price400:null,mrp200:null,mrp400:null,image:'assets/red-velvet.jpg',badge:'NEW'}];
+{id:'almond',name:'Almond Cashew Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
+{id:'butter',name:'Butter Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
+{id:'chip',name:'Classic Choco Chip Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/classic-chip.jpg',badge:'POPULAR'},
+{id:'coconut',name:'Coconut Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
+{id:'double',name:'Double Chocolate Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
+{id:'dry',name:'Dry Fruit Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
+{id:'oats',name:'Oats Raisin Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
+{id:'red',name:'Red Velvet Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/red-velvet.jpg',badge:'NEW'}];
 
 let cart=JSON.parse(localStorage.getItem('srivariCart')||'[]');
 const grid=document.getElementById('productGrid');
@@ -100,7 +100,6 @@ document.getElementById('checkout').addEventListener('submit',async e=>{
  const lines=cart.map(i=>{const p=configuredProducts.find(x=>x.id===i.id);return `${p.name} (${i.weight}g) x${i.qty} = ₹${priceFor(p,i.weight)*i.qty}`}).join('\n');
  const msg=`SRIVARI COOKIES ORDER\n\nName: ${name}\nMobile: ${phone}\nEmail: ${email||'Not provided'}\nAddress: ${address}\nPincode: ${pincode}\n\n${lines}\n\nSubtotal: ₹${subtotal}\nDelivery: ₹${charge}\nTotal: ₹${total}\nOrder saved: ${saved?'Yes':'WhatsApp only'}`;
  window.open('https://wa.me/'+window.SRIVARI_CONFIG.WHATSAPP_NUMBER+'?text='+encodeURIComponent(msg),'_blank');
- if(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK)window.open(window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK,'_blank');
- alert('Order details sent to WhatsApp. Payment status remains Awaiting Payment until Razorpay verification/webhook is connected.');
+ alert('Order details sent to WhatsApp. Please collect payment by UPI directly. Card payments are not enabled on this checkout to avoid card-processing fees.');
 });
 renderProducts();saveCart();
