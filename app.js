@@ -563,6 +563,7 @@ document
        * customer_name
        * mobile
        * address
+       * pincode
        * delivery_charge
        * total
        * payment_status
@@ -582,6 +583,9 @@ document
 
           address:
             `${address}\nPincode: ${pincode}`,
+
+          pincode:
+            pincode,
 
           delivery_charge:
             deliveryCharge,
