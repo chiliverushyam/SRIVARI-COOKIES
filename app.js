@@ -638,7 +638,8 @@ document
 
             quantity:
               i.qty,
-
+          unit_price:
+              priceFor(p,i.weight),
 
           });
 
