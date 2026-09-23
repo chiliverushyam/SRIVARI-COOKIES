@@ -648,8 +648,6 @@ document
             unit_price:
               priceFor(p,i.weight),
 
-            line_total:
-              priceFor(p,i.weight)*i.qty
 
           });
 
