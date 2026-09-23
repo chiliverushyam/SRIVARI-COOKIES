@@ -4,7 +4,7 @@ window.SRIVARI_CONFIG={
 
   // Paste ONLY your Razorpay Key ID here.
   // Never put the Razorpay Key Secret in this file.
-  RAZORPAY_KEY_ID:"rzp_live_TfRVZRNY3dWwWF",
+  RAZORPAY_KEY_ID:"rzp_live_TfRVZRNY3dWwWF,IjP8M2JogcdQbWIUZAhpbzJY",
 
   RAZORPAY_FUNCTION_URL:"https://szsqbqcodtlruorcsgpq.supabase.co/functions/v1/create-razorpay-order",
 
