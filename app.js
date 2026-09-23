@@ -639,14 +639,8 @@ document
             product_name:
               p.name,
 
-            weight:
-              i.weight+'g',
-
             quantity:
               i.qty,
-
-            unit_price:
-              priceFor(p,i.weight),
 
 
           });
