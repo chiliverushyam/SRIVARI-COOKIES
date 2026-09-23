@@ -14,21 +14,18 @@ const grid=document.getElementById('productGrid');
 const configuredProducts=products.map(p=>({...p}));
 
 const DELHIVERY_API='https://srivari-delhivery-api.chiluverushyam8790.workers.dev';
+const RAZORPAY_FUNCTION=
+  (window.SRIVARI_CONFIG&&window.SRIVARI_CONFIG.RAZORPAY_FUNCTION_URL) ||
+  `${window.SRIVARI_CONFIG.SUPABASE_URL}/functions/v1/create-razorpay-order`;
 
 let deliveryCharge=null;
 let lastDeliveryPincode='';
+let checkoutBusy=false;
 
-function priceFor(p,w){
-  return w===200?p.price200:p.price400;
-}
-
-function mrpFor(p,w){
-  return w===200?p.mrp200:p.mrp400;
-}
-
+function priceFor(p,w){return w===200?p.price200:p.price400;}
+function mrpFor(p,w){return w===200?p.mrp200:p.mrp400;}
 function discount(p,w){
-  const price=priceFor(p,w);
-  const mrp=mrpFor(p,w);
+  const price=priceFor(p,w),mrp=mrpFor(p,w);
   return price&&mrp?Math.round((1-price/mrp)*100):null;
 }
 
@@ -39,55 +36,28 @@ function renderProducts(){
         <img src="${p.image}" alt="${p.name}" loading="lazy">
         <span class="badge">${p.badge}</span>
       </div>
-
       <div class="info">
         <h3>${p.name}</h3>
-
         <div class="weightChoices" role="group" aria-label="Choose pack size">
-          <button type="button" class="weightBtn active" data-weight="200"
-            onclick="selectWeight('${p.id}',200)">200g</button>
-
-          <button type="button" class="weightBtn" data-weight="400"
-            onclick="selectWeight('${p.id}',400)">400g</button>
+          <button type="button" class="weightBtn active" data-weight="200" onclick="selectWeight('${p.id}',200)">200g</button>
+          <button type="button" class="weightBtn" data-weight="400" onclick="selectWeight('${p.id}',400)">400g</button>
         </div>
-
-        <div class="priceArea" id="price-${p.id}">
-          ${priceBlock(p,200)}
-        </div>
-
-        <button class="add" onclick="addToCart('${p.id}')">
-          🛒 Add to Cart
-        </button>
+        <div class="priceArea" id="price-${p.id}">${priceBlock(p,200)}</div>
+        <button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>
       </div>
     </article>
   `).join('');
 }
 
 function priceBlock(p,w){
-  const price=priceFor(p,w);
-  const mrp=mrpFor(p,w);
-  const off=discount(p,w);
-
-  return `
-    <div class="priceRow">
-      <div class="price">
-        ₹${price}
-        <span class="mrp">₹${mrp}</span>
-      </div>
-      ${off?`<span class="off">${off}% OFF</span>`:''}
-    </div>
-  `;
+  const price=priceFor(p,w),mrp=mrpFor(p,w),off=discount(p,w);
+  return `<div class="priceRow"><div class="price">₹${price} <span class="mrp">₹${mrp}</span></div>${off?`<span class="off">${off}% OFF</span>`:''}</div>`;
 }
 
 function selectWeight(id,w){
-  const p=configuredProducts.find(x=>x.id===id);
-  if(!p)return;
-
+  const p=configuredProducts.find(x=>x.id===id); if(!p)return;
   const card=document.querySelector(`[data-product="${id}"]`);
-  card.querySelectorAll('.weightBtn').forEach(b=>{
-    b.classList.toggle('active',Number(b.dataset.weight)===w);
-  });
-
+  card.querySelectorAll('.weightBtn').forEach(b=>b.classList.toggle('active',Number(b.dataset.weight)===w));
   card.querySelector(`#price-${id}`).innerHTML=priceBlock(p,w);
 }
 
@@ -95,36 +65,21 @@ function addToCart(id){
   const p=configuredProducts.find(x=>x.id===id);
   const card=document.querySelector(`[data-product="${id}"]`);
   const w=Number(card.querySelector('.weightBtn.active').dataset.weight);
-
   const key=`${id}-${w}`;
   const x=cart.find(i=>i.key===key);
-
-  if(x){
-    x.qty++;
-  }else{
-    cart.push({key,id,weight:w,qty:1});
-  }
-
-  deliveryCharge=null;
-  lastDeliveryPincode='';
-
-  saveCart();
-  openDrawer();
+  if(x)x.qty++; else cart.push({key,id,weight:w,qty:1});
+  deliveryCharge=null;lastDeliveryPincode='';
+  saveCart();openDrawer();
 }
 
 function saveCart(){
   localStorage.setItem('srivariCart',JSON.stringify(cart));
   renderCart();
-
-  document.getElementById('cartCount').textContent=
-    cart.reduce((s,i)=>s+i.qty,0);
+  document.getElementById('cartCount').textContent=cart.reduce((s,i)=>s+i.qty,0);
 }
 
 function cartWeightGrams(){
-  return cart.reduce(
-    (sum,i)=>sum+(Number(i.weight)||0)*i.qty,
-    0
-  );
+  return cart.reduce((sum,i)=>sum+(Number(i.weight)||0)*i.qty,0);
 }
 
 function cartSubtotal(){
@@ -136,79 +91,30 @@ function cartSubtotal(){
 
 function renderCart(){
   const box=document.getElementById('cartItems');
-
   if(!cart.length){
-    box.innerHTML=
-      '<div class="empty">Your cart is empty.<br>Add some cookies ❤️</div>';
-
-    updateSummary(0);
-    return;
+    box.innerHTML='<div class="empty">Your cart is empty.<br>Add some cookies ❤️</div>';
+    updateSummary(0);return;
   }
-
   let subtotal=0;
-
   box.innerHTML=cart.map(i=>{
     const p=configuredProducts.find(x=>x.id===i.id);
-    const price=priceFor(p,i.weight);
-
-    subtotal+=price*i.qty;
-
-    return `
-      <div class="cartLine">
-        <img src="${p.image}" alt="">
-
-        <div>
-          <b>${p.name}</b>
-          <small>${i.weight}g • ₹${price} × ${i.qty}</small>
-        </div>
-
-        <div class="qty">
-          <button onclick="changeQty('${i.key}',-1)">−</button>
-          <span>${i.qty}</span>
-          <button onclick="changeQty('${i.key}',1)">+</button>
-        </div>
-      </div>
-    `;
+    const price=priceFor(p,i.weight);subtotal+=price*i.qty;
+    return `<div class="cartLine"><img src="${p.image}" alt=""><div><b>${p.name}</b><small>${i.weight}g • ₹${price} × ${i.qty}</small></div><div class="qty"><button onclick="changeQty('${i.key}',-1)">−</button><span>${i.qty}</span><button onclick="changeQty('${i.key}',1)">+</button></div></div>`;
   }).join('');
-
   updateSummary(subtotal);
 }
 
 function changeQty(key,d){
-  const x=cart.find(i=>i.key===key);
-  if(!x)return;
-
-  x.qty+=d;
-
-  if(x.qty<=0){
-    cart=cart.filter(i=>i.key!==key);
-  }
-
-  deliveryCharge=null;
-  lastDeliveryPincode='';
-
-  saveCart();
+  const x=cart.find(i=>i.key===key);if(!x)return;
+  x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);
+  deliveryCharge=null;lastDeliveryPincode='';saveCart();
 }
 
 function updateSummary(subtotal){
   document.getElementById('cartSubtotal').textContent='₹'+subtotal;
-
-  document.getElementById('cartDelivery').textContent=
-    deliveryCharge==null
-      ? '—'
-      : '₹'+Math.round(deliveryCharge);
-
-  document.getElementById('cartTotal').textContent=
-    '₹'+Math.round(
-      deliveryCharge==null
-        ? subtotal
-        : subtotal+deliveryCharge
-    );
-
-  document.getElementById('deliveryNote').textContent=
-    deliveryCharge==null
-      ? 'Enter your pincode to calculate delivery charge.'
-      : 'Delivery charge: ₹'+Math.round(deliveryCharge);
+  document.getElementById('cartDelivery').textContent=deliveryCharge==null?'—':'₹'+Math.round(deliveryCharge);
+  document.getElementById('cartTotal').textContent='₹'+Math.round(deliveryCharge==null?subtotal:subtotal+deliveryCharge);
+  document.getElementById('deliveryNote').textContent=deliveryCharge==null?'Enter your pincode to calculate delivery charge.':'Delivery charge: ₹'+Math.round(deliveryCharge);
 }
 
 function openDrawer(){
@@ -216,116 +122,110 @@ function openDrawer(){
   document.getElementById('shade').classList.add('open');
   document.body.classList.add('noScroll');
 }
-
 function closeDrawer(){
   document.getElementById('drawer').classList.remove('open');
   document.getElementById('shade').classList.remove('open');
   document.body.classList.remove('noScroll');
 }
-
 document.getElementById('openCart').onclick=openDrawer;
 document.getElementById('closeCart').onclick=closeDrawer;
 document.getElementById('shade').onclick=closeDrawer;
 
-
-/* =========================
-   DELHIVERY DELIVERY CHARGE
-   ========================= */
-
 async function calculateDelivery(){
-
   const pincode=document.getElementById('pincode').value.trim();
-
   if(!/^\d{6}$/.test(pincode)){
-    deliveryCharge=null;
-    lastDeliveryPincode='';
-    updateSummary(cartSubtotal());
-    return false;
+    deliveryCharge=null;lastDeliveryPincode='';updateSummary(cartSubtotal());return false;
   }
-
   const weight=cartWeightGrams();
-
-  if(weight<=0){
-    alert('Please add cookies to cart.');
-    return false;
-  }
-
+  if(weight<=0){alert('Please add cookies to cart.');return false;}
   const note=document.getElementById('deliveryNote');
   note.textContent='Calculating delivery charge…';
-
   try{
-
-    const url=
-      `${DELHIVERY_API}/?pincode=${encodeURIComponent(pincode)}&weight=${Math.ceil(weight)}`;
-
+    const url=`${DELHIVERY_API}/?pincode=${encodeURIComponent(pincode)}&weight=${Math.ceil(weight)}`;
     const response=await fetch(url,{cache:'no-store'});
-
     const data=await response.json();
-
-    if(!response.ok || !data.success){
-      throw new Error(
-        data.error || 'Delivery charge unavailable'
-      );
-    }
-
+    if(!response.ok||!data.success)throw new Error(data.error||'Delivery charge unavailable');
     deliveryCharge=Number(data.shippingCharge);
-
-    if(!Number.isFinite(deliveryCharge)){
-      throw new Error('Invalid delivery charge');
-    }
-
-    lastDeliveryPincode=pincode;
-
-    updateSummary(cartSubtotal());
-
-    return true;
-
+    if(!Number.isFinite(deliveryCharge))throw new Error('Invalid delivery charge');
+    lastDeliveryPincode=pincode;updateSummary(cartSubtotal());return true;
   }catch(error){
-
     console.error('Delhivery error:',error);
-
-    deliveryCharge=null;
-    lastDeliveryPincode='';
-
-    updateSummary(cartSubtotal());
-
-    note.textContent=
-      'Delivery charge could not be calculated for this pincode.';
-
-    alert(
-      'Delivery charge could not be calculated. Please check the pincode and try again.'
-    );
-
+    deliveryCharge=null;lastDeliveryPincode='';updateSummary(cartSubtotal());
+    note.textContent='Delivery charge could not be calculated for this pincode.';
+    alert('Delivery charge could not be calculated. Please check the pincode and try again.');
     return false;
   }
 }
 
-
-/* Calculate when customer leaves pincode field */
-
 const pincodeEl=document.getElementById('pincode');
-
 pincodeEl.addEventListener('blur',calculateDelivery);
-
 pincodeEl.addEventListener('input',()=>{
-  deliveryCharge=null;
-  lastDeliveryPincode='';
-  updateSummary(cartSubtotal());
+  deliveryCharge=null;lastDeliveryPincode='';updateSummary(cartSubtotal());
 });
 
+async function callRazorpayFunction(payload){
+  const response=await fetch(RAZORPAY_FUNCTION,{
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json',
+      'apikey':window.SRIVARI_CONFIG.SUPABASE_ANON_KEY,
+      'Authorization':`Bearer ${window.SRIVARI_CONFIG.SUPABASE_ANON_KEY}`
+    },
+    body:JSON.stringify(payload)
+  });
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok||data.error)throw new Error(data.error||'Payment service unavailable');
+  return data;
+}
 
-/* =========================
-   CHECKOUT
-   ========================= */
+function buildWhatsAppMessage(order){
+  const lines=order.items.map(i=>{
+    const p=configuredProducts.find(x=>x.id===i.id);
+    return `${p.name} (${i.weight}g) x${i.qty} = ₹${priceFor(p,i.weight)*i.qty}`;
+  }).join('\n');
+
+  return `SRIVARI COOKIES ORDER\n\nOrder ID: ${order.orderId}\nPayment: PAID\n\nName: ${order.name}\nMobile: ${order.phone}\nEmail: ${order.email||'Not provided'}\nAddress: ${order.address}\nPincode: ${order.pincode}\n\n${lines}\n\nSubtotal: ₹${order.subtotal}\nDelivery: ₹${Math.round(order.deliveryCharge)}\nTotal: ₹${Math.round(order.total)}\nRazorpay Payment ID: ${order.paymentId}`;
+}
+
+function openRazorpayCheckout(order,paymentOrder){
+  return new Promise((resolve,reject)=>{
+    if(typeof Razorpay==='undefined'){
+      reject(new Error('Razorpay Checkout could not load. Please refresh and try again.'));
+      return;
+    }
+
+    const options={
+      key:paymentOrder.keyId,
+      amount:paymentOrder.amount,
+      currency:'INR',
+      name:'SRIVARI COOKIES',
+      description:'Cookie Order',
+      order_id:paymentOrder.orderId,
+      prefill:{
+        name:order.name,
+        contact:order.phone,
+        email:order.email||undefined
+      },
+      notes:{srivari_order_id:order.orderId},
+      theme:{color:'#7b3f18'},
+      handler:response=>resolve(response),
+      modal:{
+        ondismiss:()=>reject(new Error('Payment window closed before payment was completed.'))
+      }
+    };
+
+    const rzp=new Razorpay(options);
+    rzp.on('payment.failed',response=>{
+      reject(new Error(response?.error?.description||'Payment failed. Please try again.'));
+    });
+    rzp.open();
+  });
+}
 
 document.getElementById('checkout').addEventListener('submit',async e=>{
-
   e.preventDefault();
-
-  if(!cart.length){
-    alert('Please add cookies to cart.');
-    return;
-  }
+  if(checkoutBusy)return;
+  if(!cart.length){alert('Please add cookies to cart.');return;}
 
   const name=document.getElementById('cname').value.trim();
   const phone=document.getElementById('phone').value.trim();
@@ -333,141 +233,117 @@ document.getElementById('checkout').addEventListener('submit',async e=>{
   const address=document.getElementById('address').value.trim();
   const pincode=document.getElementById('pincode').value.trim();
 
-  if(
-    !name ||
-    !phone ||
-    !address ||
-    !/^\d{6}$/.test(pincode)
-  ){
-    alert(
-      'Please fill all required details and enter a valid 6-digit pincode.'
-    );
+  if(!name||!phone||!address||!/^\d{6}$/.test(pincode)){
+    alert('Please fill all required details and enter a valid 6-digit pincode.');
     return;
   }
 
   const ready=await calculateDelivery();
-
-  if(!ready){
-    return;
-  }
+  if(!ready)return;
 
   const subtotal=cartSubtotal();
-  const total=subtotal+deliveryCharge;
+  const total=Math.round((subtotal+deliveryCharge)*100)/100;
 
-  let saved=false;
+  checkoutBusy=true;
+  const button=document.querySelector('.checkoutBtn');
+  const oldText=button.textContent;
+  button.disabled=true;
+  button.textContent='Creating secure payment…';
 
   try{
+    if(!window.supabaseClient)throw new Error('Supabase is not loaded. Please refresh the page.');
 
-    if(window.supabaseClient){
+    const {data:dbOrder,error:orderError}=await window.supabaseClient
+      .from('orders')
+      .insert({
+        customer_name:name,
+        customer_phone:phone,
+        customer_address:address,
+        customer_pincode:pincode,
+        total_amount:total,
+        payment_status:'awaiting_payment',
+        order_status:'new',
+        notes:email
+      })
+      .select()
+      .single();
 
-      const r=await window.supabaseClient
-        .from('orders')
-        .insert({
-          customer_name:name,
-          customer_phone:phone,
-          customer_address:address,
-          customer_pincode:pincode,
-          total_amount:total,
-          payment_status:'awaiting_payment',
-          order_status:'new',
-          notes:email
-        })
-        .select()
-        .single();
+    if(orderError||!dbOrder)throw new Error(orderError?.message||'Could not create order.');
 
-      if(!r.error){
-
-        for(const i of cart){
-
-          const p=configuredProducts.find(x=>x.id===i.id);
-
-          await window.supabaseClient
-            .from('order_items')
-            .insert({
-              order_id:r.data.id,
-              product_id:p.id,
-              product_name:p.name,
-              weight:i.weight+'g',
-              quantity:i.qty,
-              unit_price:priceFor(p,i.weight),
-              line_total:priceFor(p,i.weight)*i.qty
-            });
-        }
-
-        saved=true;
-      }
+    for(const i of cart){
+      const p=configuredProducts.find(x=>x.id===i.id);
+      const {error:itemError}=await window.supabaseClient.from('order_items').insert({
+        order_id:dbOrder.id,
+        product_id:p.id,
+        product_name:p.name,
+        weight:i.weight+'g',
+        quantity:i.qty,
+        unit_price:priceFor(p,i.weight),
+        line_total:priceFor(p,i.weight)*i.qty
+      });
+      if(itemError)throw new Error(itemError.message||'Could not save order items.');
     }
 
-  }catch(error){
+    button.textContent='Opening Razorpay…';
 
-    console.error('Order save failed:',error);
-  }
+    const paymentOrder=await callRazorpayFunction({
+      action:'create',
+      order_id:dbOrder.id
+    });
 
-  const lines=cart.map(i=>{
-    const p=configuredProducts.find(x=>x.id===i.id);
+    if(Number(paymentOrder.amount)!==Math.round(total*100)){
+      throw new Error('Payment amount mismatch. Order was not sent for payment.');
+    }
 
-    return `${p.name} (${i.weight}g) x${i.qty} = ₹${priceFor(p,i.weight)*i.qty}`;
-
-  }).join('\n');
-
-  const msg=
-`SRIVARI COOKIES ORDER
-
-Name: ${name}
-Mobile: ${phone}
-Email: ${email||'Not provided'}
-Address: ${address}
-Pincode: ${pincode}
-
-${lines}
-
-Subtotal: ₹${subtotal}
-Delivery: ₹${Math.round(deliveryCharge)}
-Total: ₹${Math.round(total)}
-Order saved: ${saved?'Yes':'WhatsApp only'}`;
-
-  localStorage.setItem(
-    'srivari_pending_order',
-    JSON.stringify({
-      name,
-      phone,
-      email,
-      address,
-      pincode,
-      items:cart,
-      subtotal,
-      deliveryCharge,
-      total,
-      createdAt:new Date().toISOString()
-    })
-  );
-
-  const paymentLink=
-    window.SRIVARI_CONFIG &&
-    window.SRIVARI_CONFIG.RAZORPAY_PAYMENT_LINK;
-
-  if(paymentLink){
-    window.open(paymentLink,'_blank','noopener');
-  }
-
-  const whatsappNumber=
-    window.SRIVARI_CONFIG &&
-    window.SRIVARI_CONFIG.WHATSAPP_NUMBER;
-
-  if(whatsappNumber){
-
-    window.open(
-      'https://wa.me/'+
-      whatsappNumber+
-      '?text='+
-      encodeURIComponent(msg),
-      '_blank',
-      'noopener'
+    const paymentResponse=await openRazorpayCheckout(
+      {orderId:dbOrder.id,name,phone,email,address,pincode,items:cart,subtotal,deliveryCharge,total},
+      paymentOrder
     );
+
+    button.textContent='Verifying payment…';
+
+    const verified=await callRazorpayFunction({
+      action:'verify',
+      order_id:dbOrder.id,
+      razorpay_order_id:paymentResponse.razorpay_order_id,
+      razorpay_payment_id:paymentResponse.razorpay_payment_id,
+      razorpay_signature:paymentResponse.razorpay_signature
+    });
+
+    if(!verified.paid)throw new Error('Payment could not be verified.');
+
+    const paidOrder={
+      orderId:dbOrder.id,name,phone,email,address,pincode,items:cart,
+      subtotal,deliveryCharge,total,paymentId:verified.paymentId
+    };
+
+    localStorage.setItem('srivari_pending_order',JSON.stringify(paidOrder));
+
+    const whatsappNumber=window.SRIVARI_CONFIG.WHATSAPP_NUMBER;
+    if(whatsappNumber){
+      window.open(
+        'https://wa.me/'+whatsappNumber+'?text='+encodeURIComponent(buildWhatsAppMessage(paidOrder)),
+        '_blank','noopener'
+      );
+    }
+
+    alert(`Payment successful!\nOrder ID: ${dbOrder.id}\nPaid: ₹${Math.round(total)}\n\nThank you for ordering from SRIVARI COOKIES.`);
+    cart=[];
+    deliveryCharge=null;
+    lastDeliveryPincode='';
+    saveCart();
+    document.getElementById('checkout').reset();
+    closeDrawer();
+
+  }catch(error){
+    console.error('Checkout error:',error);
+    alert(error.message||'Payment could not be completed. Please try again.');
+  }finally{
+    checkoutBusy=false;
+    button.disabled=false;
+    button.textContent=oldText;
   }
-
 });
-
 
 renderProducts();
 saveCart();

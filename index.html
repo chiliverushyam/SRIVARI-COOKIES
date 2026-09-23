@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=40">
+<link rel="stylesheet" href="styles.css?v=41">
 </head>
 <body>
 <div class="topbar"><span>🌿 Freshly baked treats</span><span>💛 Premium ingredients</span><span>🚚 Home delivery across India</span><span>🎁 Perfect for gifting</span></div>
@@ -78,19 +78,22 @@
     <div><span>Delivery</span><b id="cartDelivery">—</b></div>
     <div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div>
   </div>
-  <p class="deliveryNote" id="deliveryNote">Delivery charge will be shown here once configured.</p>
+  <p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
   <form id="checkout">
     <label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
     <label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
     <label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
     <label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
     <label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
-    <button class="primary checkoutBtn" type="submit">Save Order & Pay →</button>
+    <button class="primary checkoutBtn" type="submit">Pay Securely →</button>
   </form>
 </aside>
 <div class="shade" id="shade"></div>
-<script src="config.js?v=40"></script>
-<script src="supabase-client.js?v=40"></script>
-<script src="app.js?v=40"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="config.js?v=41"></script>
+<script src="supabase-client.js?v=41"></script>
+<script src="app.js?v=41"></script>
 </body>
 </html>
