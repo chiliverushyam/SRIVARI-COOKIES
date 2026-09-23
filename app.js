@@ -633,9 +633,6 @@ document
             order_id:
               dbOrder.id,
 
-            product_id:
-              p.id,
-
             product_name:
               p.name,
 
