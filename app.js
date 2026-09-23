@@ -587,6 +587,9 @@ document
           pincode:
             pincode,
 
+          subtotal:
+               subtotal,
+
           delivery_charge:
             deliveryCharge,
 
