@@ -841,13 +841,173 @@ document
         );
       }
 
-      alert(
-        `Payment successful!\n\n`+
-        `Order Number: ${orderNumber}\n`+
-        `Paid: ₹${Math.round(total)}\n`+
-        `Delhivery AWB: ${shipmentData.awb}\n\n`+
-        `Thank you for ordering from SRIVARI COOKIES.`
-      );
+    const receiptHtml = `
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>${orderNumber} - SRIVARI COOKIES Receipt</title>
+
+<style>
+body{
+  font-family:Arial,sans-serif;
+  background:#f6f3ef;
+  margin:0;
+  padding:20px;
+  color:#333;
+}
+.receipt{
+  max-width:700px;
+  margin:auto;
+  background:white;
+  padding:30px;
+  border-radius:16px;
+  box-shadow:0 4px 20px rgba(0,0,0,.12);
+}
+h1{
+  margin:0;
+  color:#7b3f18;
+}
+.success{
+  background:#e8f7ed;
+  padding:12px;
+  border-radius:8px;
+  margin:20px 0;
+  font-weight:bold;
+}
+.info{
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:14px;
+  margin:10px 0;
+}
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:20px;
+}
+th,td{
+  border-bottom:1px solid #ddd;
+  padding:10px;
+  text-align:left;
+}
+.total{
+  font-size:20px;
+  font-weight:bold;
+  margin-top:20px;
+}
+button{
+  background:#7b3f18;
+  color:white;
+  border:0;
+  padding:13px 20px;
+  border-radius:8px;
+  cursor:pointer;
+  font-weight:bold;
+  margin-top:20px;
+}
+@media print{
+  button{display:none}
+  body{background:white}
+  .receipt{box-shadow:none}
+}
+</style>
+</head>
+
+<body>
+
+<div class="receipt">
+
+<h1>SRIVARI COOKIES</h1>
+<h2>Order Receipt</h2>
+
+<div class="success">
+✓ Payment Successful
+</div>
+
+<div class="info">
+<b>Order Number:</b> ${orderNumber}<br>
+<b>Payment Status:</b> PAID<br>
+<b>Delhivery AWB:</b> ${shipmentData.awb}<br>
+<b>Shipment Status:</b> Booked
+</div>
+
+<div class="info">
+<b>Customer:</b> ${name}<br>
+<b>Mobile:</b> ${phone}<br>
+<b>Address:</b><br>
+${address}<br>
+<b>Pincode:</b> ${pincode}
+</div>
+
+<h3>Order Items</h3>
+
+<table>
+<thead>
+<tr>
+<th>Product</th>
+<th>Qty</th>
+<th>Amount</th>
+</tr>
+</thead>
+
+<tbody>
+
+${cart.map(i=>{
+  const p=configuredProducts.find(x=>x.id===i.id);
+  return `
+  <tr>
+    <td>${p.name} (${i.weight}g)</td>
+    <td>${i.qty}</td>
+    <td>₹${priceFor(p,i.weight)*i.qty}</td>
+  </tr>
+  `;
+}).join('')}
+
+</tbody>
+</table>
+
+<div class="info">
+Subtotal: ₹${subtotal}<br>
+Delivery: ₹${Math.round(deliveryCharge)}<br>
+<div class="total">
+Total Paid: ₹${Math.round(total)}
+</div>
+</div>
+
+<div class="info">
+<b>Razorpay Payment ID:</b><br>
+${verified.paymentId}
+</div>
+
+<p>
+Thank you for ordering from SRIVARI COOKIES ❤️
+</p>
+
+<button onclick="window.print()">
+Download / Save Receipt as PDF
+</button>
+
+</div>
+
+</body>
+</html>
+`;
+
+const receiptWindow = window.open('', '_blank');
+
+if(receiptWindow){
+  receiptWindow.document.open();
+  receiptWindow.document.write(receiptHtml);
+  receiptWindow.document.close();
+}else{
+  alert(
+    `Payment successful!\\n\\n`+
+    `Order Number: ${orderNumber}\\n`+
+    `Paid: ₹${Math.round(total)}\\n`+
+    `Delhivery AWB: ${shipmentData.awb}`
+  );
+};
 
       cart=[];
 
