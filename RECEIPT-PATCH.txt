@@ -1,0 +1,63 @@
+SRIVARI COOKIES — DIRECT RECEIPT PAGE PATCH
+
+1) In app.js, find this existing section immediately after:
+const paidOrder={
+
+Change the paidOrder object to:
+
+const paidOrder={
+  orderId: dbOrder.id,
+  orderNumber,
+  name,
+  phone,
+  email,
+  address,
+  pincode,
+  items: cart.map(i=>{
+    const p=configuredProducts.find(x=>x.id===i.id);
+    return {
+      name:p.name,
+      weight:i.weight,
+      qty:i.qty,
+      amount:priceFor(p,i.weight)*i.qty
+    };
+  }),
+  subtotal,
+  deliveryCharge,
+  total,
+  paymentId: verified.paymentId,
+  awb: shipmentData.awb
+};
+
+2) Keep this line:
+localStorage.setItem(
+  'srivari_pending_order',
+  JSON.stringify(paidOrder)
+);
+
+3) DELETE the whole old receipt popup block:
+- const receiptHtml = ` ... `;
+- const receiptWindow = window.open('', '_blank');
+- if(receiptWindow){ ... }
+- else { ... }
+
+4) Also DELETE the automatic WhatsApp popup block if you want payment -> receipt directly with no new window:
+const whatsappNumber=...
+if(whatsappNumber){
+  window.open(...)
+}
+
+5) In its place put ONLY:
+
+window.location.href='receipt.html';
+
+6) Keep the existing cart clear / reset code after it.
+
+Result:
+Razorpay payment successful
+→ payment verified
+→ Delhivery AWB created
+→ receipt saved
+→ SAME TAB opens receipt.html
+→ no receipt popup
+→ Download / Save Receipt as PDF button is on the receipt page.
