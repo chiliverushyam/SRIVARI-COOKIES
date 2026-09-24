@@ -806,8 +806,11 @@ document
 
         total,
 
-        paymentId:
-          verified.paymentId
+       paymentId:
+  verified.paymentId,
+
+awb:
+  shipmentData.awb
 
       };
 
@@ -1002,12 +1005,13 @@ if(receiptWindow){
   receiptWindow.document.close();
 }else{
   alert(
-    `Payment successful!\\n\\n`+
-    `Order Number: ${orderNumber}\\n`+
-    `Paid: ₹${Math.round(total)}\\n`+
-    `Delhivery AWB: ${shipmentData.awb}`
+    `Payment successful!\n\n`+
+    `Order Number: ${orderNumber}\n`+
+    `Paid: ₹${Math.round(total)}\n`+
+    `Delhivery AWB: ${shipmentData.awb}\n\n`+
+    `Thank you for ordering from SRIVARI COOKIES.`
   );
-};
+}
 
       cart=[];
 
