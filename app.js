@@ -142,6 +142,7 @@ function saveCart(){
   renderCart();
 
   const count=document.getElementById('cartCount');
+
   if(count){
     count.textContent=
       cart.reduce((s,i)=>s+i.qty,0);
@@ -588,7 +589,7 @@ document
             pincode,
 
           subtotal:
-               subtotal,
+            subtotal,
 
           delivery_charge:
             deliveryCharge,
@@ -638,7 +639,8 @@ document
 
             quantity:
               i.qty,
-          unit_price:
+
+            unit_price:
               priceFor(p,i.weight),
 
           });
@@ -737,6 +739,48 @@ document
         );
       }
 
+      /*
+       * Create Delhivery shipment AFTER verified payment
+       */
+
+      button.textContent=
+        'Creating Delhivery shipment…';
+
+      const shipmentResponse=
+        await fetch(
+          `${DELHIVERY_API}/create-shipment`,
+          {
+            method:'POST',
+            headers:{
+              'Content-Type':'application/json'
+            },
+            body:JSON.stringify({
+              orderId:dbOrder.id,
+              weight:cartWeightGrams()
+            })
+          }
+        );
+
+      const shipmentData=
+        await shipmentResponse
+        .json()
+        .catch(()=>({}));
+
+      if(
+        !shipmentResponse.ok||
+        !shipmentData.success
+      ){
+        throw new Error(
+          shipmentData.error||
+          'Payment succeeded, but Delhivery shipment could not be created.'
+        );
+      }
+
+      console.log(
+        'Delhivery AWB:',
+        shipmentData.awb
+      );
+
       const paidOrder={
 
         orderId:
@@ -800,7 +844,8 @@ document
       alert(
         `Payment successful!\n\n`+
         `Order Number: ${orderNumber}\n`+
-        `Paid: ₹${Math.round(total)}\n\n`+
+        `Paid: ₹${Math.round(total)}\n`+
+        `Delhivery AWB: ${shipmentData.awb}\n\n`+
         `Thank you for ordering from SRIVARI COOKIES.`
       );
 
