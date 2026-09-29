@@ -160,3 +160,60 @@ footer#contact .socialLinks a {
   color: #fff !important;
   border-color: #ffffff30;
 }
+
+
+/* SRIVARI COOKIES: restore original deep-green footer and readable contrast */
+footer#contact{
+  background:#063e36 !important;
+  color:#fff !important;
+}
+footer#contact .footerLogo,
+footer#contact .footerColumn h4{
+  color:#fff !important;
+}
+footer#contact .footerBrand p,
+footer#contact .footerColumn a,
+footer#contact .footerColumn p,
+footer#contact .footerContact small{
+  color:#d7e0dc !important;
+}
+footer#contact .socialLinks a{
+  display:grid;
+  place-items:center;
+  color:#fff !important;
+  background:#075e45;
+  border:1px solid #ffffff55;
+  text-decoration:none;
+  font-size:22px;
+}
+footer#contact .footerColumn a:hover{
+  color:#e5b64b !important;
+  text-decoration:underline;
+}
+/* Contact symbols */
+footer#contact .footerContact p:nth-of-type(1)::before{content:"📍";margin-right:7px}
+footer#contact .footerContact p:nth-of-type(2)::before{content:"🏘️";margin-right:7px}
+footer#contact .footerContact p:nth-of-type(3)::before{content:"📌";margin-right:7px}
+footer#contact .footerContact a[href^="tel"]::before{content:"📞";margin-right:7px}
+footer#contact .footerContact a[href^="mailto"]::before{content:"✉️";margin-right:7px}
+footer#contact .copy{
+  color:#d7e0dc !important;
+  border-top:1px solid #ffffff35;
+  opacity:.9;
+}
+/* Keep the secure payment button visible in the cart */
+#checkout .checkoutBtn{
+  display:block !important;
+  visibility:visible !important;
+  opacity:1 !important;
+  width:100% !important;
+  min-height:48px;
+  margin:16px 0 24px !important;
+  background:#005448 !important;
+  color:#fff !important;
+  border:0 !important;
+  border-radius:10px;
+  font-size:15px;
+  font-weight:700;
+  cursor:pointer;
+}
