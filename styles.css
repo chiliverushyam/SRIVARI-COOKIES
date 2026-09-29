@@ -119,26 +119,3 @@ footer h3,footer p{margin:0}footer p{opacity:.8}
   left: 2px;
   top: 2px;
 }
-/* Match footer with the page background */
-footer#contact {
-  background: #fffdf7;
-  color: #12352e;
-}
-
-.footerLogo {
-  color: #12352e;
-}
-
-.footerBrand p,
-.footerColumn a,
-.footerColumn p {
-  color: #71807c;
-}
-
-.footerColumn h4 {
-  color: #12352e;
-}
-
-.footerContact small {
-  color: #71807c;
-}
