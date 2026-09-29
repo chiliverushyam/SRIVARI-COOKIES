@@ -119,3 +119,20 @@ footer h3,footer p{margin:0}footer p{opacity:.8}
   left: 2px;
   top: 2px;
 }
+/* FIX: Show payment button in cart */
+#checkout .checkoutBtn {
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+  position: relative !important;
+  width: 100% !important;
+  min-height: 48px;
+  margin: 16px 0 24px !important;
+  background: #005448 !important;
+  color: #ffffff !important;
+  border: 0 !important;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+}
