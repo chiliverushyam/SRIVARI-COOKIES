@@ -1,4 +1,4 @@
-:root{--green:#005448;--green2:#063e36;--gold:#d69a19;--cream:#fffaf0;--ink:#12352e;--muted:#71807c;--line:#eadfcd}
+2:root{--green:#005448;--green2:#063e36;--gold:#d69a19;--cream:#fffaf0;--ink:#12352e;--muted:#71807c;--line:#eadfcd}
 *{box-sizing:border-box}
 html{scroll-behavior:smooth}
 body{margin:0;font-family:'DM Sans',sans-serif;color:var(--ink);background:#fffdf7;max-width:100%;overflow-x:hidden}
@@ -118,4 +118,27 @@ footer h3,footer p{margin:0}footer p{opacity:.8}
   border-radius: 50%;
   left: 2px;
   top: 2px;
+}
+/* Match footer with the page background */
+footer#contact {
+  background: #fffdf7;
+  color: #12352e;
+}
+
+.footerLogo {
+  color: #12352e;
+}
+
+.footerBrand p,
+.footerColumn a,
+.footerColumn p {
+  color: #71807c;
+}
+
+.footerColumn h4 {
+  color: #12352e;
+}
+
+.footerContact small {
+  color: #71807c;
 }
