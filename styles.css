@@ -136,3 +136,27 @@ footer h3,footer p{margin:0}footer p{opacity:.8}
   font-weight: 700;
   cursor: pointer;
 }
+footer#contact {
+  background: var(--green2) !important;
+  color: #fff !important;
+}
+
+footer#contact .footerLogo,
+footer#contact .footerColumn h4 {
+  color: #fff !important;
+}
+
+footer#contact .footerBrand p,
+footer#contact .footerColumn a,
+footer#contact .footerColumn p {
+  color: #d7caca !important;
+}
+
+footer#contact .footerContact small {
+  color: #b9a9a9 !important;
+}
+
+footer#contact .socialLinks a {
+  color: #fff !important;
+  border-color: #ffffff30;
+}
