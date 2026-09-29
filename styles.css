@@ -93,3 +93,29 @@ footer h3,footer p{margin:0}footer p{opacity:.8}
  .contactItem{padding:5px 0}.contactItem b{font-size:14px;overflow-wrap:anywhere}.contactItem small{font-size:12px}.footerOrder{display:block}.copy{padding-top:17px}
  .drawer{padding:20px 16px}.drawerHead h2{font-size:28px}.cartLine{grid-template-columns:62px 1fr auto}.cartLine img{width:62px;height:50px}
 }
+.vegNotice {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #16803c;
+  font-weight: 700;
+}
+
+.vegSymbol {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #16803c;
+  display: inline-block;
+  position: relative;
+}
+
+.vegSymbol::after {
+  content: "";
+  position: absolute;
+  width: 7px;
+  height: 7px;
+  background: #16803c;
+  border-radius: 50%;
+  left: 2px;
+  top: 2px;
+}
