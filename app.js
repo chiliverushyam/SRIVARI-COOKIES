@@ -1,12 +1,12 @@
 const products=[
-{id:'almond',name:'Almond Cashew Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
-{id:'butter',name:'Butter Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
-{id:'chip',name:'Classic Choco Chip Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/classic-chip.jpg',badge:'POPULAR'},
-{id:'coconut',name:'Coconut Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
-{id:'double',name:'Double Chocolate Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
-{id:'dry',name:'Dry Fruit Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
-{id:'oats',name:'Oats Raisin Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
-{id:'red',name:'Red Velvet Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/red-velvet.jpg',badge:'NEW'}
+  {id:'almond',name:'Almond Cashew Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
+  {id:'butter',name:'Butter Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
+  {id:'chip',name:'Classic Choco Chip Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/classic-chip.jpg',badge:'POPULAR'},
+  {id:'coconut',name:'Coconut Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
+  {id:'double',name:'Double Chocolate Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/double-chocolate.jpg',badge:'RICH & FUDGY'},
+  {id:'dry',name:'Dry Fruit Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/dry-fruit.jpg',badge:'PREMIUM'},
+  {id:'oats',name:'Oats Raisin Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/oats-raisin.jpg',badge:'HEALTHY CHOICE'},
+  {id:'red',name:'Red Velvet Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/red-velvet.jpg',badge:'NEW'}
 ];
 
 let cart=JSON.parse(localStorage.getItem('srivariCart')||'[]');
@@ -15,10 +15,7 @@ const grid=document.getElementById('productGrid');
 const configuredProducts=products.map(p=>({...p}));
 
 const DELHIVERY_API='https://srivari-delhivery-api.chiluverushyam8790.workers.dev';
-
-const RAZORPAY_FUNCTION=
-(window.SRIVARI_CONFIG&&window.SRIVARI_CONFIG.RAZORPAY_FUNCTION_URL) ||
-`${window.SRIVARI_CONFIG.SUPABASE_URL}/functions/v1/create-razorpay-order`;
+const ORDERS_API='https://srivari-orders-api.chiluverushyam8790.workers.dev';
 
 let deliveryCharge=null;
 let lastDeliveryPincode='';
@@ -45,16 +42,24 @@ function renderProducts(){
         <img src="${p.image}" alt="${p.name}" loading="lazy">
         <span class="badge">${p.badge}</span>
       </div>
+
       <div class="info">
         <h3>${p.name}</h3>
-        <div class="weightChoices" role="group">
-          <button type="button" class="weightBtn active"
-            data-weight="200"
-            onclick="selectWeight('${p.id}',200)">200g</button>
 
-          <button type="button" class="weightBtn"
+        <div class="weightChoices" role="group">
+          <button type="button"
+            class="weightBtn active"
+            data-weight="200"
+            onclick="selectWeight('${p.id}',200)">
+            200g
+          </button>
+
+          <button type="button"
+            class="weightBtn"
             data-weight="400"
-            onclick="selectWeight('${p.id}',400)">400g</button>
+            onclick="selectWeight('${p.id}',400)">
+            400g
+          </button>
         </div>
 
         <div class="priceArea" id="price-${p.id}">
@@ -90,6 +95,7 @@ function selectWeight(id,w){
   if(!p)return;
 
   const card=document.querySelector(`[data-product="${id}"]`);
+  if(!card)return;
 
   card.querySelectorAll('.weightBtn').forEach(b=>{
     b.classList.toggle(
@@ -108,9 +114,8 @@ function addToCart(id){
 
   if(!p||!card)return;
 
-  const w=Number(
-    card.querySelector('.weightBtn.active').dataset.weight
-  );
+  const active=card.querySelector('.weightBtn.active');
+  const w=Number(active?.dataset.weight||200);
 
   const key=`${id}-${w}`;
   const x=cart.find(i=>i.key===key);
@@ -151,25 +156,23 @@ function saveCart(){
 
 function cartWeightGrams(){
   return cart.reduce(
-    (sum,i)=>
-      sum+(Number(i.weight)||0)*i.qty,
+    (sum,i)=>sum+(Number(i.weight)||0)*i.qty,
     0
   );
 }
 
 function cartSubtotal(){
   return cart.reduce((sum,i)=>{
-    const p=configuredProducts.find(
-      x=>x.id===i.id
-    );
+    const p=configuredProducts.find(x=>x.id===i.id);
+    if(!p)return sum;
 
-    return sum+
-      priceFor(p,i.weight)*i.qty;
+    return sum+priceFor(p,i.weight)*i.qty;
   },0);
 }
 
 function renderCart(){
   const box=document.getElementById('cartItems');
+  if(!box)return;
 
   if(!cart.length){
     box.innerHTML=
@@ -182,17 +185,16 @@ function renderCart(){
   let subtotal=0;
 
   box.innerHTML=cart.map(i=>{
-    const p=configuredProducts.find(
-      x=>x.id===i.id
-    );
+    const p=configuredProducts.find(x=>x.id===i.id);
+    if(!p)return '';
 
     const price=priceFor(p,i.weight);
-
     subtotal+=price*i.qty;
 
     return `
       <div class="cartLine">
         <img src="${p.image}" alt="">
+
         <div>
           <b>${p.name}</b>
           <small>${i.weight}g • ₹${price} × ${i.qty}</small>
@@ -212,7 +214,6 @@ function renderCart(){
 
 function changeQty(key,d){
   const x=cart.find(i=>i.key===key);
-
   if(!x)return;
 
   x.qty+=d;
@@ -228,42 +229,63 @@ function changeQty(key,d){
 }
 
 function updateSummary(subtotal){
-  document.getElementById('cartSubtotal').textContent=
-    '₹'+subtotal;
+  const subtotalEl=document.getElementById('cartSubtotal');
+  const deliveryEl=document.getElementById('cartDelivery');
+  const totalEl=document.getElementById('cartTotal');
+  const note=document.getElementById('deliveryNote');
 
-  document.getElementById('cartDelivery').textContent=
-    deliveryCharge==null
-      ?'—'
-      :'₹'+Math.round(deliveryCharge);
+  if(subtotalEl)
+    subtotalEl.textContent='₹'+subtotal;
 
-  document.getElementById('cartTotal').textContent=
-    '₹'+Math.round(
+  if(deliveryEl)
+    deliveryEl.textContent=
       deliveryCharge==null
-        ?subtotal
-        :subtotal+deliveryCharge
-    );
+        ?'—'
+        :'₹'+Math.round(deliveryCharge);
 
-  document.getElementById('deliveryNote').textContent=
-    deliveryCharge==null
-      ?'Enter your pincode to calculate delivery charge.'
-      :'Delivery charge: ₹'+Math.round(deliveryCharge);
+  if(totalEl){
+    totalEl.textContent=
+      '₹'+Math.round(
+        deliveryCharge==null
+          ?subtotal
+          :subtotal+deliveryCharge
+      );
+  }
+
+  if(note){
+    note.textContent=
+      deliveryCharge==null
+        ?'Enter your pincode to calculate delivery charge.'
+        :'Delivery charge: ₹'+Math.round(deliveryCharge);
+  }
 }
 
 function openDrawer(){
-  document.getElementById('drawer').classList.add('open');
-  document.getElementById('shade').classList.add('open');
+  document.getElementById('drawer')?.classList.add('open');
+  document.getElementById('shade')?.classList.add('open');
   document.body.classList.add('noScroll');
 }
 
 function closeDrawer(){
-  document.getElementById('drawer').classList.remove('open');
-  document.getElementById('shade').classList.remove('open');
+  document.getElementById('drawer')?.classList.remove('open');
+  document.getElementById('shade')?.classList.remove('open');
   document.body.classList.remove('noScroll');
 }
 
-document.getElementById('openCart').onclick=openDrawer;
-document.getElementById('closeCart').onclick=closeDrawer;
-document.getElementById('shade').onclick=closeDrawer;
+document.getElementById('openCart')?.addEventListener(
+  'click',
+  openDrawer
+);
+
+document.getElementById('closeCart')?.addEventListener(
+  'click',
+  closeDrawer
+);
+
+document.getElementById('shade')?.addEventListener(
+  'click',
+  closeDrawer
+);
 
 async function calculateDelivery(){
   const pincode=
@@ -285,7 +307,8 @@ async function calculateDelivery(){
 
   const note=document.getElementById('deliveryNote');
 
-  note.textContent='Calculating delivery charge…';
+  if(note)
+    note.textContent='Calculating delivery charge…';
 
   try{
     const url=
@@ -294,7 +317,8 @@ async function calculateDelivery(){
     const response=
       await fetch(url,{cache:'no-store'});
 
-    const data=await response.json();
+    const data=
+      await response.json().catch(()=>({}));
 
     if(!response.ok||!data.success){
       throw new Error(
@@ -309,7 +333,6 @@ async function calculateDelivery(){
     }
 
     lastDeliveryPincode=pincode;
-
     updateSummary(cartSubtotal());
 
     return true;
@@ -323,8 +346,10 @@ async function calculateDelivery(){
 
     updateSummary(cartSubtotal());
 
-    note.textContent=
-      'Delivery charge could not be calculated for this pincode.';
+    if(note){
+      note.textContent=
+        'Delivery charge could not be calculated for this pincode.';
+    }
 
     alert(
       'Delivery charge could not be calculated. Please check the pincode and try again.'
@@ -334,15 +359,14 @@ async function calculateDelivery(){
   }
 }
 
-const pincodeEl=
-  document.getElementById('pincode');
+const pincodeEl=document.getElementById('pincode');
 
-pincodeEl.addEventListener(
+pincodeEl?.addEventListener(
   'blur',
   calculateDelivery
 );
 
-pincodeEl.addEventListener(
+pincodeEl?.addEventListener(
   'input',
   ()=>{
     deliveryCharge=null;
@@ -351,18 +375,18 @@ pincodeEl.addEventListener(
   }
 );
 
-async function callRazorpayFunction(payload){
+/* ================================
+   CLOUDFLARE D1 ORDERS API
+================================ */
+
+async function callOrdersApi(path,payload){
 
   const response=await fetch(
-    RAZORPAY_FUNCTION,
+    `${ORDERS_API}${path}`,
     {
       method:'POST',
       headers:{
-        'Content-Type':'application/json',
-        'apikey':
-          window.SRIVARI_CONFIG.SUPABASE_ANON_KEY,
-        'Authorization':
-          `Bearer ${window.SRIVARI_CONFIG.SUPABASE_ANON_KEY}`
+        'Content-Type':'application/json'
       },
       body:JSON.stringify(payload)
     }
@@ -371,47 +395,22 @@ async function callRazorpayFunction(payload){
   const data=
     await response.json().catch(()=>({}));
 
-  if(!response.ok||data.error){
+  if(
+    !response.ok||
+    data.error||
+    data.success===false
+  ){
     throw new Error(
-      data.error||'Payment service unavailable'
+      data.error||'Order service unavailable'
     );
   }
 
   return data;
 }
 
-function buildWhatsAppMessage(order){
-
-  const lines=order.items.map(i=>{
-
-    const p=configuredProducts.find(
-      x=>x.id===i.id
-    );
-
-    return `${p.name} (${i.weight}g) x${i.qty} = ₹${priceFor(p,i.weight)*i.qty}`;
-
-  }).join('\n');
-
-  return `SRIVARI COOKIES ORDER
-
-Order Number: ${order.orderNumber}
-Payment: PAID
-
-Name: ${order.name}
-Mobile: ${order.phone}
-Email: ${order.email||'Not provided'}
-
-Address: ${order.address}
-Pincode: ${order.pincode}
-
-${lines}
-
-Subtotal: ₹${order.subtotal}
-Delivery: ₹${Math.round(order.deliveryCharge)}
-Total: ₹${Math.round(order.total)}
-
-Razorpay Payment ID: ${order.paymentId}`;
-}
+/* ================================
+   RAZORPAY CHECKOUT
+================================ */
 
 function openRazorpayCheckout(order,paymentOrder){
 
@@ -428,10 +427,15 @@ function openRazorpayCheckout(order,paymentOrder){
 
     const options={
       key:paymentOrder.keyId,
+
       amount:paymentOrder.amount,
+
       currency:'INR',
+
       name:'SRIVARI COOKIES',
+
       description:'Cookie Order',
+
       order_id:paymentOrder.orderId,
 
       prefill:{
@@ -481,9 +485,13 @@ function openRazorpayCheckout(order,paymentOrder){
   });
 }
 
+/* ================================
+   CHECKOUT
+================================ */
+
 document
 .getElementById('checkout')
-.addEventListener(
+?.addEventListener(
   'submit',
   async e=>{
 
@@ -543,220 +551,187 @@ document
       document.querySelector('.checkoutBtn');
 
     const oldText=
-      button.textContent;
+      button?.textContent||'Pay Now';
 
-    button.disabled=true;
-    button.textContent=
-      'Creating secure payment…';
+    if(button){
+      button.disabled=true;
+      button.textContent=
+        'Creating secure order…';
+    }
 
     try{
 
-      if(!window.supabaseClient){
-        throw new Error(
-          'Supabase is not loaded. Please refresh the page.'
+      /* Create order + items in Cloudflare D1 */
+
+      const dbOrder=
+        await callOrdersApi(
+          '/orders',
+          {
+            order_number:
+              orderNumber,
+
+            customer_name:
+              name,
+
+            mobile:
+              phone,
+
+            address:
+              `${address}\nPincode: ${pincode}`,
+
+            pincode:
+              pincode,
+
+            subtotal:
+              subtotal,
+
+            delivery_charge:
+              deliveryCharge,
+
+            total:
+              total,
+
+            items:
+              cart.map(i=>{
+                const p=
+                  configuredProducts.find(
+                    x=>x.id===i.id
+                  );
+
+                return {
+                  product_id:
+                    i.id,
+
+                  product_name:
+                    p.name,
+
+                  weight_g:
+                    i.weight,
+
+                  quantity:
+                    i.qty,
+
+                  unit_price:
+                    priceFor(p,i.weight),
+
+                  line_total:
+                    priceFor(p,i.weight)*i.qty
+                };
+              })
+          }
         );
-      }
 
-      /*
-       * IMPORTANT:
-       * This matches the actual orders table:
-       * order_number
-       * customer_name
-       * mobile
-       * address
-       * pincode
-       * delivery_charge
-       * total
-       * payment_status
-       * order_status
-       */
-
-      const {data:dbOrder,error:orderError}=
-        await window.supabaseClient
-        .from('orders')
-        .insert({
-
-          order_number:orderNumber,
-
-          customer_name:name,
-
-          mobile:phone,
-
-          address:
-            `${address}\nPincode: ${pincode}`,
-
-          pincode:
-            pincode,
-
-          subtotal:
-            subtotal,
-
-          delivery_charge:
-            deliveryCharge,
-
-          total:
-            total,
-
-          payment_status:
-            'pending',
-
-          order_status:
-            'new'
-
-        })
-        .select()
-        .single();
-
-      if(orderError||!dbOrder){
-
+      if(!dbOrder?.order_id){
         throw new Error(
-          orderError?.message||
           'Could not create order.'
         );
       }
 
-      /*
-       * Save order items
-       */
+      if(button)
+        button.textContent='Opening Razorpay…';
 
-      for(const i of cart){
-
-        const p=
-          configuredProducts.find(
-            x=>x.id===i.id
-          );
-
-        const {error:itemError}=
-          await window.supabaseClient
-          .from('order_items')
-          .insert({
-
-            order_id:
-              dbOrder.id,
-
-            product_name:
-              p.name,
-
-            quantity:
-              i.qty,
-
-            unit_price:
-              priceFor(p,i.weight),
-
-          });
-
-        if(itemError){
-
-          throw new Error(
-            itemError.message||
-            'Could not save order items.'
-          );
-        }
-      }
-
-      button.textContent=
-        'Opening Razorpay…';
-
-      /*
-       * Create Razorpay order
-       */
+      /* Create Razorpay order */
 
       const paymentOrder=
-        await callRazorpayFunction({
-
-          action:'create',
-
-          order_id:
-            dbOrder.id
-
-        });
+        await callOrdersApi(
+          '/payments/create',
+          {
+            order_id:
+              dbOrder.order_id
+          }
+        );
 
       if(
         Number(paymentOrder.amount)!==
         Math.round(total*100)
       ){
-
         throw new Error(
           'Payment amount mismatch. Order was not sent for payment.'
         );
       }
 
-      /*
-       * Open Razorpay
-       */
+      /* Open Razorpay */
 
       const paymentResponse=
         await openRazorpayCheckout(
-
           {
-            orderId:dbOrder.id,
+            orderId:
+              dbOrder.order_id,
+
             orderNumber,
+
             name,
+
             phone,
+
             email,
+
             address,
+
             pincode,
+
             items:cart,
+
             subtotal,
+
             deliveryCharge,
+
             total
           },
-
           paymentOrder
-
         );
 
-      button.textContent=
-        'Verifying payment…';
+      if(button)
+        button.textContent='Verifying payment…';
 
-      /*
-       * Verify payment on server
-       */
+      /* Verify Razorpay payment */
 
       const verified=
-        await callRazorpayFunction({
+        await callOrdersApi(
+          '/payments/verify',
+          {
+            order_id:
+              dbOrder.order_id,
 
-          action:'verify',
+            razorpay_order_id:
+              paymentResponse.razorpay_order_id,
 
-          order_id:
-            dbOrder.id,
+            razorpay_payment_id:
+              paymentResponse.razorpay_payment_id,
 
-          razorpay_order_id:
-            paymentResponse.razorpay_order_id,
-
-          razorpay_payment_id:
-            paymentResponse.razorpay_payment_id,
-
-          razorpay_signature:
-            paymentResponse.razorpay_signature
-
-        });
+            razorpay_signature:
+              paymentResponse.razorpay_signature
+          }
+        );
 
       if(!verified.paid){
-
         throw new Error(
           'Payment could not be verified.'
         );
       }
 
-      /*
-       * Create Delhivery shipment AFTER verified payment
-       */
+      /* Create Delhivery shipment only after payment */
 
-      button.textContent=
-        'Creating Delhivery shipment…';
+      if(button)
+        button.textContent=
+          'Creating Delhivery shipment…';
 
       const shipmentResponse=
         await fetch(
           `${DELHIVERY_API}/create-shipment`,
           {
             method:'POST',
+
             headers:{
               'Content-Type':'application/json'
             },
+
             body:JSON.stringify({
-              orderId:dbOrder.id,
-              weight:cartWeightGrams()
+              orderId:
+                dbOrder.order_id,
+
+              weight:
+                cartWeightGrams()
             })
           }
         );
@@ -776,15 +751,10 @@ document
         );
       }
 
-      console.log(
-        'Delhivery AWB:',
-        shipmentData.awb
-      );
-
       const paidOrder={
 
         orderId:
-          dbOrder.id,
+          dbOrder.order_id,
 
         orderNumber,
 
@@ -806,12 +776,13 @@ document
             );
 
           return {
+            id:i.id,
             name:p?.name||i.id,
             weight:i.weight,
             qty:i.qty,
-            amount:priceFor(p,i.weight)*i.qty
+            amount:
+              priceFor(p,i.weight)*i.qty
           };
-
         }),
 
         subtotal,
@@ -825,7 +796,6 @@ document
 
         awb:
           shipmentData.awb
-
       };
 
       localStorage.setItem(
@@ -845,11 +815,6 @@ document
         .reset();
 
       closeDrawer();
-
-      /*
-       * Direct same-tab receipt page.
-       * receipt.html reads the saved order from localStorage.
-       */
 
       window.location.href='receipt.html';
 
@@ -871,9 +836,10 @@ document
 
       checkoutBusy=false;
 
-      button.disabled=false;
-
-      button.textContent=oldText;
+      if(button){
+        button.disabled=false;
+        button.textContent=oldText;
+      }
     }
   }
 );
