@@ -8,8 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=44">
+<link rel="stylesheet" href="styles.css?v=101">
 <style>
+html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: auto !important; }
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
 .benefit{display:flex;align-items:center;gap:16px;min-width:0}
 .benefitIcon{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#f7e7e8;display:grid;place-items:center;font-size:23px;color:#260b0b}
@@ -47,16 +48,47 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 .vegNotice{display:inline-flex;align-items:center;gap:6px;color:#16803c;font-weight:700}
 .vegSymbol{display:inline-block;width:14px;height:14px;border:1.5px solid #16803c;position:relative;flex:0 0 14px;box-sizing:border-box}
 .vegSymbol::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#16803c;left:2px;top:2px}
+
+/* App Install Top Notification */
+#pwaBanner {
+  display: flex;
+  background: #7b3f18;
+  color: #fff;
+  padding: 8px 16px;
+  font-size: 13px;
+  justify-content: space-between;
+  align-items: center;
+}
+#pwaBanner button {
+  background: #e5b64b;
+  color: #260b0b;
+  border: none;
+  padding: 4px 10px;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+}
 </style>
 </head>
 <body>
+<div id="pwaBanner">
+  <span>🍪 Add Srivari Cookies to Home Screen for fast ordering!</span>
+  <button onclick="promptPwaInstall()">Install App</button>
+</div>
 <div class="topbar">
 <span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
 <span>🌿 Freshly baked treats</span><span>💛 Premium ingredients</span><span>🚚 Home delivery across India</span><span>🎁 Perfect for gifting</span>
 </div>
 <header class="nav">
 <a class="brand" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo"><div><b>SRIVARI COOKIES</b><small>PURE • FRESH • DELICIOUS</small></div></a>
-<nav><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#why">Why Us</a><a href="#contact">Contact</a></nav>
+<nav>
+  <a href="#home">Home</a>
+  <a href="#shop">Shop</a>
+  <a href="#about">About</a>
+  <a href="#why">Why Us</a>
+  <a href="#contact">Contact</a>
+  <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#d49d28;font-weight:bold;">📦 My Orders</a>
+</nav>
 <button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button><a class="orderBtn" href="#shop">Order Now</a>
 </header>
 <section class="hero" id="home">
@@ -70,4 +102,76 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 <a href="#contact"><b>🚚</b><span><strong>Home Delivery</strong><small>Easy & reliable →</small></span></a>
 </section>
 <section class="collection" id="shop"><div class="sectionHead"><div><p class="eyebrow">OUR COLLECTION</p><h2>Cookies worth craving</h2><p>Choose your flavour and pack size.</p></div><span>Freshly baked for every order →</span></div><div class="grid" id="productGrid"></div></section>
-<section class="about" id="about"><div><p class="eyebrow">OUR PRO
+<section class="about" id="about"><div><p class="eyebrow">OUR PROMISE</p><h2>Made with devotion, baked for your moments.</h2><p>Every batch is prepared with care so you can enjoy a warm, comforting cookie experience at home.</p></div><div class="promise" id="why"><span>🌿<b>Freshly Baked</b><small>Made in small batches</small></span><span>❤️<b>Quality Ingredients</b><small>No artificial flavours</small></span><span>🎁<b>Perfect for Gifting</b><small>Birthdays, festivals & more</small></span><span>🚚<b>Home Delivery</b><small>Pan India delivery</small></span></div></section>
+<section class="benefits" aria-label="Our benefits">
+<div class="benefit"><span class="benefitIcon">◷</span><span><b>Baked to Order</b><small>Never off a shelf</small></span></div>
+<div class="benefit"><span class="benefitIcon">❋</span><span><b>Real Ingredients</b><small>Butter, chocolate & dry fruits</small></span></div>
+<div class="benefit"><span class="benefitIcon">♧</span><span><b>FSSAI Registered</b><small>Lic. 23626028006050</small></span></div>
+<div class="benefit"><span class="benefitIcon">♧</span><span><b>Pan-India Delivery</b><small>Home delivery across India</small></span></div>
+</section>
+<footer id="contact">
+<div class="footerBrand"><a class="footerLogo" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES"><b>SRIVARI COOKIES</b></a><p>Small-batch cookies and brownies, freshly baked with care using quality ingredients. Made with love, baked for you.</p><div class="socialLinks"><a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><span class="whatsappMark" aria-hidden="true">◔</span></a></div></div>
+<div class="footerColumn"><h4>SHOP</h4><a href="#shop">Cookies</a><a href="#shop">Brownies</a><a href="#shop">Gift Packs</a><a href="#shop">Bestsellers</a></div>
+<div class="footerColumn"><h4>HELP</h4><a href="#contact">Shipping & Delivery</a><a href="#contact">Returns</a><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></div>
+<div class="footerColumn footerContact"><h4>CONTACT</h4><p>HNO 8-6-3/1/A/2</p><p>Rajendranagar, Rangareddy</p><p>Telangana – 500077, India</p><a href="tel:+917989816250">+91 79898 16250</a><a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a><small>FSSAI Lic. 23626028006050</small></div>
+<div class="copy">© 2026 SRIVARI COOKIES. All rights reserved.</div>
+</footer>
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+<div class="drawerHead"><h2>Your Cart</h2><button id="closeCart" aria-label="Close cart">×</button></div><div id="cartItems"></div>
+<div class="summary"><div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div><div><span>Delivery</span><b id="cartDelivery">—</b></div><div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div></div>
+<p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
+<form id="checkout">
+<label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
+<label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
+<label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
+<label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
+<label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
+<button class="primary checkoutBtn" type="submit">Pay Securely →</button>
+</form></aside>
+<div class="shade" id="shade"></div>
+
+<!-- Customer My Orders Modal -->
+<div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.25);max-height:85vh;display:flex;flex-direction:column;border:1px solid #ebdcd0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3 style="margin:0;color:#5a2e10;font-size:1.15rem;">📦 Past Orders & Tracking</h3>
+      <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;line-height:1;">✕</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:9px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
+    </div>
+    <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
+      <div style="text-align:center;padding:20px;color:#888;font-size:13px;">Enter your mobile number to view past orders and Delhivery tracking.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="app.js?v=101"></script>
+
+<script>
+  let defPrompt=null;
+  window.addEventListener('beforeinstallprompt',(e)=>{
+    e.preventDefault(); defPrompt=e;
+  });
+  function promptPwaInstall(){
+    if(defPrompt){
+      defPrompt.prompt();
+      defPrompt=null;
+    } else {
+      alert("To install, tap your browser's menu (⋮ or Share) and select 'Add to Home Screen'!");
+    }
+  }
+  // Clear stuck scroll states
+  window.addEventListener('load', () => {
+    document.body.classList.remove('noScroll');
+    document.getElementById('shade')?.classList.remove('open');
+    document.getElementById('drawer')?.classList.remove('open');
+  });
+</script>
+</body>
+</html>
