@@ -1,5 +1,5 @@
 const products=[
-  {id:'almond',name:'Almond Cashew Cookies (Test ₹1)',price200:1,price400:1,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'TEST ITEM'},
+  {id:'almond',name:'Almond Cashew Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'CHEF SPECIAL'},
   {id:'butter',name:'Butter Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
   {id:'chip',name:'Classic Choco Chip Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/classic-chip.jpg',badge:'POPULAR'},
   {id:'coconut',name:'Coconut Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
@@ -434,7 +434,6 @@ function openRazorpayCheckout(orderInfo, rzpOrderData){
         color:'#7b3f18'
       },
       handler: function(response){
-        // Close modal explicitly so it doesn't get stuck
         if (rzpInstance && typeof rzpInstance.close === 'function') {
           try { rzpInstance.close(); } catch(e){}
         }
@@ -495,9 +494,9 @@ document
     const ready=await calculateDelivery();
     if(!ready)return;
 
-    // Test Purpose: Amount ₹1
+    // Real Commercial Calculation: Subtotal + Delivery
     const subtotal=cartSubtotal();
-    const total=1;
+    const total=Math.round(subtotal + (deliveryCharge || 0));
 
     checkoutBusy=true;
 
