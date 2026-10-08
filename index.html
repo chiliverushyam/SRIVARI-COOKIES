@@ -3,120 +3,239 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
-<meta name="description" content="SRIVARI COOKIES — homemade premium cookies, freshly baked under 35+ years of industrial baking mentorship.">
+<title>SRIVARI COOKIES | Artisanal Confectionery • Pure • Fresh • Delicious</title>
+<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship.">
 <link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7b3f18">
+<meta name="theme-color" content="#5a2e10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=801">
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css?v=901">
 <style>
-html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: smooth !important; background: #faf5ef; margin: 0; padding: 0; }
+:root {
+  --royal-gold: #c59b27;
+  --gold-glow: rgba(197, 155, 39, 0.22);
+  --deep-forest: #04261f;
+  --warm-chocolate: #48230b;
+  --parchment: #faf6f0;
+  --cream-card: #ffffff;
+}
 
+html, body {
+  overflow-y: auto !important;
+  height: auto !important;
+  scroll-behavior: smooth !important;
+  background: var(--parchment);
+  color: #2b221d;
+  font-family: 'Plus Jakarta Sans', -apple-system, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* TOP STATUS BAR */
 .topbar {
-  background: #042e27;
-  color: #f1dfbf;
-  padding: 8px 16px;
+  background: linear-gradient(90deg, #021a15 0%, #05332b 50%, #021a15 100%);
+  color: #f7e6c4;
+  padding: 10px 18px;
   font-size: 13px;
+  letter-spacing: 0.4px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 18px;
+  gap: 24px;
   flex-wrap: wrap;
-  border-bottom: 1px solid rgba(212, 157, 40, 0.3);
+  border-bottom: 1.5px solid rgba(197, 155, 39, 0.4);
+  box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+}
+.topbar span { display: inline-flex; align-items: center; gap: 8px; font-weight: 500; }
+.topbar b.gold-text { color: #f3cf7a; letter-spacing: 0.6px; font-weight: 700; }
+
+/* LUXURY HEADER */
+header.nav {
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid #ebdcd0;
+  box-shadow: 0 4px 25px rgba(72, 35, 11, 0.05);
+}
+.brand img {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 2px solid var(--royal-gold);
+  box-shadow: 0 2px 8px var(--gold-glow);
+}
+.brand b {
+  font-family: 'Cinzel', serif;
+  font-size: 1.15rem;
+  letter-spacing: 1.5px;
+  color: var(--warm-chocolate);
+}
+.brand small {
+  font-size: 10px;
+  letter-spacing: 2px;
+  color: var(--royal-gold);
+  font-weight: 700;
 }
 
+/* 35+ YEARS ROYAL MENTORSHIP EMBLEM CARD */
 .master-mentorship-wrap {
-  padding: 24px 8% 10px;
-  background: #faf5ef;
+  padding: 24px 8% 8px;
+  background: var(--parchment);
 }
 .master-card {
-  max-width: 980px;
+  max-width: 960px;
   margin: 0 auto;
-  background: #ffffff;
-  border: 1.5px solid #d49d28;
-  border-radius: 14px;
-  padding: 20px 24px;
-  box-shadow: 0 6px 20px rgba(90, 46, 16, 0.06);
+  background: radial-gradient(circle at top right, #fffbf5 0%, #ffffff 100%);
+  border: 1.5px solid var(--royal-gold);
+  border-radius: 18px;
+  padding: 26px 32px;
+  box-shadow: 0 12px 36px rgba(72, 35, 11, 0.07), 0 0 0 1px rgba(197, 155, 39, 0.15);
   display: flex;
   align-items: center;
-  gap: 20px;
+  gap: 26px;
+  position: relative;
+  overflow: hidden;
+}
+.master-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 5px;
+  height: 100%;
+  background: linear-gradient(180deg, #d49d28 0%, #875c06 100%);
 }
 .master-emblem {
-  font-size: 36px;
-  flex: 0 0 50px;
-  text-align: center;
+  width: 76px;
+  height: 76px;
+  flex: 0 0 76px;
+  background: linear-gradient(135deg, #fcedcd 0%, #ebd39f 100%);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 38px;
+  border: 2px solid var(--royal-gold);
+  box-shadow: 0 4px 16px var(--gold-glow);
+}
+.master-pill {
+  display: inline-block;
+  background: #04261f;
+  color: #eeddbb;
+  font-size: 10.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  padding: 4px 12px;
+  border-radius: 30px;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  border: 1px solid rgba(197, 155, 39, 0.5);
 }
 .master-text h3 {
   margin: 0 0 6px;
   font-family: 'Playfair Display', serif;
-  font-size: 1.25rem;
-  color: #4a2107;
+  font-size: 1.35rem;
+  color: var(--warm-chocolate);
+  letter-spacing: -0.2px;
 }
 .master-text p {
   margin: 0;
-  color: #554133;
-  font-size: 0.93rem;
-  line-height: 1.6;
+  color: #4f3b2d;
+  font-size: 0.94rem;
+  line-height: 1.65;
 }
 
-/* FIX FOOTER GIANT LOGO BUG */
+/* QUICK SHORTCUT STRIP */
+.shortcuts {
+  padding: 16px 8%;
+  gap: 16px;
+}
+.shortcuts a {
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.03);
+  transition: all 0.25s ease;
+}
+.shortcuts a:hover {
+  border-color: var(--royal-gold);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 18px rgba(197, 155, 39, 0.12);
+}
+
+/* SECTION HEADINGS */
+.sectionHead h2, .about h2 {
+  font-family: 'Playfair Display', serif;
+  color: var(--warm-chocolate);
+  font-size: 2.1rem;
+}
+.eyebrow {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 2px;
+  color: var(--royal-gold);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+/* FOOTER GUARANTEE - LOGO BUG FIXED */
 footer#contact {
-  background: #042e27;
+  background: var(--deep-forest);
   color: #fff;
-  padding: 44px 8% 22px;
+  padding: 50px 8% 24px;
   display: grid;
   grid-template-columns: 1.4fr .85fr .95fr 1.1fr;
-  gap: 32px;
+  gap: 34px;
   align-items: start;
+  border-top: 2px solid var(--royal-gold);
 }
-.footerBrand { max-width: 300px; }
-.footerLogo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; margin-bottom: 14px; }
-.footerLogo img { width: 50px !important; height: 50px !important; max-width: 50px !important; max-height: 50px !important; border-radius: 50%; object-fit: cover; }
-.footerLogo b { font-family: 'Playfair Display', serif; font-size: 18px; }
-.footerBrand p, .footerColumn a, .footerColumn p { color: #d1ddd8; font-size: 13.5px; line-height: 1.6; text-decoration: none; }
-
-.benefits {
-  display: grid;
-  grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 20px;
-  padding: 30px 8%;
-  background: #fff;
-  border-top: 1px solid #ebdcd0;
-  border-bottom: 1px solid #ebdcd0;
+.footerBrand { max-width: 310px; }
+.footerLogo {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  color: #fff;
+  text-decoration: none;
+  margin-bottom: 14px;
 }
-.benefit { display:flex; align-items:center; gap:14px; min-width:0; }
-.benefitIcon {
-  width: 50px;
-  height: 50px;
-  flex: 0 0 50px;
+.footerLogo img {
+  width: 50px !important;
+  height: 50px !important;
+  max-width: 50px !important;
+  max-height: 50px !important;
   border-radius: 50%;
-  background: #fbf3e8;
-  border: 1px solid #e7cca8;
-  display: grid;
-  place-items: center;
-  font-size: 20px;
-  color: #5a2e10;
+  object-fit: cover;
+  border: 1.5px solid var(--royal-gold);
 }
-.benefit b { font-size: 14.5px; font-weight: 700; color: #3d1c08; display: block; }
-.benefit small { color: #6d5b50; font-size: 13px; display: block; }
+.footerLogo b {
+  font-family: 'Cinzel', serif;
+  font-size: 19px;
+  letter-spacing: 1px;
+  color: #f7e6c4;
+}
+.footerBrand p, .footerColumn a, .footerColumn p {
+  color: #d1ddd8;
+  font-size: 13.5px;
+  line-height: 1.65;
+}
+.footerColumn h4 {
+  font-family: 'Cinzel', serif;
+  letter-spacing: 1px;
+  color: #f7cf7a;
+}
 
 @media(max-width:768px){
-  .master-card { flex-direction: column; text-align: center; }
-  .benefits { grid-template-columns: 1fr 1fr; }
-  footer#contact { grid-template-columns: 1fr; }
-  .footerBrand, .footerContact, footer#contact .copy { grid-column: 1/-1; }
+  .master-card { flex-direction: column; text-align: center; padding: 22px 18px; }
+  .master-card::after { width: 100%; height: 5px; }
+  .footerLogo img { width: 46px !important; height: 46px !important; }
 }
 </style>
 </head>
 <body>
 
 <div class="topbar">
-  <span><b style="color: #f7d28b;">🎖️ Guided by 35+ Years Baking Industry Expertise</b></span>
-  <span style="color:#4ade80;font-weight:bold;">● 100% Vegetarian</span>
-  <span>🌿 Freshly Baked Treats</span>
-  <span>🚚 Pan-India Express Delivery</span>
+  <span><b class="gold-text">🎖️ 35+ Years Master Confectionery Mentorship</b></span>
+  <span style="color:#52e185;font-weight:bold;">● 100% Pure Vegetarian</span>
+  <span>🌿 Small Batch Fresh Oven Baking</span>
+  <span>🚚 Express Pan-India Delivery</span>
 </div>
 
 <header class="nav">
@@ -124,7 +243,7 @@ footer#contact {
     <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo">
     <div>
       <b>SRIVARI COOKIES</b>
-      <small style="color:#b5801e;">PURE • FRESH • DELICIOUS</small>
+      <small>PURE • FRESH • DELICIOUS</small>
     </div>
   </a>
   <nav>
@@ -133,7 +252,7 @@ footer#contact {
     <a href="#about">Our Story</a>
     <a href="#why">Why Us</a>
     <a href="#contact">Contact</a>
-    <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#d49d28;font-weight:bold;">📦 My Orders</a>
+    <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#c59b27;font-weight:bold;">📦 My Orders</a>
   </nav>
   <button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
   <a class="orderBtn" href="#shop">Order Now</a>
@@ -141,34 +260,34 @@ footer#contact {
 
 <section class="hero" id="home">
   <div class="heroCopy">
-    <p class="eyebrow">HOMEMADE • PREMIUM • MADE WITH DEVOTION</p>
+    <p class="eyebrow">GOURMET HOMEMADE COOKIES</p>
     <h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1>
-    <p>Handcrafted gourmet cookies baked in small batches for celebrations, gifting, and everyday cravings.</p>
+    <p>Handcrafted artisan cookies baked in small batches with genuine butter, roasted nuts, and heritage craftsmanship.</p>
     <div class="heroActions">
       <a class="primary" href="#shop">Shop Gourmet Cookies →</a>
       <a class="secondary" href="#about">Our Heritage</a>
     </div>
     <div class="trust">
-      <span>🌿 Freshly Baked</span>
-      <span>❤️ Quality Butter & Nuts</span>
-      <span>✨ 35+ Yrs Baking Mentorship</span>
+      <span>🌿 100% Vegetarian</span>
+      <span>🧈 Pure Premium Butter</span>
+      <span>👑 35+ Yrs Industry Guidance</span>
     </div>
   </div>
   <div class="heroVisual">
-    <img src="assets/hero-cookie.jpg" alt="Freshly baked chocolate chip cookies">
-    <div class="seal">Artisanal<br><b>Premium</b><br>Perfection</div>
+    <img src="assets/hero-cookie.jpg" alt="Freshly baked artisanal cookies">
+    <div class="seal">Artisanal<br><b>Premium</b><br>Heritage</div>
   </div>
 </section>
 
-<!-- MASTER ADVISOR SHOWCASE STRIP -->
+<!-- MASTER CONFECTIONERY SHOWCASE CARD -->
 <div class="master-mentorship-wrap">
   <div class="master-card">
     <div class="master-emblem">👨‍🍳</div>
     <div class="master-text">
-      <span style="display:inline-block;background:#075e45;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px;">PROFESSIONAL HERITAGE</span>
-      <h3>Guided by 35+ Years of Confectionery Mastery</h3>
+      <span class="master-pill">Industrial Excellence</span>
+      <h3>Guided by 35+ Years of Baking Industry Mastery</h3>
       <p>
-        Every single recipe at <b>SRIVARI COOKIES</b> is curated and perfected under the hands-on mentorship of an industry veteran with over <b>35 years of commercial baking expertise</b>.
+        Every cookie recipe at <b>SRIVARI</b> is perfected under the direct mentorship of a seasoned confectionery veteran with over <b>35 years of commercial industrial baking expertise</b>. From precise baking temperatures to our golden butter crumbles, we bring master-class bakery finesse straight to your doorstep.
       </p>
     </div>
   </div>
@@ -181,7 +300,7 @@ footer#contact {
   <a href="#contact"><b>🚚</b><span><strong>Pan-India Delivery</strong><small>Safe & sealed packaging →</small></span></a>
 </section>
 
-<!-- COLLECTION SECTION -->
+<!-- PRODUCT SELECTION GRID -->
 <section class="collection" id="shop">
   <div class="sectionHead">
     <div>
@@ -215,30 +334,36 @@ footer#contact {
   <div class="benefit"><span class="benefitIcon">🚚</span><span><b>Pan-India Shipping</b><small>Tracked express delivery</small></span></div>
 </section>
 
+<!-- FOOTER WITH SECURE LOGO CONSTRAINTS -->
 <footer id="contact">
   <div class="footerBrand">
     <a class="footerLogo" href="#home">
       <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES">
       <b>SRIVARI COOKIES</b>
     </a>
-    <p>Small-batch cookies and brownies, freshly baked with care using quality ingredients.</p>
+    <p>Gourmet artisanal cookies and brownies, handcrafted with devotion and guided by over 35 years of confectionery mastery.</p>
+    <div class="socialLinks">
+      <a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+        <span class="whatsappMark" aria-hidden="true">◔</span>
+      </a>
+    </div>
   </div>
   <div class="footerColumn">
-    <h4>SHOP</h4>
-    <a href="#shop">Cookies</a>
-    <a href="#shop">Brownies</a>
-    <a href="#shop">Gift Packs</a>
+    <h4>COLLECTIONS</h4>
+    <a href="#shop">Almond Cashew</a>
+    <a href="#shop">Double Chocolate</a>
+    <a href="#shop">Dry Fruit Special</a>
     <a href="#shop">Bestsellers</a>
   </div>
   <div class="footerColumn">
-    <h4>HELP</h4>
+    <h4>SUPPORT</h4>
     <a href="#contact">Shipping & Delivery</a>
-    <a href="#contact">Returns</a>
+    <a href="#contact">Refund Policy</a>
     <a href="#contact">Privacy Policy</a>
-    <a href="#contact">Terms of Service</a>
+    <a href="#contact">Terms & Conditions</a>
   </div>
   <div class="footerColumn footerContact">
-    <h4>CONTACT</h4>
+    <h4>BAKERY & CONTACT</h4>
     <p>HNO 8-6-3/1/A/2</p>
     <p>Rajendranagar, Rangareddy</p>
     <p>Telangana – 500077, India</p>
@@ -246,46 +371,46 @@ footer#contact {
     <a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a>
     <small>FSSAI Lic. 23626028006050</small>
   </div>
-  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 16px; text-align: center; font-size: 12px; color: #d7e0dc;">
-    © 2026 SRIVARI COOKIES. All rights reserved.
+  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 18px; text-align: center; font-size: 12px; color: #a4beba;">
+    © 2026 SRIVARI COOKIES. All rights reserved. Handcrafted with devotion.
   </div>
 </footer>
 
 <aside class="drawer" id="drawer" aria-label="Shopping cart">
   <div class="drawerHead">
-    <h2>Your Cart</h2>
+    <h2>Your Gourmet Cart</h2>
     <button id="closeCart" aria-label="Close cart">×</button>
   </div>
   <div id="cartItems"></div>
   <div class="summary">
     <div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div>
-    <div><span>Delivery</span><b id="cartDelivery">—</b></div>
-    <div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div>
+    <div><span>Delivery (Delhivery)</span><b id="cartDelivery">—</b></div>
+    <div class="grand"><span>Total to Pay</span><b id="cartTotal">₹0</b></div>
   </div>
-  <p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
+  <p class="deliveryNote" id="deliveryNote">Enter your 6-digit pincode to calculate delivery charge.</p>
   <form id="checkout">
-    <label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
-    <label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
-    <label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
-    <label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
-    <label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
-    <button class="primary checkoutBtn" type="submit">Pay Securely →</button>
+    <label>Full Name <i>*</i><input id="cname" required placeholder="Enter customer name"></label>
+    <label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter 10-digit mobile number"></label>
+    <label>Email <span>(optional)</span><input id="email" type="email" placeholder="For instant invoice copy"></label>
+    <label>Complete Delivery Address <i>*</i><textarea id="address" required placeholder="House/Flat No, Street, Landmark, Area"></textarea></label>
+    <label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit postal code"></label>
+    <button class="primary checkoutBtn" type="submit">Pay Securely via Razorpay →</button>
   </form>
 </aside>
 <div class="shade" id="shade"></div>
 
-<div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
-  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.25);max-height:85vh;display:flex;flex-direction:column;border:1px solid #ebdcd0;">
+<div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:16px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,0.3);max-height:85vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <h3 style="margin:0;color:#5a2e10;font-size:1.15rem;">📦 Past Orders & Tracking</h3>
+      <h3 style="margin:0;color:#5a2e10;font-size:1.2rem;font-family:'Playfair Display',serif;">📦 Track Past Orders</h3>
       <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;">✕</button>
     </div>
     <div style="display:flex;gap:8px;margin-bottom:14px;">
-      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:9px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
-      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
+      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
     </div>
     <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
-      <div style="text-align:center;padding:20px;color:#888;font-size:13px;">Enter your mobile number to view past orders and Delhivery tracking.</div>
+      <div style="text-align:center;padding:20px;color:#888;font-size:13.5px;">Enter your phone number to view tracking and Delhivery dispatch status.</div>
     </div>
   </div>
 </div>
@@ -294,9 +419,9 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="config.js"></script>
 <script src="supabase-client.js"></script>
-<script src="app.js?v=801"></script>
+<script src="app.js?v=901"></script>
 
-<!-- DIRECT INSTANT RENDER GUARD -->
+<!-- BULLETPROOF DIRECT RENDER -->
 <script>
   window.addEventListener('DOMContentLoaded', () => {
     document.body.classList.remove('noScroll');
