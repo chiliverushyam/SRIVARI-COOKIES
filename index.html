@@ -10,20 +10,21 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=1002">
+<link rel="stylesheet" href="styles.css?v=2001">
 <style>
 * { box-sizing: border-box; }
 html, body {
   overflow-x: hidden !important;
   overflow-y: auto !important;
-  background: #faf6f0;
-  color: #2b221d;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  margin: 0;
-  padding: 0;
+  height: auto !important;
+  min-height: 100vh !important;
+  background: #faf6f0 !important;
+  color: #2b221d !important;
+  font-family: 'Plus Jakarta Sans', sans-serif !important;
+  margin: 0 !important;
+  padding: 0 !important;
 }
 
-/* TOPBAR */
 .topbar {
   background: #04261f;
   color: #f7e6c4;
@@ -38,189 +39,227 @@ html, body {
   border-bottom: 1.5px solid #c59b27;
 }
 
-/* 35+ YEARS MENTOR CARD */
+header.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 6%;
+  background: #ffffff;
+  border-bottom: 1px solid #ebdcd0;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+}
+.brand img {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.brand b {
+  color: #48230b;
+  font-size: 1.15rem;
+  display: block;
+}
+.brand small {
+  color: #c59b27;
+  font-size: 10px;
+  letter-spacing: 1px;
+}
+
+nav a {
+  color: #48230b;
+  text-decoration: none;
+  font-weight: 600;
+  margin: 0 10px;
+  font-size: 14px;
+}
+
+.cartBtn, .orderBtn {
+  background: #075e45;
+  color: #fff;
+  border: none;
+  padding: 8px 18px;
+  border-radius: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hero {
+  padding: 40px 6%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 30px;
+  background: #faf6f0;
+}
+.heroCopy h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  color: #48230b;
+  margin: 10px 0;
+}
+
 .master-mentorship-wrap {
-  padding: 16px 5%;
+  padding: 20px 6%;
   background: #faf6f0;
 }
 .master-card {
-  max-width: 900px;
-  margin: 0 auto;
   background: #ffffff;
   border: 1.5px solid #c59b27;
   border-radius: 14px;
-  padding: 18px 20px;
+  padding: 20px;
   display: flex;
   align-items: center;
-  gap: 18px;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.04);
-}
-.master-emblem {
-  font-size: 34px;
-  flex: 0 0 50px;
-  text-align: center;
-}
-.master-text h3 {
-  margin: 0 0 4px;
-  font-family: 'Playfair Display', serif;
-  font-size: 1.15rem;
-  color: #48230b;
-}
-.master-text p {
-  margin: 0;
-  color: #554133;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  gap: 20px;
 }
 
-/* BENEFITS SECTION */
+.collection {
+  padding: 40px 6%;
+  display: block !important;
+  visibility: visible !important;
+}
+.sectionHead h2 {
+  font-family: 'Playfair Display', serif;
+  color: #48230b;
+  font-size: 2rem;
+  margin-bottom: 6px;
+}
+
+.grid {
+  display: grid !important;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
+  gap: 24px !important;
+  margin-top: 24px !important;
+  visibility: visible !important;
+}
+
+.card {
+  background: #ffffff;
+  border: 1px solid #ebdcd0;
+  border-radius: 14px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+.card .photo {
+  position: relative;
+  width: 100%;
+  height: 200px;
+}
+.card .photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.card .info {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+}
+.card h3 {
+  margin: 0 0 10px;
+  font-size: 1.1rem;
+  color: #48230b;
+}
+
+.weightChoices {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.weightBtn {
+  flex: 1;
+  padding: 6px 0;
+  border: 1px solid #d49d28;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.weightBtn.active {
+  background: #7b3f18;
+  color: #fff;
+}
+
+button.add {
+  background: #7b3f18;
+  color: #fff;
+  border: none;
+  padding: 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: auto;
+}
+
 .benefits {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
   gap: 14px !important;
-  padding: 24px 5% !important;
+  padding: 30px 6% !important;
   background: #ffffff !important;
-  border-top: 1px solid #ebdcd0 !important;
-  border-bottom: 1px solid #ebdcd0 !important;
 }
 .benefit {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  background: #fbf8f4 !important;
-  padding: 12px 14px !important;
-  border-radius: 10px !important;
-  border: 1px solid #f0e2d5 !important;
-}
-.benefitIcon {
-  width: 42px !important;
-  height: 42px !important;
-  flex: 0 0 42px !important;
-  border-radius: 50% !important;
-  background: #f3e6d8 !important;
-  display: grid !important;
-  place-items: center !important;
-  font-size: 18px !important;
-  color: #48230b !important;
-}
-.benefit b {
-  font-size: 13.5px !important;
-  display: block !important;
-  color: #3d1c08 !important;
-  line-height: 1.3 !important;
-}
-.benefit small {
-  color: #7a6558 !important;
-  font-size: 12px !important;
-  display: block !important;
-  margin-top: 2px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: #fbf8f4;
+  padding: 12px;
+  border-radius: 10px;
 }
 
-/* FOOTER ARCHITECTURE */
 footer#contact {
   background: #04261f !important;
   color: #fff !important;
-  padding: 50px 8% 24px !important;
+  padding: 40px 6% 20px !important;
   display: grid !important;
-  grid-template-columns: 1.5fr 1fr 1.1fr 1.4fr !important;
-  gap: 36px !important;
-  align-items: start !important;
-  border-top: 2px solid #c59b27 !important;
+  grid-template-columns: 1.5fr 1fr 1fr 1.3fr !important;
+  gap: 30px !important;
 }
-.footerBrand { max-width: 320px; }
 .footerLogo {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  color: #fff !important;
-  text-decoration: none !important;
-  margin-bottom: 14px !important;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  color: #fff;
+  text-decoration: none;
 }
 .footerLogo img {
-  width: 48px !important;
-  height: 48px !important;
-  border-radius: 50% !important;
-  object-fit: cover !important;
-  border: 1.5px solid #c59b27 !important;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
 }
-.footerLogo b {
-  font-family: 'Playfair Display', serif !important;
-  font-size: 18px !important;
-  color: #f7e6c4 !important;
-  letter-spacing: 0.5px;
-}
-.footerBrand p {
-  color: #d1ddd8 !important;
-  font-size: 13.5px !important;
-  line-height: 1.65 !important;
-  margin: 0 0 16px !important;
-}
-
 .wa-badge {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 8px !important;
-  background: #25D366 !important;
-  color: #ffffff !important;
-  padding: 9px 16px !important;
-  border-radius: 24px !important;
-  font-size: 13px !important;
-  font-weight: 700 !important;
-  text-decoration: none !important;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25) !important;
-}
-.wa-badge:hover {
-  background: #20ba5a !important;
-}
-
-.footerColumn h4 {
-  color: #f3cf7a !important;
-  font-size: 14px !important;
-  margin: 0 0 16px !important;
-  letter-spacing: 0.8px;
-  font-weight: 700;
+  display: inline-block;
+  background: #25D366;
+  color: #fff;
+  padding: 8px 16px;
+  border-radius: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  margin-top: 12px;
 }
 .footerColumn ul {
-  list-style: none !important;
-  padding: 0 !important;
-  margin: 0 !important;
-  display: flex !important;
-  flex-direction: column !important;
-  gap: 10px !important;
+  list-style: none;
+  padding: 0;
+  margin: 0;
 }
-.footerColumn ul li a {
-  color: #d1ddd8 !important;
-  font-size: 13.5px !important;
-  text-decoration: none !important;
-  transition: color 0.2s;
-  display: inline-block !important;
-}
-.footerColumn ul li a:hover {
-  color: #f3cf7a !important;
+.footerColumn ul li a, .footerContact p, .footerContact a {
+  color: #d1ddd8;
+  text-decoration: none;
+  font-size: 13px;
+  line-height: 1.8;
 }
 
-.footerContact p {
-  color: #d1ddd8 !important;
-  font-size: 13.5px !important;
-  line-height: 1.6 !important;
-  margin: 0 0 6px !important;
-}
-.footerContact a {
-  color: #f7e6c4 !important;
-  text-decoration: none !important;
-  font-size: 13.5px !important;
-  display: block !important;
-  margin: 4px 0 !important;
-  font-weight: 600;
-}
-
-@media(max-width: 900px) {
-  .benefits { grid-template-columns: 1fr 1fr !important; gap: 10px !important; padding: 18px 4% !important; }
-  footer#contact { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
-}
-@media(max-width: 600px) {
-  footer#contact { grid-template-columns: 1fr !important; gap: 24px !important; }
-  .footerBrand, .footerContact, footer#contact .copy { grid-column: 1 / -1 !important; }
+@media(max-width: 768px) {
+  .hero { flex-direction: column; }
+  .benefits { grid-template-columns: 1fr 1fr !important; }
+  footer#contact { grid-template-columns: 1fr !important; }
 }
 </style>
 </head>
@@ -237,7 +276,7 @@ footer#contact {
     <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo">
     <div>
       <b>SRIVARI COOKIES</b>
-      <small style="color:#c59b27;">PURE • FRESH • DELICIOUS</small>
+      <small>PURE • FRESH • DELICIOUS</small>
     </div>
   </a>
   <nav>
@@ -246,8 +285,87 @@ footer#contact {
     <a href="#about">Our Story</a>
     <a href="#why">Why Us</a>
     <a href="#contact">Contact</a>
-    <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#c59b27;font-weight:bold;">📦 My Orders</a>
   </nav>
-  <button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
+  <button class="cartBtn" id="openCart">🛒 <span id="cartCount">0</span></button>
   <a class="orderBtn" href="#shop">Order Now</a>
-</
+</header>
+
+<section class="hero" id="home">
+  <div class="heroCopy">
+    <p style="color:#c59b27;font-weight:bold;letter-spacing:1px;">HOMEMADE • PREMIUM • ARTISANAL</p>
+    <h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1>
+    <p>Handcrafted gourmet cookies baked in small batches with genuine butter and roasted nuts.</p>
+  </div>
+  <div class="heroVisual">
+    <img src="assets/hero-cookie.jpg" alt="Cookies" style="max-width:320px;border-radius:14px;">
+  </div>
+</section>
+
+<div class="master-mentorship-wrap">
+  <div class="master-card">
+    <div style="font-size:36px;">👨‍🍳</div>
+    <div>
+      <h3 style="margin:0 0 4px;color:#48230b;font-family:'Playfair Display',serif;">Guided by 35+ Years of Industry Mastery</h3>
+      <p style="margin:0;color:#554133;font-size:14px;">Every cookie recipe at SRIVARI is perfected under direct industrial guidance.</p>
+    </div>
+  </div>
+</div>
+
+<section class="collection" id="shop">
+  <div class="sectionHead">
+    <h2>Cookies Worth Craving</h2>
+    <p style="color:#6d5b50;margin:0;">Select your favourite blend, pack size, and crunch.</p>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<section class="benefits">
+  <div class="benefit"><span>◷</span><div><b>Fresh Oven Baking</b><br><small>Baked on order</small></div></div>
+  <div class="benefit"><span>❋</span><div><b>No Preservatives</b><br><small>100% natural</small></div></div>
+  <div class="benefit"><span>♧</span><div><b>FSSAI Certified</b><br><small>Lic. 23626028006050</small></div></div>
+  <div class="benefit"><span>🚚</span><div><b>Pan-India Shipping</b><br><small>Tracked delivery</small></div></div>
+</section>
+
+<footer id="contact">
+  <div>
+    <a class="footerLogo" href="#home">
+      <img src="assets/srivari-logo.jpg" alt="Logo">
+      <b>SRIVARI COOKIES</b>
+    </a>
+    <p style="font-size:13px;color:#d1ddd8;margin:10px 0;">Gourmet artisanal cookies, baked with devotion.</p>
+    <a class="wa-badge" href="https://wa.me/917989816250" target="_blank">Chat on WhatsApp</a>
+  </div>
+  <div class="footerColumn">
+    <h4 style="color:#f3cf7a;margin:0 0 10px;">COLLECTIONS</h4>
+    <ul>
+      <li><a href="#shop">Almond Cashew</a></li>
+      <li><a href="#shop">Double Chocolate</a></li>
+      <li><a href="#shop">Dry Fruit Special</a></li>
+    </ul>
+  </div>
+  <div class="footerColumn">
+    <h4 style="color:#f3cf7a;margin:0 0 10px;">SUPPORT</h4>
+    <ul>
+      <li><a href="#contact">Shipping & Delivery</a></li>
+      <li><a href="#contact">Refund Policy</a></li>
+      <li><a href="#contact">Privacy Policy</a></li>
+    </ul>
+  </div>
+  <div class="footerContact">
+    <h4 style="color:#f3cf7a;margin:0 0 10px;">CONTACT</h4>
+    <p>📍 Rajendranagar, Rangareddy, Telangana – 500077</p>
+    <p><a href="tel:+917989816250">📞 +91 79898 16250</a></p>
+    <p><a href="mailto:chiluverushyam8790@gmail.com">✉️ chiluverushyam8790@gmail.com</a></p>
+  </div>
+</footer>
+
+<script src="app.js?v=2001"></script>
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    if (typeof renderProducts === 'function') {
+      renderProducts();
+    }
+  });
+</script>
+</body>
+</html>
