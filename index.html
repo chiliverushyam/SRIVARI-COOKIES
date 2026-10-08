@@ -5,20 +5,10 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
 <meta name="description" content="SRIVARI COOKIES — homemade premium cookies, freshly baked and made with devotion.">
-
-<!-- Mobile App / PWA Tags -->
-<link rel="manifest" href="manifest.json">
-<meta name="theme-color" content="#7b3f18">
-<meta name="mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Srivari Cookies">
-<link rel="apple-touch-icon" href="assets/srivari-logo.jpg">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=46">
+<link rel="stylesheet" href="styles.css">
 <style>
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
 .benefit{display:flex;align-items:center;gap:16px;min-width:0}
@@ -57,10 +47,23 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 .vegNotice{display:inline-flex;align-items:center;gap:6px;color:#16803c;font-weight:700}
 .vegSymbol{display:inline-block;width:14px;height:14px;border:1.5px solid #16803c;position:relative;flex:0 0 14px;box-sizing:border-box}
 .vegSymbol::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#16803c;left:2px;top:2px}
-
-/* PWA App Install Banner */
-#pwaInstallBanner {
-  display: none;
-  position: fixed;
-  bottom: 20px;
-  left: 16px
+</style>
+</head>
+<body>
+<div class="topbar">
+<span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
+<span>🌿 Freshly baked treats</span><span>💛 Premium ingredients</span><span>🚚 Home delivery across India</span><span>🎁 Perfect for gifting</span>
+</div>
+<header class="nav">
+<a class="brand" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo"><div><b>SRIVARI COOKIES</b><small>PURE • FRESH • DELICIOUS</small></div></a>
+<nav>
+  <a href="#home">Home</a>
+  <a href="#shop">Shop</a>
+  <a href="#about">About</a>
+  <a href="#why">Why Us</a>
+  <a href="#contact">Contact</a>
+  <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#d49d28; font-weight:700;">📦 My Orders</a>
+</nav>
+<button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button><a class="orderBtn" href="#shop">Order Now</a>
+</header>
+<section class="hero
