@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=210">
+<link rel="stylesheet" href="styles.css?v=215">
 <style>
 html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: auto !important; }
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
@@ -153,14 +153,14 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="config.js"></script>
 <script src="supabase-client.js"></script>
-<script src="app.js?v=210"></script>
+<script src="app.js?v=215"></script>
 
 <script>
  let defPrompt = null;
 
- // Register sw.js
  if ('serviceWorker' in navigator) {
-   navigator.serviceWorker.register('sw.js').catch(() => {});
+   navigator.serviceWorker.register('sw.js', { scope: '/' })
+     .catch(() => {});
  }
 
  window.addEventListener('beforeinstallprompt', (e) => {
@@ -177,17 +177,11 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
        if (banner) banner.style.display = 'none';
      }
      defPrompt = null;
-   } else {
-     alert("To install, tap your browser's menu (⋮ or Share) and select 'Add to Home Screen'!");
+     return;
    }
- }
 
- // Clear stuck scroll states
- window.addEventListener('load', () => {
-   document.body.classList.remove('noScroll');
-   document.getElementById('shade')?.classList.remove('open');
-   document.getElementById('drawer')?.classList.remove('open');
- });
-</script>
-</body>
-</html>
+   let guide = document.getElementById('pwaGuide');
+   if (!guide) {
+     guide = document.createElement('div');
+     guide.id = 'pwaGuide';
+     guide.style.cssText = 'position:fixed;bottom:0;left:0;width:100%;background:#ffffff;border-
