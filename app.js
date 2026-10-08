@@ -391,6 +391,85 @@ function openRazorpayCheckout(orderInfo, rzpOrderData) {
 }
 
 /* ================================
+   AUTO-FILL CUSTOMER DETAILS (NO LOGIN)
+================================ */
+function autoFillCustomerDetails() {
+  try {
+    const saved = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
+    if (saved.name && document.getElementById('cname')) document.getElementById('cname').value = saved.name;
+    if (saved.phone && document.getElementById('phone')) document.getElementById('phone').value = saved.phone;
+    if (saved.email && document.getElementById('email')) document.getElementById('email').value = saved.email;
+    if (saved.address && document.getElementById('address')) document.getElementById('address').value = saved.address;
+    if (saved.pincode && document.getElementById('pincode')) {
+      document.getElementById('pincode').value = saved.pincode;
+      if (cart.length > 0) calculateDelivery();
+    }
+  } catch (e) {}
+}
+
+/* ================================
+   TRACK / MY ORDERS POPUP LOGIC
+================================ */
+function openOrdersModal() {
+  const modal = document.getElementById('ordersModal');
+  if (modal) modal.style.display = 'flex';
+  const saved = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
+  const input = document.getElementById('lookupPhone');
+  if (input && saved.phone) {
+    input.value = saved.phone;
+    fetchCustomerOrders();
+  }
+}
+
+function closeOrdersModal() {
+  const modal = document.getElementById('ordersModal');
+  if (modal) modal.style.display = 'none';
+}
+
+async function fetchCustomerOrders() {
+  const input = document.getElementById('lookupPhone');
+  const container = document.getElementById('ordersListContainer');
+  let phone = input ? input.value.replace(/\D/g, '') : '';
+  if (phone.length > 10) phone = phone.slice(-10);
+
+  if (!phone || phone.length < 10) {
+    alert('Please enter a valid 10-digit mobile number');
+    return;
+  }
+
+  container.innerHTML = '<div style="text-align:center; padding:18px; color:#666;">Fetching your past orders...</div>';
+
+  try {
+    const res = await fetch(`${ORDERS_API}/customer-orders?phone=${phone}`, { cache: 'no-store' });
+    const data = await res.json();
+
+    if (!data.success || !data.orders || !data.orders.length) {
+      container.innerHTML = '<div style="text-align:center; padding:20px; color:#777;">No previous orders found for this mobile number.</div>';
+      return;
+    }
+
+    container.innerHTML = data.orders.map(o => `
+      <div style="background:#fff; border:1px solid #ebdcd0; border-radius:10px; padding:14px; margin-bottom:12px; box-shadow:0 2px 6px rgba(0,0,0,0.04);">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+          <b style="color:#5a2e10; font-size:15px;">Order #${o.id}</b>
+          <span style="background:#e6f4ea; color:#137333; font-size:11px; padding:3px 8px; border-radius:6px; font-weight:bold; text-transform:uppercase;">${o.payment_status}</span>
+        </div>
+        <div style="font-size:13px; color:#444; line-height:1.6;">
+          <div><b>Amount:</b> ₹${o.total}</div>
+          <div><b>Date:</b> ${o.created_at ? o.created_at.slice(0, 10) : 'Recent'}</div>
+          ${o.awb ? `<div style="margin-top:4px;"><b>Delhivery AWB:</b> <code style="background:#f4f4f4; padding:2px 5px; border-radius:4px;">${o.awb}</code></div>` : ''}
+        </div>
+        <div style="margin-top:10px; display:flex; gap:8px;">
+          ${o.awb ? `<a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" style="background:#075e45; color:#fff; text-decoration:none; padding:7px 14px; font-size:12px; font-weight:bold; border-radius:6px; display:inline-block;">🚚 Track Live</a>` : ''}
+        </div>
+      </div>
+    `).join('');
+  } catch (err) {
+    container.innerHTML = '<div style="text-align:center; padding:18px; color:#c5221f;">Failed to load orders. Please try again.</div>';
+  }
+}
+
+/* ================================
    CHECKOUT PROCESS
 ================================ */
 
@@ -413,6 +492,11 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
     alert('Please fill all required details and enter a valid 6-digit pincode.');
     return;
   }
+
+  // Save profile for auto-fill on repeat visits
+  localStorage.setItem('srivari_customer_profile', JSON.stringify({
+    name, phone, email, address, pincode
+  }));
 
   const ready = await calculateDelivery();
   if (!ready) return;
@@ -568,6 +652,7 @@ async function initLiveProducts() {
   }
   renderProducts();
   saveCart();
+  autoFillCustomerDetails();
 }
 
 // Start live sync
