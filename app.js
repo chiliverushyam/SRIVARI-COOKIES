@@ -21,7 +21,6 @@ let checkoutBusy = false;
 
 function priceFor(p, w) { return w === 200 ? p.price200 : p.price400; }
 
-// Dynamic MRP: Selling price kannā MRP eppudaina thakkuva unte automatic ga 25% ekkuva calculate avtundi
 function mrpFor(p, w) {
   const currentPrice = priceFor(p, w);
   const baseMrp = w === 200 ? (p.mrp200 || 0) : (p.mrp400 || 0);
@@ -29,7 +28,6 @@ function mrpFor(p, w) {
   return Math.round(currentPrice * 1.25);
 }
 
-// Discount: Eppatiki negative percentage (-140%) raadhu, kevalam positive discount maatrame vasthundi
 function discount(p, w) {
   const price = priceFor(p, w);
   const mrp = mrpFor(p, w);
@@ -122,7 +120,10 @@ function addToCart(id) {
   const p = configuredProducts.find(x => x.id === id);
   const card = document.querySelector(`[data-product="${id}"]`);
 
-  if (!p || !card || Number(p.in_stock) === 0) return;
+  if (!p || !card || Number(p.in_stock) === 0) {
+    alert('Sorry, this cookie is currently out of stock!');
+    return;
+  }
 
   const active = card.querySelector('.weightBtn.active');
   const w = Number(active?.dataset.weight || 200);
@@ -503,7 +504,6 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
       console.warn('Verification warning:', err);
     }
 
-    // Delhivery auto-booking
     let shipmentAwb = verifyResponse.awb || '';
     if (!shipmentAwb) {
       try {
