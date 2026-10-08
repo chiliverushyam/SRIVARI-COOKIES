@@ -509,6 +509,8 @@ document
     }
 
     try{
+      const fullAddressText = `${address}, Pincode: ${pincode}`;
+
       // 1. Worker Call: Order create
       const rzpOrderData = await callOrdersApi({
         action: 'create_order',
@@ -516,12 +518,12 @@ document
         total: total,
         customer_name: name,
         mobile: phone,
-        address: `${address}\nPincode: ${pincode}`,
+        address: fullAddressText,
         customer: {
           name,
           phone,
           email,
-          address: `${address}\nPincode: ${pincode}`,
+          address: fullAddressText,
           items: cart.map(i=>{
             const p=configuredProducts.find(x=>x.id===i.id);
             return {
@@ -548,7 +550,7 @@ document
       if(button)
         button.textContent='Verifying payment…';
 
-      // 3. Worker Call: Verify signature, update DB to PAID, & book Delhivery
+      // 3. Worker Call: Verify signature, update DB, & book Delhivery with full customer details
       let verifyResponse = {};
       try {
         verifyResponse = await callOrdersApi({
@@ -556,7 +558,13 @@ document
           order_id: rzpOrderData.order_id,
           razorpay_order_id: paymentResponse.razorpay_order_id,
           razorpay_payment_id: paymentResponse.razorpay_payment_id,
-          razorpay_signature: paymentResponse.razorpay_signature
+          razorpay_signature: paymentResponse.razorpay_signature,
+          customer_name: name,
+          name: name,
+          phone: phone,
+          mobile: phone,
+          address: fullAddressText,
+          total: total
         });
       } catch (verifyErr) {
         console.warn('Verification warning:', verifyErr);
