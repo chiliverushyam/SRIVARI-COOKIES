@@ -25,57 +25,109 @@
     .status-msg { text-align: center; color: #666; margin: 20px 0; }
     .add-box { background: #fff; border: 2px dashed #bfa38e; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
     .add-box h3 { margin: 0 0 10px 0; color: #5a2e10; font-size: 1.1rem; }
+    
+    /* Lock Screen Overlay */
+    #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #5a2e10; display: flex; align-items: center; justify-content: center; z-index: 99999; padding: 20px; }
+    .lock-box { background: #fff; padding: 26px 20px; border-radius: 16px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+    .lock-box h3 { margin: 0 0 8px; color: #5a2e10; font-size: 1.3rem; }
+    .lock-box p { font-size: 0.85rem; color: #777; margin: 0 0 16px; }
+    .lock-box input { margin-bottom: 12px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; }
+    .btn-unlock { background: #7b3f18; color: #fff; width: 100%; padding: 12px; font-size: 1rem; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
   </style>
 </head>
 <body>
-  <h2>🍪 Srivari Quick Stock & Price Manager</h2>
 
-  <!-- ADD NEW PRODUCT FORM -->
-  <div class="add-box">
-    <h3>＋ Add New Cookie Product</h3>
-    <form id="addForm" onsubmit="handleCreateProduct(event)">
-      <div class="row">
-        <div class="input-group">
-          <label>Cookie Name *</label>
-          <input id="new-name" placeholder="e.g. Kaju Pista Crunch" required>
-        </div>
-        <div class="input-group">
-          <label>Product Slug (ID) *</label>
-          <input id="new-id" placeholder="e.g. kaju-pista" required pattern="[a-z0-9_-]+">
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-group">
-          <label>200g Price (₹) *</label>
-          <input id="new-p2" type="number" placeholder="250" required>
-        </div>
-        <div class="input-group">
-          <label>400g Price (₹) *</label>
-          <input id="new-p4" type="number" placeholder="500" required>
-        </div>
-      </div>
-      <div class="row">
-        <div class="input-group">
-          <label>Badge Text</label>
-          <input id="new-badge" placeholder="e.g. SPECIAL / NEW">
-        </div>
-        <div class="input-group">
-          <label>Image URL / Path</label>
-          <input id="new-image" value="assets/hero-cookie.jpg">
-        </div>
-      </div>
-      <div style="margin-top: 14px;">
-        <button type="submit" class="btn-add">Add Cookie to Live Store</button>
-      </div>
-    </form>
+  <!-- ADMIN PASSWORD SCREEN -->
+  <div id="lockScreen">
+    <div class="lock-box">
+      <h3>🔒 Admin Access</h3>
+      <p>Enter password to manage Srivari Cookies</p>
+      <input type="password" id="adminPass" placeholder="Enter Admin PIN" autofocus>
+      <button class="btn-unlock" onclick="verifyPassword()">Unlock Dashboard</button>
+    </div>
   </div>
 
-  <!-- PRODUCT LIST FROM D1 DATABASE -->
-  <div id="list" class="status-msg">Loading products from database...</div>
+  <div id="adminContent" style="display:none;">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+      <h2>🍪 Srivari Quick Stock & Price Manager</h2>
+      <button onclick="logoutAdmin()" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:6px 12px; border-radius:6px; flex:none; cursor:pointer;">Logout ✕</button>
+    </div>
+
+    <!-- ADD NEW PRODUCT FORM -->
+    <div class="add-box">
+      <h3>＋ Add New Cookie Product</h3>
+      <form id="addForm" onsubmit="handleCreateProduct(event)">
+        <div class="row">
+          <div class="input-group">
+            <label>Cookie Name *</label>
+            <input id="new-name" placeholder="e.g. Kaju Pista Crunch" required>
+          </div>
+          <div class="input-group">
+            <label>Product Slug (ID) *</label>
+            <input id="new-id" placeholder="e.g. kaju-pista" required pattern="[a-z0-9_-]+">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group">
+            <label>200g Price (₹) *</label>
+            <input id="new-p2" type="number" placeholder="250" required>
+          </div>
+          <div class="input-group">
+            <label>400g Price (₹) *</label>
+            <input id="new-p4" type="number" placeholder="500" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group">
+            <label>Badge Text</label>
+            <input id="new-badge" placeholder="e.g. SPECIAL / NEW">
+          </div>
+          <div class="input-group">
+            <label>Image URL / Path</label>
+            <input id="new-image" value="assets/hero-cookie.jpg">
+          </div>
+        </div>
+        <div style="margin-top: 14px;">
+          <button type="submit" class="btn-add">Add Cookie to Live Store</button>
+        </div>
+      </form>
+    </div>
+
+    <!-- PRODUCT LIST FROM D1 DATABASE -->
+    <div id="list" class="status-msg">Loading products from database...</div>
+  </div>
 
   <script>
     const API = 'https://srivari-orders-api.chiluverushyam8790.workers.dev';
     const SECRET = 'srivari2026';
+
+    function verifyPassword() {
+      const pass = document.getElementById('adminPass').value.trim();
+      if (pass === SECRET) {
+        sessionStorage.setItem('srivari_admin_auth', 'true');
+        document.getElementById('lockScreen').style.display = 'none';
+        document.getElementById('adminContent').style.display = 'block';
+        loadProducts();
+      } else {
+        alert('Incorrect Password! Try again.');
+      }
+    }
+
+    document.getElementById('adminPass').addEventListener('keypress', function(e) {
+      if (e.key === 'Enter') verifyPassword();
+    });
+
+    function logoutAdmin() {
+      sessionStorage.removeItem('srivari_admin_auth');
+      location.reload();
+    }
+
+    // Auto login if already unlocked in this session
+    if (sessionStorage.getItem('srivari_admin_auth') === 'true') {
+      document.getElementById('lockScreen').style.display = 'none';
+      document.getElementById('adminContent').style.display = 'block';
+      loadProducts();
+    }
 
     async function loadProducts() {
       const box = document.getElementById('list');
@@ -230,7 +282,6 @@
           alert(`"${name}" removed successfully!`);
           loadProducts();
         } else {
-          // If delete endpoint isn't present in worker, it disables stock to hide it
           await toggleStock(id, 0);
           alert(`Product set to Out of Stock.`);
         }
@@ -238,8 +289,6 @@
         alert('Network error while removing product.');
       }
     }
-
-    loadProducts();
   </script>
 </body>
 </html>
