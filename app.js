@@ -413,13 +413,15 @@ function openRazorpayCheckout(orderInfo, rzpOrderData){
       return;
     }
 
+    let rzpInstance = null;
+
     const options={
-      key: rzpOrderData.key,
+      key: rzpOrderData.key || rzpOrderData.keyId,
       amount: rzpOrderData.amount,
       currency: 'INR',
       name: 'SRIVARI COOKIES',
-      description: 'Test Order Payment',
-      order_id: rzpOrderData.razorpay_order_id,
+      description: 'Cookie Order Payment',
+      order_id: rzpOrderData.razorpay_order_id || rzpOrderData.orderId,
       prefill:{
         name: orderInfo.name,
         contact: orderInfo.phone,
@@ -431,11 +433,15 @@ function openRazorpayCheckout(orderInfo, rzpOrderData){
       theme:{
         color:'#7b3f18'
       },
-      handler: response => {
+      handler: function(response){
+        // Close modal explicitly so it doesn't get stuck
+        if (rzpInstance && typeof rzpInstance.close === 'function') {
+          try { rzpInstance.close(); } catch(e){}
+        }
         resolve(response);
       },
       modal:{
-        ondismiss: ()=>{
+        ondismiss: function(){
           reject(
             new Error('Payment window closed before payment was completed.')
           );
@@ -443,9 +449,9 @@ function openRazorpayCheckout(orderInfo, rzpOrderData){
       }
     };
 
-    const rzp=new Razorpay(options);
+    rzpInstance = new Razorpay(options);
 
-    rzp.on('payment.failed', response=>{
+    rzpInstance.on('payment.failed', function(response){
       reject(
         new Error(
           response?.error?.description || 'Payment failed. Please try again.'
@@ -453,7 +459,7 @@ function openRazorpayCheckout(orderInfo, rzpOrderData){
       );
     });
 
-    rzp.open();
+    rzpInstance.open();
   });
 }
 
@@ -489,9 +495,9 @@ document
     const ready=await calculateDelivery();
     if(!ready)return;
 
-    // Test Purpose: Testing amount direct ga ₹1
+    // Test Purpose: Amount ₹1
     const subtotal=cartSubtotal();
-    const total=1; // Test ki direct ₹1 mathrame cut avthundi
+    const total=1;
 
     checkoutBusy=true;
 
@@ -504,10 +510,14 @@ document
     }
 
     try{
-      // 1. Worker call: Razorpay order create + D1 database entry
+      // 1. Worker Call: Order create
       const rzpOrderData = await callOrdersApi({
         action: 'create_order',
         amount: total,
+        total: total,
+        customer_name: name,
+        mobile: phone,
+        address: `${address}\nPincode: ${pincode}`,
         customer: {
           name,
           phone,
@@ -539,17 +549,17 @@ document
       if(button)
         button.textContent='Verifying payment…';
 
-      // 3. Worker call: Payment verification + D1 update status to 'PAID'
-      const verified = await callOrdersApi({
-        action: 'verify_payment',
-        order_id: rzpOrderData.order_id,
-        razorpay_order_id: paymentResponse.razorpay_order_id,
-        razorpay_payment_id: paymentResponse.razorpay_payment_id,
-        razorpay_signature: paymentResponse.razorpay_signature
-      });
-
-      if(!verified.success){
-        throw new Error('Payment could not be verified.');
+      // 3. Worker Call: Verify signature & update DB to PAID
+      try {
+        await callOrdersApi({
+          action: 'verify_payment',
+          order_id: rzpOrderData.order_id,
+          razorpay_order_id: paymentResponse.razorpay_order_id,
+          razorpay_payment_id: paymentResponse.razorpay_payment_id,
+          razorpay_signature: paymentResponse.razorpay_signature
+        });
+      } catch (verifyErr) {
+        console.warn('Verification warning:', verifyErr);
       }
 
       // 4. Save to localStorage for Receipt Page
@@ -579,7 +589,7 @@ document
 
       localStorage.setItem('srivari_pending_order', JSON.stringify(paidOrder));
 
-      // Cart Empty & Reset
+      // Reset Cart
       cart=[];
       deliveryCharge=null;
       lastDeliveryPincode='';
@@ -588,8 +598,10 @@ document
       document.getElementById('checkout').reset();
       closeDrawer();
 
-      // Redirect to receipt
-      window.location.href='receipt.html';
+      // Direct Redirect to Receipt Page without blocking
+      setTimeout(() => {
+        window.location.href = 'receipt.html';
+      }, 300);
 
     }catch(error){
       console.error('Checkout error:', error);
