@@ -9,8 +9,10 @@
     body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #faf5ef; padding: 16px; margin: 0; color: #333; max-width: 650px; margin: 0 auto; }
     h2 { color: #5a2e10; margin-top: 0; font-size: 1.3rem; }
     .card { background: #fff; padding: 14px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border: 1px solid #ebdcd0; }
+    .card.hidden-product { opacity: 0.65; background: #fdf8f4; border: 1px dashed #c49a7a; }
     .title { font-size: 1.05rem; font-weight: bold; color: #431f06; display: flex; justify-content: space-between; align-items: center; }
     .badge-tag { font-size: 0.7rem; background: #f0e2d5; color: #5a2e10; padding: 2px 8px; border-radius: 6px; }
+    .hidden-badge { font-size: 0.7rem; background: #c5221f; color: #fff; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
     .row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
     .input-group { display: flex; flex-direction: column; flex: 1; }
     .input-group label { font-size: 0.75rem; color: #777; margin-bottom: 3px; }
@@ -18,7 +20,8 @@
     .actions { display: flex; gap: 8px; margin-top: 12px; }
     button { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
     .btn-save { background: #7b3f18; color: #fff; }
-    .btn-delete { background: #fee2e2; color: #b91c1c; border: 1px solid #fca5a5; flex: 0.45; }
+    .btn-remove { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; flex: 0.7; }
+    .btn-restore { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; flex: 0.7; }
     .btn-add { background: #075e45; color: #fff; width: 100%; padding: 12px; font-size: 0.95rem; }
     .in { background: #e6f4ea; color: #137333; border: 1px solid #ceead6; }
     .out { background: #fce8e6; color: #c5221f; border: 1px solid #fad2cf; }
@@ -26,7 +29,6 @@
     .add-box { background: #fff; border: 2px dashed #bfa38e; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
     .add-box h3 { margin: 0 0 10px 0; color: #5a2e10; font-size: 1.1rem; }
     
-    /* Lock Screen Overlay */
     #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #5a2e10; display: flex; align-items: center; justify-content: center; z-index: 99999; padding: 20px; }
     .lock-box { background: #fff; padding: 26px 20px; border-radius: 16px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .lock-box h3 { margin: 0 0 8px; color: #5a2e10; font-size: 1.3rem; }
@@ -88,12 +90,12 @@
           </div>
         </div>
         <div style="margin-top: 14px;">
-          <button type="submit" class="btn-add">Add Cookie to Live Store</button>
+          <button type="submit" class="btn-add">Add Cookie to Store</button>
         </div>
       </form>
     </div>
 
-    <!-- PRODUCT LIST FROM D1 DATABASE -->
+    <!-- PRODUCT LIST -->
     <div id="list" class="status-msg">Loading products from database...</div>
   </div>
 
@@ -122,7 +124,6 @@
       location.reload();
     }
 
-    // Auto login if already unlocked in this session
     if (sessionStorage.getItem('srivari_admin_auth') === 'true') {
       document.getElementById('lockScreen').style.display = 'none';
       document.getElementById('adminContent').style.display = 'block';
@@ -136,35 +137,45 @@
         const data = await res.json();
         
         if (!data.success || !data.products.length) {
-          box.innerHTML = '<div class="card">No products found in database. Add one above!</div>';
+          box.innerHTML = '<div class="card">No products found. Add one above!</div>';
           return;
         }
 
-        box.innerHTML = data.products.map(p => `
-          <div class="card" id="card-${p.id}">
-            <div class="title">
-              <span>${p.name}</span>
-              <span class="badge-tag">${p.badge || 'FRESH'}</span>
-            </div>
-            <div class="row">
-              <div class="input-group">
-                <label>200g Price (₹)</label>
-                <input id="p2-${p.id}" type="number" value="${p.price200}">
+        box.innerHTML = data.products.map(p => {
+          const isHidden = Number(p.is_hidden) === 1;
+
+          return `
+            <div class="card ${isHidden ? 'hidden-product' : ''}" id="card-${p.id}">
+              <div class="title">
+                <span>${p.name}</span>
+                ${isHidden 
+                  ? `<span class="hidden-badge">HIDDEN FROM STORE</span>` 
+                  : `<span class="badge-tag">${p.badge || 'FRESH'}</span>`
+                }
               </div>
-              <div class="input-group">
-                <label>400g Price (₹)</label>
-                <input id="p4-${p.id}" type="number" value="${p.price400}">
+              <div class="row">
+                <div class="input-group">
+                  <label>200g Price (₹)</label>
+                  <input id="p2-${p.id}" type="number" value="${p.price200}">
+                </div>
+                <div class="input-group">
+                  <label>400g Price (₹)</label>
+                  <input id="p4-${p.id}" type="number" value="${p.price400}">
+                </div>
+              </div>
+              <div class="actions">
+                <button class="btn-save" onclick="savePrice('${p.id}')">Save Price</button>
+                <button class="${p.in_stock ? 'in' : 'out'}" onclick="toggleStock('${p.id}', ${p.in_stock ? 0 : 1})">
+                  ${p.in_stock ? '● In Stock' : '✕ Out of Stock'}
+                </button>
+                ${isHidden
+                  ? `<button class="btn-restore" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 0)">🔄 Restore</button>`
+                  : `<button class="btn-remove" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 1)">👁️ Remove</button>`
+                }
               </div>
             </div>
-            <div class="actions">
-              <button class="btn-save" onclick="savePrice('${p.id}')">Save Price</button>
-              <button class="${p.in_stock ? 'in' : 'out'}" onclick="toggleStock('${p.id}', ${p.in_stock ? 0 : 1})">
-                ${p.in_stock ? '● In Stock' : '✕ Out of Stock'}
-              </button>
-              <button class="btn-delete" title="Remove from store" onclick="removeProduct('${p.id}', '${p.name}')">🗑 Remove</button>
-            </div>
-          </div>
-        `).join('');
+          `;
+        }).join('');
       } catch (err) {
         box.innerHTML = 'Error loading products. Check internet or Worker.';
       }
@@ -218,6 +229,40 @@
       }
     }
 
+    // PASSWORD PROTECTED REMOVE / RESTORE (No permanent delete, image & details are safely preserved)
+    async function toggleStoreVisibility(id, name, shouldHide) {
+      const actionText = shouldHide ? 'remove (hide)' : 'restore (show)';
+      const enteredPass = prompt(`Enter Admin Password to ${actionText} "${name}":`);
+
+      if (!enteredPass) return; // User cancelled
+      if (enteredPass !== SECRET) {
+        alert('Incorrect Password! Action cancelled.');
+        return;
+      }
+
+      try {
+        const res = await fetch(`${API}/admin/update-product`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            secret: SECRET,
+            id,
+            is_hidden: shouldHide,
+            in_stock: shouldHide ? 0 : 1
+          })
+        });
+        const data = await res.json().catch(()=>({}));
+        if (data.success) {
+          alert(`"${name}" successfully ${shouldHide ? 'removed from live store' : 'restored to live store'}!`);
+          loadProducts();
+        } else {
+          alert(data.error || 'Failed to update store visibility.');
+        }
+      } catch(err) {
+        alert('Network error while updating product.');
+      }
+    }
+
     async function handleCreateProduct(e) {
       e.preventDefault();
       const id = document.getElementById('new-id').value.trim().toLowerCase();
@@ -244,7 +289,8 @@
             price400,
             badge,
             image,
-            in_stock: 1
+            in_stock: 1,
+            is_hidden: 0
           })
         });
         const data = await res.json().catch(()=>({}));
@@ -260,33 +306,7 @@
         alert('Network error while adding product.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Add Cookie to Live Store';
-      }
-    }
-
-    async function removeProduct(id, name) {
-      if(!confirm(`Are you sure you want to remove "${name}" from the store?`)) return;
-
-      try {
-        const res = await fetch(`${API}/admin/update-product`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: SECRET,
-            action: 'delete',
-            id
-          })
-        });
-        const data = await res.json().catch(()=>({}));
-        if(data.success) {
-          alert(`"${name}" removed successfully!`);
-          loadProducts();
-        } else {
-          await toggleStock(id, 0);
-          alert(`Product set to Out of Stock.`);
-        }
-      } catch(err) {
-        alert('Network error while removing product.');
+        btn.textContent = 'Add Cookie to Store';
       }
     }
   </script>
