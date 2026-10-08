@@ -8,8 +8,9 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css?v=44">
 <style>
+body { overflow-y: auto !important; height: auto !important; }
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
 .benefit{display:flex;align-items:center;gap:16px;min-width:0}
 .benefitIcon{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#f7e7e8;display:grid;place-items:center;font-size:23px;color:#260b0b}
@@ -27,43 +28,4 @@ footer#contact{background:#063e36;color:#fff;padding:48px 8% 22px;display:grid;g
 .footerColumn{display:flex;flex-direction:column;gap:13px}
 .footerColumn h4{font-size:12px;letter-spacing:2px;margin:0 0 8px;color:#fff}
 .footerColumn a:hover{color:#e5b64b;text-decoration:underline}
-.footerContact p,.footerContact a{display:flex;align-items:flex-start;gap:9px}
-.footerContact p:nth-of-type(1)::before{content:"📍"}
-.footerContact p:nth-of-type(2)::before{content:"🏘️"}
-.footerContact p:nth-of-type(3)::before{content:"📌"}
-.footerContact a[href^="tel"]::before{content:"📞"}
-.footerContact a[href^="mailto"]::before{content:"✉️"}
-.footerContact small{color:#d7e0dc;font-size:12px;margin-top:8px}
-footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top:18px;text-align:center;font-size:12px;opacity:.85;color:#d7e0dc}
-@media(max-width:700px){
- .benefits{grid-template-columns:1fr 1fr;gap:18px;padding:24px 18px}
- .benefit{gap:10px}.benefitIcon{width:44px;height:44px;flex-basis:44px;font-size:19px}
- .benefit b{font-size:13px}.benefit small{font-size:11px}
- footer#contact{grid-template-columns:1fr 1fr;gap:28px 18px;padding:36px 20px 22px}
- .footerBrand{grid-column:1/-1;max-width:none}.footerContact{grid-column:1/-1}
- .footerColumn a,.footerColumn p{font-size:13px}
- footer#contact .copy{grid-column:1/-1}
-}
-.vegNotice{display:inline-flex;align-items:center;gap:6px;color:#16803c;font-weight:700}
-.vegSymbol{display:inline-block;width:14px;height:14px;border:1.5px solid #16803c;position:relative;flex:0 0 14px;box-sizing:border-box}
-.vegSymbol::after{content:"";position:absolute;width:7px;height:7px;border-radius:50%;background:#16803c;left:2px;top:2px}
-</style>
-</head>
-<body>
-<div class="topbar">
-<span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
-<span>🌿 Freshly baked treats</span><span>💛 Premium ingredients</span><span>🚚 Home delivery across India</span><span>🎁 Perfect for gifting</span>
-</div>
-<header class="nav">
-<a class="brand" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo"><div><b>SRIVARI COOKIES</b><small>PURE • FRESH • DELICIOUS</small></div></a>
-<nav>
-  <a href="#home">Home</a>
-  <a href="#shop">Shop</a>
-  <a href="#about">About</a>
-  <a href="#why">Why Us</a>
-  <a href="#contact">Contact</a>
-  <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#d49d28; font-weight:700;">📦 My Orders</a>
-</nav>
-<button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button><a class="orderBtn" href="#shop">Order Now</a>
-</header>
-<section class="hero
+.footerContact p,.footerContact a{display:flex;align-items:flex-start;gap:9
