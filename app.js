@@ -494,7 +494,7 @@ document
     const ready=await calculateDelivery();
     if(!ready)return;
 
-    // Real Commercial Calculation: Subtotal + Delivery
+    // Subtotal + Delivery
     const subtotal=cartSubtotal();
     const total=Math.round(subtotal + (deliveryCharge || 0));
 
@@ -548,9 +548,10 @@ document
       if(button)
         button.textContent='Verifying payment…';
 
-      // 3. Worker Call: Verify signature & update DB to PAID
+      // 3. Worker Call: Verify signature, update DB to PAID, & book Delhivery
+      let verifyResponse = {};
       try {
-        await callOrdersApi({
+        verifyResponse = await callOrdersApi({
           action: 'verify_payment',
           order_id: rzpOrderData.order_id,
           razorpay_order_id: paymentResponse.razorpay_order_id,
@@ -561,9 +562,9 @@ document
         console.warn('Verification warning:', verifyErr);
       }
 
-      // 4. Save to localStorage for Receipt Page
+      // 4. Save to localStorage with real Order Number & Delhivery AWB
       const paidOrder={
-        orderId: rzpOrderData.order_id,
+        orderId: verifyResponse.order_number || verifyResponse.order_id || rzpOrderData.order_number || rzpOrderData.order_id,
         name,
         phone,
         email,
@@ -583,7 +584,7 @@ document
         deliveryCharge,
         total,
         paymentId: paymentResponse.razorpay_payment_id,
-        awb: ''
+        awb: verifyResponse.awb || ''
       };
 
       localStorage.setItem('srivari_pending_order', JSON.stringify(paidOrder));
@@ -597,7 +598,7 @@ document
       document.getElementById('checkout').reset();
       closeDrawer();
 
-      // Direct Redirect to Receipt Page without blocking
+      // Direct Redirect to Receipt Page
       setTimeout(() => {
         window.location.href = 'receipt.html';
       }, 300);
