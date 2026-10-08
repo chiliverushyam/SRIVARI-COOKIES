@@ -10,9 +10,6 @@
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css?v=44">
 <style>
-html, body {
-  scroll-behavior: auto !important;
-}
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
 .benefit{display:flex;align-items:center;gap:16px;min-width:0}
 .benefitIcon{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#f7e7e8;display:grid;place-items:center;font-size:23px;color:#260b0b}
@@ -73,35 +70,4 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 <a href="#contact"><b>🚚</b><span><strong>Home Delivery</strong><small>Easy & reliable →</small></span></a>
 </section>
 <section class="collection" id="shop"><div class="sectionHead"><div><p class="eyebrow">OUR COLLECTION</p><h2>Cookies worth craving</h2><p>Choose your flavour and pack size.</p></div><span>Freshly baked for every order →</span></div><div class="grid" id="productGrid"></div></section>
-<section class="about" id="about"><div><p class="eyebrow">OUR PROMISE</p><h2>Made with devotion, baked for your moments.</h2><p>Every batch is prepared with care so you can enjoy a warm, comforting cookie experience at home.</p></div><div class="promise" id="why"><span>🌿<b>Freshly Baked</b><small>Made in small batches</small></span><span>❤️<b>Quality Ingredients</b><small>No artificial flavours</small></span><span>🎁<b>Perfect for Gifting</b><small>Birthdays, festivals & more</small></span><span>🚚<b>Home Delivery</b><small>Pan India delivery</small></span></div></section>
-<section class="benefits" aria-label="Our benefits">
-<div class="benefit"><span class="benefitIcon">◷</span><span><b>Baked to Order</b><small>Never off a shelf</small></span></div>
-<div class="benefit"><span class="benefitIcon">❋</span><span><b>Real Ingredients</b><small>Butter, chocolate & dry fruits</small></span></div>
-<div class="benefit"><span class="benefitIcon">♧</span><span><b>FSSAI Registered</b><small>Lic. 23626028006050</small></span></div>
-<div class="benefit"><span class="benefitIcon">♧</span><span><b>Pan-India Delivery</b><small>Home delivery across India</small></span></div>
-</section>
-<footer id="contact">
-<div class="footerBrand"><a class="footerLogo" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES"><b>SRIVARI COOKIES</b></a><p>Small-batch cookies and brownies, freshly baked with care using quality ingredients. Made with love, baked for you.</p><div class="socialLinks"><a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><span class="whatsappMark" aria-hidden="true">◔</span></a></div></div>
-<div class="footerColumn"><h4>SHOP</h4><a href="#shop">Cookies</a><a href="#shop">Brownies</a><a href="#shop">Gift Packs</a><a href="#shop">Bestsellers</a></div>
-<div class="footerColumn"><h4>HELP</h4><a href="#contact">Shipping & Delivery</a><a href="#contact">Returns</a><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></div>
-<div class="footerColumn footerContact"><h4>CONTACT</h4><p>HNO 8-6-3/1/A/2</p><p>Rajendranagar, Rangareddy</p><p>Telangana – 500077, India</p><a href="tel:+917989816250">+91 79898 16250</a><a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a><small>FSSAI Lic. 23626028006050</small></div>
-<div class="copy">© 2026 SRIVARI COOKIES. All rights reserved.</div>
-</footer>
-<aside class="drawer" id="drawer" aria-label="Shopping cart">
-<div class="drawerHead"><h2>Your Cart</h2><button id="closeCart" aria-label="Close cart">×</button></div><div id="cartItems"></div>
-<div class="summary"><div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div><div><span>Delivery</span><b id="cartDelivery">—</b></div><div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div></div>
-<p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
-<form id="checkout">
-<label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
-<label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
-<label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
-<label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
-<label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
-<button class="primary checkoutBtn" type="submit">Pay Securely →</button>
-</form></aside>
-<div class="shade" id="shade"></div>
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="config.js?v=43"></script><script src="supabase-client.js?v=43"></script><script src="app.js?v=43"></script>
-</body>
-</html>
+<section class="about" id="about"><div><p class="eyebrow">OUR PRO
