@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=999">
+<link rel="stylesheet" href="styles.css?v=1001">
 <style>
 * { box-sizing: border-box; }
 html, body {
@@ -73,7 +73,7 @@ html, body {
   line-height: 1.5;
 }
 
-/* CLEAN MOBILE-PERFECT BENEFITS (NO OVERLAPPING TEXT) */
+/* BENEFITS SECTION */
 .benefits {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -116,26 +116,29 @@ html, body {
   margin-top: 2px !important;
 }
 
-/* FOOTER FIX (PERFECT MOBILE STACKING) */
+/* FOOTER ARCHITECTURE FIX */
 footer#contact {
   background: #04261f !important;
   color: #fff !important;
-  padding: 40px 5% 20px !important;
+  padding: 50px 8% 24px !important;
   display: grid !important;
-  grid-template-columns: 1.4fr 1fr 1fr 1.2fr !important;
-  gap: 28px !important;
+  grid-template-columns: 1.5fr 1fr 1.1fr 1.4fr !important;
+  gap: 36px !important;
+  align-items: start !important;
+  border-top: 2px solid #c59b27 !important;
 }
+.footerBrand { max-width: 320px; }
 .footerLogo {
   display: inline-flex !important;
   align-items: center !important;
-  gap: 10px !important;
+  gap: 12px !important;
   color: #fff !important;
   text-decoration: none !important;
-  margin-bottom: 12px !important;
+  margin-bottom: 14px !important;
 }
 .footerLogo img {
-  width: 46px !important;
-  height: 46px !important;
+  width: 48px !important;
+  height: 48px !important;
   border-radius: 50% !important;
   object-fit: cover !important;
   border: 1.5px solid #c59b27 !important;
@@ -144,27 +147,81 @@ footer#contact {
   font-family: 'Playfair Display', serif !important;
   font-size: 18px !important;
   color: #f7e6c4 !important;
+  letter-spacing: 0.5px;
 }
-.footerBrand p, .footerColumn a, .footerColumn p {
+.footerBrand p {
   color: #d1ddd8 !important;
-  font-size: 13px !important;
-  line-height: 1.6 !important;
-  text-decoration: none !important;
-  margin: 4px 0 !important;
-}
-.footerColumn h4 {
-  color: #f3cf7a !important;
-  margin-top: 0 !important;
-  margin-bottom: 10px !important;
-  font-size: 14px !important;
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+  margin: 0 0 16px !important;
 }
 
-/* SMART PHONE RESPONSIVE */
-@media(max-width: 768px) {
-  .master-card { flex-direction: column; text-align: center; }
+/* WHATSAPP CLEAN PILL BUTTON */
+.wa-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #25D366 !important;
+  color: #ffffff !important;
+  padding: 9px 16px !important;
+  border-radius: 24px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25) !important;
+  transform: none !important;
+}
+.wa-badge:hover {
+  background: #20ba5a !important;
+}
+
+.footerColumn h4 {
+  color: #f3cf7a !important;
+  font-size: 14px !important;
+  margin: 0 0 16px !important;
+  letter-spacing: 0.8px;
+  font-weight: 700;
+}
+.footerColumn ul {
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 10px !important;
+}
+.footerColumn ul li a {
+  color: #d1ddd8 !important;
+  font-size: 13.5px !important;
+  text-decoration: none !important;
+  transition: color 0.2s;
+  display: inline-block !important;
+}
+.footerColumn ul li a:hover {
+  color: #f3cf7a !important;
+}
+
+.footerContact p {
+  color: #d1ddd8 !important;
+  font-size: 13.5px !important;
+  line-height: 1.6 !important;
+  margin: 0 0 6px !important;
+}
+.footerContact a {
+  color: #f7e6c4 !important;
+  text-decoration: none !important;
+  font-size: 13.5px !important;
+  display: block !important;
+  margin: 4px 0 !important;
+  font-weight: 600;
+}
+
+@media(max-width: 900px) {
   .benefits { grid-template-columns: 1fr 1fr !important; gap: 10px !important; padding: 18px 4% !important; }
-  .benefit { padding: 10px 12px !important; }
-  footer#contact { grid-template-columns: 1fr !important; gap: 22px !important; text-align: left !important; }
+  footer#contact { grid-template-columns: 1fr 1fr !important; gap: 28px !important; }
+}
+@media(max-width: 600px) {
+  footer#contact { grid-template-columns: 1fr !important; gap: 24px !important; }
   .footerBrand, .footerContact, footer#contact .copy { grid-column: 1 / -1 !important; }
 }
 </style>
@@ -266,7 +323,7 @@ footer#contact {
   </div>
 </section>
 
-<!-- CLEAN FIXED BENEFITS SECTION -->
+<!-- BENEFITS SECTION -->
 <section class="benefits" aria-label="Our benefits">
   <div class="benefit">
     <span class="benefitIcon">◷</span>
@@ -298,7 +355,7 @@ footer#contact {
   </div>
 </section>
 
-<!-- FOOTER -->
+<!-- CLEAN ULTRA-LUXURY FOOTER -->
 <footer id="contact">
   <div class="footerBrand">
     <a class="footerLogo" href="#home">
@@ -306,37 +363,43 @@ footer#contact {
       <b>SRIVARI COOKIES</b>
     </a>
     <p>Gourmet artisanal cookies, baked with devotion and guided by over 35 years of confectionery mastery.</p>
-    <div class="socialLinks">
-      <a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-        <span class="whatsappMark" aria-hidden="true">◔ WhatsApp</span>
-      </a>
-    </div>
+    <a class="wa-badge" href="https://wa.me/917989816250" target="_blank" rel="noopener">
+      <span>💬</span> Chat on WhatsApp
+    </a>
   </div>
+
   <div class="footerColumn">
-    <h4>SHOP</h4>
-    <a href="#shop">Almond Cashew</a>
-    <a href="#shop">Double Chocolate</a>
-    <a href="#shop">Dry Fruit Special</a>
-    <a href="#shop">Bestsellers</a>
+    <h4>COLLECTIONS</h4>
+    <ul>
+      <li><a href="#shop">Almond Cashew</a></li>
+      <li><a href="#shop">Double Chocolate</a></li>
+      <li><a href="#shop">Dry Fruit Special</a></li>
+      <li><a href="#shop">Bestsellers</a></li>
+    </ul>
   </div>
+
   <div class="footerColumn">
-    <h4>HELP</h4>
-    <a href="#contact">Shipping & Delivery</a>
-    <a href="#contact">Refund Policy</a>
-    <a href="#contact">Privacy Policy</a>
-    <a href="#contact">Terms & Conditions</a>
+    <h4>SUPPORT</h4>
+    <ul>
+      <li><a href="#contact">Shipping & Delivery</a></li>
+      <li><a href="#contact">Refund Policy</a></li>
+      <li><a href="#contact">Privacy Policy</a></li>
+      <li><a href="#contact">Terms & Conditions</a></li>
+    </ul>
   </div>
+
   <div class="footerColumn footerContact">
-    <h4>CONTACT</h4>
-    <p>HNO 8-6-3/1/A/2</p>
+    <h4>CONTACT & BAKERY</h4>
+    <p>📍 HNO 8-6-3/1/A/2</p>
     <p>Rajendranagar, Rangareddy</p>
     <p>Telangana – 500077</p>
-    <a href="tel:+917989816250">+91 79898 16250</a>
-    <a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a>
-    <small style="display:block;margin-top:6px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
+    <a href="tel:+917989816250">📞 +91 79898 16250</a>
+    <a href="mailto:chiluverushyam8790@gmail.com">✉️ chiluverushyam8790@gmail.com</a>
+    <p style="margin-top:8px;font-size:12px;color:#a4beba;">FSSAI Lic. 23626028006050</p>
   </div>
-  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 16px; text-align: center; font-size: 12px; color: #a4beba;">
-    © 2026 SRIVARI COOKIES. All rights reserved.
+
+  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 18px; text-align: center; font-size: 12.5px; color: #a4beba;">
+    © 2026 SRIVARI COOKIES. All rights reserved. Handcrafted with devotion.
   </div>
 </footer>
 
@@ -374,26 +437,4 @@ footer#contact {
       <button onclick="fetchCustomerOrders()" style="background:#48230b;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
     </div>
     <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
-      <div style="text-align:center;padding:20px;color:#888;font-size:13px;">Enter your phone number to view past orders and Delhivery tracking.</div>
-    </div>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="config.js"></script>
-<script src="supabase-client.js"></script>
-<script src="app.js?v=999"></script>
-
-<script>
-  window.addEventListener('DOMContentLoaded', () => {
-    document.body.classList.remove('noScroll');
-    document.getElementById('shade')?.classList.remove('open');
-    document.getElementById('drawer')?.classList.remove('open');
-    if (typeof renderProducts === 'function') {
-      renderProducts();
-    }
-  });
-</script>
-</body>
-</html>
+      <div style="text-align:center;padding:20px;color:#888;
