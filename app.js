@@ -1,12 +1,12 @@
 let products = [
-  { id: 'almond', name: 'Almond Cashew Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/almond-cashew.jpg', badge: 'BEST SELLER', in_stock: 1 },
-  { id: 'butter', name: 'Butter Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/butter.jpg', badge: 'FRESHLY BAKED', in_stock: 1 },
-  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/classic-chip.jpg', badge: 'POPULAR', in_stock: 0 },
-  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/coconut.jpg', badge: 'FRESH TODAY', in_stock: 0 },
-  { id: 'double', name: 'Double Chocolate Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/double-chocolate.jpg', badge: 'RICH & FUDGY', in_stock: 1 },
-  { id: 'dry', name: 'Dry Fruit Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/dry-fruit.jpg', badge: 'PREMIUM', in_stock: 1 },
-  { id: 'oats', name: 'Oats Raisin Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/oats-raisin.jpg', badge: 'HEALTHY CHOICE', in_stock: 1 },
-  { id: 'red', name: 'Red Velvet Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/red-velvet.jpg', badge: 'NEW', in_stock: 1 }
+  { id: 'almond', name: 'Almond Cashew Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/almond-cashew.jpg', badge: 'BEST SELLER', in_stock: 1 },
+  { id: 'butter', name: 'Butter Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/butter.jpg', badge: 'FRESHLY BAKED', in_stock: 1 },
+  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/classic-chip.jpg', badge: 'POPULAR', in_stock: 0 },
+  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/coconut.jpg', badge: 'FRESH TODAY', in_stock: 0 },
+  { id: 'double', name: 'Double Chocolate Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/double-chocolate.jpg', badge: 'RICH & FUDGY', in_stock: 1 },
+  { id: 'dry', name: 'Dry Fruit Cookies', price200: 600, price400: 1200, mrp200: 750, mrp400: 1500, image: 'assets/dry-fruit.jpg', badge: 'PREMIUM', in_stock: 1 },
+  { id: 'oats', name: 'Oats Raisin Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/oats-raisin.jpg', badge: 'HEALTHY CHOICE', in_stock: 1 },
+  { id: 'red', name: 'Red Velvet Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/red-velvet.jpg', badge: 'NEW', in_stock: 1 }
 ];
 
 let cart = JSON.parse(localStorage.getItem('srivariCart') || '[]');
@@ -20,11 +20,22 @@ let lastDeliveryPincode = '';
 let checkoutBusy = false;
 
 function priceFor(p, w) { return w === 200 ? p.price200 : p.price400; }
-function mrpFor(p, w) { return w === 200 ? p.mrp200 : p.mrp400; }
+
+// Dynamic MRP: Selling price kannā MRP eppudaina thakkuva unte automatic ga 25% ekkuva calculate avtundi
+function mrpFor(p, w) {
+  const currentPrice = priceFor(p, w);
+  const baseMrp = w === 200 ? (p.mrp200 || 0) : (p.mrp400 || 0);
+  if (baseMrp > currentPrice) return baseMrp;
+  return Math.round(currentPrice * 1.25);
+}
+
+// Discount: Eppatiki negative percentage (-140%) raadhu, kevalam positive discount maatrame vasthundi
 function discount(p, w) {
   const price = priceFor(p, w);
   const mrp = mrpFor(p, w);
-  return price && mrp ? Math.round((1 - price / mrp) * 100) : null;
+  if (!price || !mrp || mrp <= price) return null;
+  const off = Math.round((1 - (price / mrp)) * 100);
+  return off > 0 ? off : null;
 }
 
 function renderProducts() {
@@ -33,7 +44,6 @@ function renderProducts() {
 
   grid.innerHTML = configuredProducts.map(p => {
     const isOutOfStock = Number(p.in_stock) === 0;
-    // Stock unte normal badge (POPULAR / FRESH TODAY), lenappudu matrame OUT OF STOCK
     const badgeText = isOutOfStock ? 'OUT OF STOCK' : p.badge;
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
@@ -493,7 +503,7 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
       console.warn('Verification warning:', err);
     }
 
-    // Delhivery shipment auto-booking
+    // Delhivery auto-booking
     let shipmentAwb = verifyResponse.awb || '';
     if (!shipmentAwb) {
       try {
@@ -556,18 +566,33 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   }
 });
 
-// Live Admin Sync: D1 Database nunchi live stock updates reflect avthayi
+// Live Admin Sync: D1 Database nunchi updates sync avthayi
 async function syncFromAdmin() {
   try {
     const res = await fetch(`${ORDERS_API}/products`, { cache: 'no-store' });
     const data = await res.json();
     if (data.success && Array.isArray(data.products) && data.products.length > 0) {
       data.products.forEach(p => {
-        const item = configuredProducts.find(x => x.id === p.id);
+        let item = configuredProducts.find(x => x.id === p.id);
         if (item) {
+          if (p.name) item.name = p.name;
           if (p.price200) item.price200 = Number(p.price200);
           if (p.price400) item.price400 = Number(p.price400);
+          if (p.mrp200) item.mrp200 = Number(p.mrp200);
+          if (p.mrp400) item.mrp400 = Number(p.mrp400);
           item.in_stock = Number(p.in_stock);
+        } else if (p.name) {
+          configuredProducts.push({
+            id: p.id,
+            name: p.name,
+            price200: Number(p.price200) || 250,
+            price400: Number(p.price400) || 500,
+            mrp200: Number(p.mrp200) || Math.round((Number(p.price200) || 250) * 1.25),
+            mrp400: Number(p.mrp400) || Math.round((Number(p.price400) || 500) * 1.25),
+            image: p.image || 'assets/hero-cookie.jpg',
+            badge: p.badge || 'FRESH',
+            in_stock: Number(p.in_stock) ?? 1
+          });
         }
       });
       renderProducts();
