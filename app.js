@@ -1,9 +1,8 @@
-// Default Products Fallback (Coconut & Choco Chip set to Out of Stock immediately)
 let products = [
   { id: 'almond', name: 'Almond Cashew Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/almond-cashew.jpg', badge: 'BEST SELLER', in_stock: 1 },
   { id: 'butter', name: 'Butter Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/butter.jpg', badge: 'FRESHLY BAKED', in_stock: 1 },
-  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/classic-chip.jpg', badge: 'OUT OF STOCK', in_stock: 0 },
-  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/coconut.jpg', badge: 'OUT OF STOCK', in_stock: 0 },
+  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/classic-chip.jpg', badge: 'POPULAR', in_stock: 0 },
+  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/coconut.jpg', badge: 'FRESH TODAY', in_stock: 0 },
   { id: 'double', name: 'Double Chocolate Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/double-chocolate.jpg', badge: 'RICH & FUDGY', in_stock: 1 },
   { id: 'dry', name: 'Dry Fruit Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/dry-fruit.jpg', badge: 'PREMIUM', in_stock: 1 },
   { id: 'oats', name: 'Oats Raisin Cookies', price200: 250, price400: 500, mrp200: 250, mrp400: 500, image: 'assets/oats-raisin.jpg', badge: 'HEALTHY CHOICE', in_stock: 1 },
@@ -34,6 +33,7 @@ function renderProducts() {
 
   grid.innerHTML = configuredProducts.map(p => {
     const isOutOfStock = Number(p.in_stock) === 0;
+    // Stock unte normal badge (POPULAR / FRESH TODAY), lenappudu matrame OUT OF STOCK
     const badgeText = isOutOfStock ? 'OUT OF STOCK' : p.badge;
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
@@ -493,6 +493,27 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
       console.warn('Verification warning:', err);
     }
 
+    // Delhivery shipment auto-booking
+    let shipmentAwb = verifyResponse.awb || '';
+    if (!shipmentAwb) {
+      try {
+        const shipRes = await fetch(`${DELHIVERY_API}/create-shipment`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderId: rzpOrderData.order_id,
+            weight: cartWeightGrams()
+          })
+        });
+        const shipData = await shipRes.json().catch(() => ({}));
+        if (shipRes.ok && shipData.success) {
+          shipmentAwb = shipData.awb;
+        }
+      } catch (shipErr) {
+        console.warn('Delhivery booking:', shipErr);
+      }
+    }
+
     const paidOrder = {
       orderId: verifyResponse.order_number || verifyResponse.order_id || rzpOrderData.order_id,
       name, phone, email, address, pincode,
@@ -508,7 +529,7 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
       }),
       subtotal, deliveryCharge, total,
       paymentId: paymentResponse.razorpay_payment_id,
-      awb: verifyResponse.awb || ''
+      awb: shipmentAwb
     };
 
     localStorage.setItem('srivari_pending_order', JSON.stringify(paidOrder));
@@ -535,7 +556,7 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   }
 });
 
-// Live Admin Sync: Fetches stock changes from D1 database without removing items from website
+// Live Admin Sync: D1 Database nunchi live stock updates reflect avthayi
 async function syncFromAdmin() {
   try {
     const res = await fetch(`${ORDERS_API}/products`, { cache: 'no-store' });
@@ -547,7 +568,6 @@ async function syncFromAdmin() {
           if (p.price200) item.price200 = Number(p.price200);
           if (p.price400) item.price400 = Number(p.price400);
           item.in_stock = Number(p.in_stock);
-          if (item.in_stock === 0) item.badge = 'OUT OF STOCK';
         }
       });
       renderProducts();
@@ -557,8 +577,17 @@ async function syncFromAdmin() {
   }
 }
 
-// Initial Safe Render
-renderProducts();
-saveCart();
-autoFillCustomerDetails();
-syncFromAdmin();
+// Initial Safe Render on Load
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    renderProducts();
+    saveCart();
+    autoFillCustomerDetails();
+    syncFromAdmin();
+  });
+} else {
+  renderProducts();
+  saveCart();
+  autoFillCustomerDetails();
+  syncFromAdmin();
+}
