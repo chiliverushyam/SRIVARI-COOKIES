@@ -10,7 +10,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=215">
+<link rel="stylesheet" href="styles.css?v=301">
 <style>
 html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: auto !important; }
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
@@ -65,7 +65,7 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
  background: #e5b64b;
  color: #260b0b;
  border: none;
- padding: 4px 10px;
+ padding: 5px 12px;
  font-weight: bold;
  border-radius: 4px;
  cursor: pointer;
@@ -75,7 +75,7 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 <body>
 <div id="pwaBanner">
  <span>🍪 Add Srivari Cookies to Home Screen for fast ordering!</span>
- <button onclick="promptPwaInstall()">Install App</button>
+ <button type="button" id="pwaInstallBtn" onclick="handlePwaClick()">Install App</button>
 </div>
 <div class="topbar">
 <span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
@@ -132,6 +132,20 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 </form></aside>
 <div class="shade" id="shade"></div>
 
+<!-- Direct PWA Install Guide Bottom Sheet -->
+<div id="pwaGuideSheet" style="display:none;position:fixed;bottom:0;left:0;width:100%;background:#ffffff;border-radius:18px 18px 0 0;box-shadow:0 -10px 30px rgba(0,0,0,0.35);z-index:999999;padding:22px;box-sizing:border-box;font-family:sans-serif;border-top:4px solid #7b3f18;">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;">
+    <b style="font-size:1.15rem;color:#5a2e10;">🍪 Install Srivari Cookies App</b>
+    <button onclick="document.getElementById('pwaGuideSheet').style.display='none'" style="background:none;border:none;font-size:24px;cursor:pointer;color:#888;">✕</button>
+  </div>
+  <p style="font-size:14px;color:#333;margin:0 0 14px;line-height:1.6;">
+    1. Browser paina unna <b>⋮ (3 dots)</b> lēdā <b>Share icon</b> tap chēyaṇḍi.<br>
+    2. Menu lō <b>"Install app"</b> lēdā <b>"Add to Home screen"</b> select chēyaṇḍi.<br>
+    3. Mee phone screen meeda direct ga Srivari App icon create aipōtundi!
+  </p>
+  <button onclick="document.getElementById('pwaGuideSheet').style.display='none'" style="width:100%;background:#075e45;color:#fff;border:none;padding:12px;border-radius:8px;font-weight:bold;font-size:15px;cursor:pointer;">Got it / Artham Aindi</button>
+</div>
+
 <!-- Customer My Orders Modal -->
 <div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.25);max-height:85vh;display:flex;flex-direction:column;border:1px solid #ebdcd0;">
@@ -153,35 +167,40 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="config.js"></script>
 <script src="supabase-client.js"></script>
-<script src="app.js?v=215"></script>
+<script src="app.js?v=301"></script>
 
 <script>
- let defPrompt = null;
+  let defPrompt = null;
 
- if ('serviceWorker' in navigator) {
-   navigator.serviceWorker.register('sw.js', { scope: '/' })
-     .catch(() => {});
- }
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
 
- window.addEventListener('beforeinstallprompt', (e) => {
-   e.preventDefault();
-   defPrompt = e;
- });
+  window.addEventListener('beforeinstallprompt', (e) => {
+    e.preventDefault();
+    defPrompt = e;
+  });
 
- async function promptPwaInstall() {
-   if (defPrompt) {
-     defPrompt.prompt();
-     const choice = await defPrompt.userChoice;
-     if (choice.outcome === 'accepted') {
-       const banner = document.getElementById('pwaBanner');
-       if (banner) banner.style.display = 'none';
-     }
-     defPrompt = null;
-     return;
-   }
+  window.handlePwaClick = async function() {
+    if (defPrompt) {
+      defPrompt.prompt();
+      const choice = await defPrompt.userChoice;
+      if (choice && choice.outcome === 'accepted') {
+        const banner = document.getElementById('pwaBanner');
+        if (banner) banner.style.display = 'none';
+      }
+      defPrompt = null;
+    } else {
+      const sheet = document.getElementById('pwaGuideSheet');
+      if (sheet) sheet.style.display = 'block';
+    }
+  };
 
-   let guide = document.getElementById('pwaGuide');
-   if (!guide) {
-     guide = document.createElement('div');
-     guide.id = 'pwaGuide';
-     guide.style.cssText = 'position:fixed;bottom:0;left:0;width:100%;background:#ffffff;border-
+  window.addEventListener('load', () => {
+    document.body.classList.remove('noScroll');
+    document.getElementById('shade')?.classList.remove('open');
+    document.getElementById('drawer')?.classList.remove('open');
+  });
+</script>
+</body>
+</html>
