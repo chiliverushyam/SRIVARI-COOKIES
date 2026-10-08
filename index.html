@@ -18,14 +18,13 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700;800&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=45">
+<link rel="stylesheet" href="styles.css?v=46">
 <style>
 .benefits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:24px;padding:34px 8%;background:#fff;color:#241b1b}
 .benefit{display:flex;align-items:center;gap:16px;min-width:0}
 .benefitIcon{width:58px;height:58px;flex:0 0 58px;border-radius:50%;background:#f7e7e8;display:grid;place-items:center;font-size:23px;color:#260b0b}
 .benefit b,.benefit small{display:block}.benefit b{font-size:16px;font-weight:600}
 .benefit small{color:#777;font-size:14px;margin-top:6px}
-/* Footer restored to the original deep-green theme */
 footer#contact{background:#063e36;color:#fff;padding:48px 8% 22px;display:grid;grid-template-columns:1.5fr .85fr .95fr 1.1fr;gap:36px;align-items:start}
 .footerBrand{max-width:320px}
 .footerLogo{display:flex;align-items:center;gap:10px;color:#fff;text-decoration:none;margin-bottom:18px}
@@ -64,144 +63,4 @@ footer#contact .copy{grid-column:1/-1;border-top:1px solid #ffffff35;padding-top
   display: none;
   position: fixed;
   bottom: 20px;
-  left: 16px;
-  right: 16px;
-  background: #063e36;
-  color: #fff;
-  padding: 12px 18px;
-  border-radius: 14px;
-  align-items: center;
-  justify-content: space-between;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-  z-index: 9999;
-  border: 1px solid #e5b64b;
-}
-#pwaInstallBanner span {
-  font-size: 14px;
-  font-weight: 600;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#pwaInstallBanner .pwaActions {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-}
-#pwaInstallBanner button.btnInstall {
-  background: #e5b64b;
-  color: #063e36;
-  border: none;
-  padding: 8px 16px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-}
-#pwaInstallBanner button.btnClose {
-  background: transparent;
-  color: #fff;
-  border: none;
-  font-size: 18px;
-  cursor: pointer;
-  padding: 0 4px;
-}
-</style>
-</head>
-<body>
-<div class="topbar">
-<span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
-<span>🌿 Freshly baked treats</span><span>💛 Premium ingredients</span><span>🚚 Home delivery across India</span><span>🎁 Perfect for gifting</span>
-</div>
-<header class="nav">
-<a class="brand" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo"><div><b>SRIVARI COOKIES</b><small>PURE • FRESH • DELICIOUS</small></div></a>
-<nav><a href="#home">Home</a><a href="#shop">Shop</a><a href="#about">About</a><a href="#why">Why Us</a><a href="#contact">Contact</a></nav>
-<button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button><a class="orderBtn" href="#shop">Order Now</a>
-</header>
-<section class="hero" id="home">
-<div class="heroCopy"><p class="eyebrow">HOMEMADE • PREMIUM • MADE WITH DEVOTION</p><h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1><p>Freshly baked cookies for everyday cravings, celebrations and gifting.</p><div class="heroActions"><a class="primary" href="#shop">Shop Cookies →</a><a class="secondary" href="#about">Our Story</a></div><div class="trust"><span>🌿 Freshly Baked</span><span>❤️ Quality Ingredients</span><span>✨ Made With Care</span></div></div>
-<div class="heroVisual"><img src="assets/hero-cookie.jpg" alt="Freshly baked chocolate chip cookies"><div class="seal">Homemade<br><b>Premium</b><br>Delicious</div></div>
-</section>
-<section class="shortcuts">
-<a href="#shop"><b>🍪</b><span><strong>All Cookies</strong><small>Explore our range →</small></span></a>
-<a href="#shop"><b>⭐</b><span><strong>Best Sellers</strong><small>Customer favourites →</small></span></a>
-<a href="#shop"><b>🎁</b><span><strong>Gift Packs</strong><small>Perfect for gifting →</small></span></a>
-<a href="#contact"><b>🚚</b><span><strong>Home Delivery</strong><small>Easy & reliable →</small></span></a>
-</section>
-<section class="collection" id="shop"><div class="sectionHead"><div><p class="eyebrow">OUR COLLECTION</p><h2>Cookies worth craving</h2><p>Choose your flavour and pack size.</p></div><span>Freshly baked for every order →</span></div><div class="grid" id="productGrid"></div></section>
-<section class="about" id="about"><div><p class="eyebrow">OUR PROMISE</p><h2>Made with devotion, baked for your moments.</h2><p>Every batch is prepared with care so you can enjoy a warm, comforting cookie experience at home.</p></div><div class="promise" id="why"><span>🌿<b>Freshly Baked</b><small>Made in small batches</small></span><span>❤️<b>Quality Ingredients</b><small>No artificial flavours</small></span><span>🎁<b>Perfect for Gifting</b><small>Birthdays, festivals & more</small></span><span>🚚<b>Home Delivery</b><small>Pan India delivery</small></span></div></section>
-<section class="benefits" aria-label="Our benefits">
-<div class="benefit"><span class="benefitIcon">◷</span><span><b>Baked to Order</b><small>Never off a shelf</small></span></div>
-<div class="benefit"><span class="benefitIcon">❋</span><span><b>Real Ingredients</b><small>Butter, chocolate & dry fruits</small></span></div>
-<div class="benefit"><span class="benefitIcon">♧</span><span><b>FSSAI Registered</b><small>Lic. 23626028006050</small></span></div>
-<div class="benefit"><span class="benefitIcon">♧</span><span><b>Pan-India Delivery</b><small>Home delivery across India</small></span></div>
-</section>
-<footer id="contact">
-<div class="footerBrand"><a class="footerLogo" href="#home"><img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES"><b>SRIVARI COOKIES</b></a><p>Small-batch cookies and brownies, freshly baked with care using quality ingredients. Made with love, baked for you.</p><div class="socialLinks"><a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp"><span class="whatsappMark" aria-hidden="true">◔</span></a></div></div>
-<div class="footerColumn"><h4>SHOP</h4><a href="#shop">Cookies</a><a href="#shop">Brownies</a><a href="#shop">Gift Packs</a><a href="#shop">Bestsellers</a></div>
-<div class="footerColumn"><h4>HELP</h4><a href="#contact">Shipping & Delivery</a><a href="#contact">Returns</a><a href="#contact">Privacy Policy</a><a href="#contact">Terms of Service</a></div>
-<div class="footerColumn footerContact"><h4>CONTACT</h4><p>HNO 8-6-3/1/A/2</p><p>Rajendranagar, Rangareddy</p><p>Telangana – 500077, India</p><a href="tel:+917989816250">+91 79898 16250</a><a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a><small>FSSAI Lic. 23626028006050</small></div>
-<div class="copy">© 2026 SRIVARI COOKIES. All rights reserved.</div>
-</footer>
-<aside class="drawer" id="drawer" aria-label="Shopping cart">
-<div class="drawerHead"><h2>Your Cart</h2><button id="closeCart" aria-label="Close cart">×</button></div><div id="cartItems"></div>
-<div class="summary"><div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div><div><span>Delivery</span><b id="cartDelivery">—</b></div><div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div></div>
-<p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
-<form id="checkout">
-<label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
-<label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
-<label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
-<label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
-<label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
-<button class="primary checkoutBtn" type="submit">Pay Securely →</button>
-</form></aside>
-<div class="shade" id="shade"></div>
-
-<!-- Mobile App Quick Install Banner -->
-<div id="pwaInstallBanner">
-  <span>🍪 Install Srivari App for Fast Orders!</span>
-  <div class="pwaActions">
-    <button class="btnInstall" onclick="triggerInstallApp()">Install</button>
-    <button class="btnClose" onclick="document.getElementById('pwaInstallBanner').style.display='none'">✕</button>
-  </div>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="config.js?v=45"></script>
-<script src="supabase-client.js?v=45"></script>
-<script src="app.js?v=45"></script>
-
-<!-- Clean App Install Prompt Handler -->
-<script>
-  let deferredPrompt = null;
-  window.addEventListener('beforeinstallprompt', (e) => {
-    e.preventDefault();
-    deferredPrompt = e;
-    const banner = document.getElementById('pwaInstallBanner');
-    if (banner) banner.style.display = 'flex';
-  });
-
-  function triggerInstallApp() {
-    if (deferredPrompt) {
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then((choiceResult) => {
-        if (choiceResult.outcome === 'accepted') {
-          const banner = document.getElementById('pwaInstallBanner');
-          if (banner) banner.style.display = 'none';
-        }
-        deferredPrompt = null;
-      });
-    }
-  }
-
-  // Clear any stuck workers that might cause white screens
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.getRegistrations().then((registrations) => {
-      for (const reg of registrations) {
-        reg.unregister();
-      }
-    });
-  }
-</script>
-</body>
-</html>
+  left: 16px
