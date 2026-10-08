@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
-<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship. Pure vegetarian, baked fresh on order.">
+<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship.">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#5a2e10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -12,15 +12,161 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
+* { box-sizing: border-box; }
 html, body {
   overflow-y: auto !important;
   height: auto !important;
+  background: #faf6f0;
+  color: #2b221d;
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* FORCED CLEAN BENEFITS GRID */
+.benefits {
+  display: grid !important;
+  grid-template-columns: repeat(4, 1fr) !important;
+  gap: 16px !important;
+  padding: 30px 6% !important;
+  background: #ffffff !important;
+  border-top: 1.5px solid #ebdcd0 !important;
+  border-bottom: 1.5px solid #ebdcd0 !important;
+}
+.benefit {
+  display: flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  background: #fbf8f4 !important;
+  padding: 14px !important;
+  border-radius: 12px !important;
+  border: 1px solid #f0e2d5 !important;
+}
+.benefitIcon {
+  width: 44px !important;
+  height: 44px !important;
+  flex: 0 0 44px !important;
+  border-radius: 50% !important;
+  background: #f3e6d8 !important;
+  display: grid !important;
+  place-items: center !important;
+  font-size: 18px !important;
+  color: #48230b !important;
+}
+.benefit b {
+  font-size: 13.5px !important;
+  display: block !important;
+  color: #3d1c08 !important;
+  margin-bottom: 2px !important;
+}
+.benefit small {
+  color: #7a6558 !important;
+  font-size: 12px !important;
+  display: block !important;
+}
+
+/* FORCED CLEAN FOOTER ARCHITECTURE */
+footer#contact {
+  background: #04261f !important;
+  color: #fff !important;
+  padding: 50px 6% 24px !important;
+  display: grid !important;
+  grid-template-columns: 1.5fr 1fr 1fr 1.3fr !important;
+  gap: 32px !important;
+  border-top: 2px solid #c59b27 !important;
+  align-items: start !important;
+}
+.footerBrand { max-width: 320px; }
+.footerLogo {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 12px !important;
+  color: #fff !important;
+  text-decoration: none !important;
+  margin-bottom: 12px !important;
 }
 .footerLogo img {
-  width: 50px !important;
-  height: 50px !important;
+  width: 48px !important;
+  height: 48px !important;
+  max-width: 48px !important;
+  max-height: 48px !important;
   border-radius: 50% !important;
   object-fit: cover !important;
+  border: 1.5px solid #c59b27 !important;
+}
+.footerLogo b {
+  font-family: 'Playfair Display', serif !important;
+  font-size: 18px !important;
+  color: #f7e6c4 !important;
+}
+.footerBrand p {
+  color: #d1ddd8 !important;
+  font-size: 13.5px !important;
+  line-height: 1.65 !important;
+  margin-bottom: 16px !important;
+}
+.wa-badge {
+  display: inline-flex !important;
+  align-items: center !important;
+  gap: 8px !important;
+  background: #25D366 !important;
+  color: #ffffff !important;
+  padding: 9px 18px !important;
+  border-radius: 24px !important;
+  font-size: 13px !important;
+  font-weight: 700 !important;
+  text-decoration: none !important;
+  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25) !important;
+}
+.footerColumn h4 {
+  color: #f3cf7a !important;
+  font-size: 14px !important;
+  margin-bottom: 14px !important;
+  letter-spacing: 0.8px;
+}
+.footerColumn a, .footerColumn p, .footerColumn li a {
+  display: block !important;
+  margin-bottom: 8px !important;
+  color: #d1ddd8 !important;
+  text-decoration: none !important;
+  font-size: 13.5px !important;
+}
+.footerColumn a:hover, .footerColumn li a:hover { color: #f3cf7a !important; }
+
+.footerContact p {
+  color: #d1ddd8 !important;
+  font-size: 13.5px !important;
+  margin-bottom: 6px !important;
+  line-height: 1.5 !important;
+}
+.footerContact a {
+  color: #f7e6c4 !important;
+  text-decoration: none !important;
+  font-size: 13.5px !important;
+  display: block !important;
+  margin: 6px 0 !important;
+  font-weight: 600;
+}
+.copy {
+  grid-column: 1 / -1;
+  border-top: 1px solid rgba(255,255,255,0.15);
+  padding-top: 18px;
+  text-align: center;
+  font-size: 12px;
+  color: #a4beba;
+}
+
+@media(max-width: 900px) {
+  .hero { flex-direction: column; text-align: center; }
+  .about { grid-template-columns: 1fr; }
+  .benefits { grid-template-columns: 1fr 1fr !important; }
+  footer#contact { grid-template-columns: 1fr 1fr !important; }
+}
+@media(max-width: 600px) {
+  nav { display: none; }
+  .benefits { grid-template-columns: 1fr !important; }
+  footer#contact { grid-template-columns: 1fr !important; }
+  .footerBrand, .footerContact, .copy { grid-column: 1 / -1 !important; }
 }
 </style>
 </head>
@@ -81,7 +227,7 @@ html, body {
     <div style="flex: 1; min-width: 260px;">
       <span style="background: #5a2e10; color: #faedcd; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px;">MASTER BAKERY GUIDANCE</span>
       <h3 style="margin: 0 0 6px; color: #5a2e10; font-family: 'Playfair Display', serif; font-size: 1.25rem;">Guided by 35+ Years of Confectionery Mastery</h3>
-      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>. From exact baking temperatures to crumb texture, we bring commercial-grade perfection to small-batch baking.</p>
+      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>.</p>
     </div>
   </div>
 </div>
@@ -119,13 +265,27 @@ html, body {
   </div>
 </section>
 
+<!-- CLEAN FIXED BENEFITS -->
 <section class="benefits" aria-label="Our benefits">
-  <div class="benefit"><span class="benefitIcon">◷</span><span><b>Fresh Oven Baking</b><small>Baked fresh on order</small></span></div>
-  <div class="benefit"><span class="benefitIcon">❋</span><span><b>No Preservatives</b><small>100% natural richness</small></span></div>
-  <div class="benefit"><span class="benefitIcon">♧</span><span><b>FSSAI Certified</b><small>Lic. 23626028006050</small></span></div>
-  <div class="benefit"><span class="benefitIcon">🚚</span><span><b>Pan-India Shipping</b><small>Tracked express delivery</small></span></div>
+  <div class="benefit">
+    <span class="benefitIcon">◷</span>
+    <div><b>Fresh Oven Baking</b><small>Baked fresh on order</small></div>
+  </div>
+  <div class="benefit">
+    <span class="benefitIcon">❋</span>
+    <div><b>No Preservatives</b><small>100% natural richness</small></div>
+  </div>
+  <div class="benefit">
+    <span class="benefitIcon">♧</span>
+    <div><b>FSSAI Certified</b><small>Lic. 23626028006050</small></div>
+  </div>
+  <div class="benefit">
+    <span class="benefitIcon">🚚</span>
+    <div><b>Pan-India Shipping</b><small>Tracked express delivery</small></div>
+  </div>
 </section>
 
+<!-- CLEAN FIXED FOOTER -->
 <footer id="contact">
   <div class="footerBrand">
     <a class="footerLogo" href="index.html">
@@ -133,11 +293,9 @@ html, body {
       <b>SRIVARI COOKIES</b>
     </a>
     <p>Gourmet artisanal cookies and confectionery, handcrafted with devotion and guided by over 35 years of industry mastery.</p>
-    <div class="socialLinks">
-      <a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" style="display:inline-block;background:#25D366;color:#fff;padding:8px 16px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:13px;margin-top:10px;">
-        💬 Chat on WhatsApp
-      </a>
-    </div>
+    <a class="wa-badge" href="https://wa.me/917989816250" target="_blank" rel="noopener">
+      <span>💬</span> Chat on WhatsApp
+    </a>
   </div>
   <div class="footerColumn">
     <h4>COLLECTIONS</h4>
@@ -162,7 +320,7 @@ html, body {
     <a href="mailto:chiluverushyam8790@gmail.com">✉️ chiluverushyam8790@gmail.com</a>
     <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
   </div>
-  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 18px; text-align: center; font-size: 12.5px; color: #a4beba;">
+  <div class="copy">
     © 2026 SRIVARI COOKIES. All rights reserved. Handcrafted with devotion.
   </div>
 </footer>
