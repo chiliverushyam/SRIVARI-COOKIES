@@ -10,156 +10,111 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="styles.css?v=601">
+<link rel="stylesheet" href="styles.css?v=801">
 <style>
-:root {
-  --gold-accent: #c9933b;
-  --gold-gradient: linear-gradient(135deg, #d49d28 0%, #b8860b 100%);
-  --brand-deep: #431a06;
-  --cream-soft: #faf5ef;
-}
-html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: smooth !important; background: #faf5ef; }
+html, body { overflow-y: auto !important; height: auto !important; scroll-behavior: smooth !important; background: #faf5ef; margin: 0; padding: 0; }
 
 .topbar {
   background: #042e27;
   color: #f1dfbf;
   padding: 8px 16px;
-  font-size: 12.5px;
-  letter-spacing: 0.3px;
+  font-size: 13px;
   display: flex;
   justify-content: center;
   align-items: center;
-  gap: 20px;
+  gap: 18px;
   flex-wrap: wrap;
   border-bottom: 1px solid rgba(212, 157, 40, 0.3);
 }
-.topbar span { display: inline-flex; align-items: center; gap: 6px; }
 
 .master-mentorship-wrap {
-  padding: 30px 8% 10px;
+  padding: 24px 8% 10px;
   background: #faf5ef;
 }
 .master-card {
   max-width: 980px;
   margin: 0 auto;
-  background: linear-gradient(145deg, #ffffff 0%, #fbf6ef 100%);
+  background: #ffffff;
   border: 1.5px solid #d49d28;
-  border-radius: 18px;
-  padding: 26px 32px;
-  box-shadow: 0 10px 30px rgba(90, 46, 16, 0.08), 0 1px 3px rgba(212, 157, 40, 0.2);
+  border-radius: 14px;
+  padding: 20px 24px;
+  box-shadow: 0 6px 20px rgba(90, 46, 16, 0.06);
   display: flex;
   align-items: center;
-  gap: 26px;
-  position: relative;
-  overflow: hidden;
-}
-.master-card::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 6px;
-  height: 100%;
-  background: var(--gold-gradient);
+  gap: 20px;
 }
 .master-emblem {
-  width: 72px;
-  height: 72px;
-  flex: 0 0 72px;
-  background: linear-gradient(135deg, #f7ecd7 0%, #edd3a4 100%);
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  font-size: 34px;
-  border: 2px solid #d49d28;
-  box-shadow: 0 4px 12px rgba(212, 157, 40, 0.25);
+  font-size: 36px;
+  flex: 0 0 50px;
+  text-align: center;
 }
 .master-text h3 {
   margin: 0 0 6px;
   font-family: 'Playfair Display', serif;
-  font-size: 1.35rem;
+  font-size: 1.25rem;
   color: #4a2107;
-  letter-spacing: -0.2px;
 }
 .master-text p {
   margin: 0;
   color: #554133;
-  font-size: 0.94rem;
-  line-height: 1.65;
-}
-.master-pill {
-  display: inline-block;
-  background: #075e45;
-  color: #fff;
-  font-size: 11px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  padding: 3px 10px;
-  border-radius: 20px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
+  font-size: 0.93rem;
+  line-height: 1.6;
 }
 
-header.nav {
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
-  backdrop-filter: blur(8px);
+/* FIX FOOTER GIANT LOGO BUG */
+footer#contact {
+  background: #042e27;
+  color: #fff;
+  padding: 44px 8% 22px;
+  display: grid;
+  grid-template-columns: 1.4fr .85fr .95fr 1.1fr;
+  gap: 32px;
+  align-items: start;
 }
+.footerBrand { max-width: 300px; }
+.footerLogo { display: flex; align-items: center; gap: 10px; color: #fff; text-decoration: none; margin-bottom: 14px; }
+.footerLogo img { width: 50px !important; height: 50px !important; max-width: 50px !important; max-height: 50px !important; border-radius: 50%; object-fit: cover; }
+.footerLogo b { font-family: 'Playfair Display', serif; font-size: 18px; }
+.footerBrand p, .footerColumn a, .footerColumn p { color: #d1ddd8; font-size: 13.5px; line-height: 1.6; text-decoration: none; }
 
 .benefits {
   display: grid;
   grid-template-columns: repeat(4,minmax(0,1fr));
-  gap: 24px;
-  padding: 38px 8%;
+  gap: 20px;
+  padding: 30px 8%;
   background: #fff;
   border-top: 1px solid #ebdcd0;
   border-bottom: 1px solid #ebdcd0;
 }
-.benefit { display:flex; align-items:center; gap:16px; min-width:0; }
+.benefit { display:flex; align-items:center; gap:14px; min-width:0; }
 .benefitIcon {
-  width: 56px;
-  height: 56px;
-  flex: 0 0 56px;
+  width: 50px;
+  height: 50px;
+  flex: 0 0 50px;
   border-radius: 50%;
   background: #fbf3e8;
   border: 1px solid #e7cca8;
   display: grid;
   place-items: center;
-  font-size: 22px;
+  font-size: 20px;
   color: #5a2e10;
 }
-.benefit b { font-size: 15px; font-weight: 700; color: #3d1c08; }
-.benefit small { color: #6d5b50; font-size: 13.5px; margin-top: 4px; display: block; }
-
-footer#contact {
-  background: #042e27;
-  color: #fff;
-  padding: 54px 8% 26px;
-  display: grid;
-  grid-template-columns: 1.5fr .85fr .95fr 1.1fr;
-  gap: 36px;
-  align-items: start;
-}
-.footerBrand p, .footerColumn a, .footerColumn p { color: #d1ddd8; font-size: 14px; line-height: 1.7; text-decoration: none; }
-.footerLogo b { font-family: 'Playfair Display', serif; font-size: 20px; letter-spacing: 0.5px; }
+.benefit b { font-size: 14.5px; font-weight: 700; color: #3d1c08; display: block; }
+.benefit small { color: #6d5b50; font-size: 13px; display: block; }
 
 @media(max-width:768px){
-  .master-card { flex-direction: column; text-align: center; padding: 22px 18px; }
-  .master-card::before { width: 100%; height: 5px; top: 0; left: 0; }
-  .master-emblem { margin: 0 auto 6px; }
-  .benefits { grid-template-columns: 1fr 1fr; gap: 18px; padding: 26px 18px; }
-  footer#contact { grid-template-columns: 1fr 1fr; gap: 28px 18px; }
+  .master-card { flex-direction: column; text-align: center; }
+  .benefits { grid-template-columns: 1fr 1fr; }
+  footer#contact { grid-template-columns: 1fr; }
   .footerBrand, .footerContact, footer#contact .copy { grid-column: 1/-1; }
 }
-.vegNotice { display:inline-flex; align-items:center; gap:6px; color:#4ade80; font-weight:700; }
-.vegSymbol { display:inline-block; width:13px; height:13px; border:1.5px solid #4ade80; position:relative; flex:0 0 13px; box-sizing:border-box; }
-.vegSymbol::after { content:""; position:absolute; width:6px; height:6px; border-radius:50%; background:#4ade80; left:2px; top:2px; }
 </style>
 </head>
 <body>
 
 <div class="topbar">
   <span><b style="color: #f7d28b;">🎖️ Guided by 35+ Years Baking Industry Expertise</b></span>
-  <span class="vegNotice"><i class="vegSymbol" aria-hidden="true"></i><b>100% Vegetarian</b></span>
+  <span style="color:#4ade80;font-weight:bold;">● 100% Vegetarian</span>
   <span>🌿 Freshly Baked Treats</span>
   <span>🚚 Pan-India Express Delivery</span>
 </div>
@@ -169,7 +124,7 @@ footer#contact {
     <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo">
     <div>
       <b>SRIVARI COOKIES</b>
-      <small style="letter-spacing: 1px; color:#b5801e;">PURE • FRESH • DELICIOUS</small>
+      <small style="color:#b5801e;">PURE • FRESH • DELICIOUS</small>
     </div>
   </a>
   <nav>
@@ -186,7 +141,7 @@ footer#contact {
 
 <section class="hero" id="home">
   <div class="heroCopy">
-    <p class="eyebrow" style="letter-spacing: 2px;">HOMEMADE • PREMIUM • MADE WITH DEVOTION</p>
+    <p class="eyebrow">HOMEMADE • PREMIUM • MADE WITH DEVOTION</p>
     <h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1>
     <p>Handcrafted gourmet cookies baked in small batches for celebrations, gifting, and everyday cravings.</p>
     <div class="heroActions">
@@ -210,10 +165,10 @@ footer#contact {
   <div class="master-card">
     <div class="master-emblem">👨‍🍳</div>
     <div class="master-text">
-      <span class="master-pill">Professional Heritage</span>
+      <span style="display:inline-block;background:#075e45;color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;margin-bottom:6px;">PROFESSIONAL HERITAGE</span>
       <h3>Guided by 35+ Years of Confectionery Mastery</h3>
       <p>
-        Every single recipe at <b>SRIVARI COOKIES</b> is curated and perfected under the hands-on mentorship of an industry veteran with over <b>35 years of commercial baking expertise</b>. From precise baking temperatures and golden crust formation to rich buttery crumbles, we bring decades of industrial mastery straight to your doorstep.
+        Every single recipe at <b>SRIVARI COOKIES</b> is curated and perfected under the hands-on mentorship of an industry veteran with over <b>35 years of commercial baking expertise</b>.
       </p>
     </div>
   </div>
@@ -226,6 +181,7 @@ footer#contact {
   <a href="#contact"><b>🚚</b><span><strong>Pan-India Delivery</strong><small>Safe & sealed packaging →</small></span></a>
 </section>
 
+<!-- COLLECTION SECTION -->
 <section class="collection" id="shop">
   <div class="sectionHead">
     <div>
@@ -265,6 +221,91 @@ footer#contact {
       <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES">
       <b>SRIVARI COOKIES</b>
     </a>
-    <p>Premium gourmet cookies and brownies, baked with pure devotion and guided by over 35 years of industrial confectionery mastery.</p>
-    <div class="socialLinks">
-      <a href="https://wa.me/917989816250" target="_blank
+    <p>Small-batch cookies and brownies, freshly baked with care using quality ingredients.</p>
+  </div>
+  <div class="footerColumn">
+    <h4>SHOP</h4>
+    <a href="#shop">Cookies</a>
+    <a href="#shop">Brownies</a>
+    <a href="#shop">Gift Packs</a>
+    <a href="#shop">Bestsellers</a>
+  </div>
+  <div class="footerColumn">
+    <h4>HELP</h4>
+    <a href="#contact">Shipping & Delivery</a>
+    <a href="#contact">Returns</a>
+    <a href="#contact">Privacy Policy</a>
+    <a href="#contact">Terms of Service</a>
+  </div>
+  <div class="footerColumn footerContact">
+    <h4>CONTACT</h4>
+    <p>HNO 8-6-3/1/A/2</p>
+    <p>Rajendranagar, Rangareddy</p>
+    <p>Telangana – 500077, India</p>
+    <a href="tel:+917989816250">+91 79898 16250</a>
+    <a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a>
+    <small>FSSAI Lic. 23626028006050</small>
+  </div>
+  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 16px; text-align: center; font-size: 12px; color: #d7e0dc;">
+    © 2026 SRIVARI COOKIES. All rights reserved.
+  </div>
+</footer>
+
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+  <div class="drawerHead">
+    <h2>Your Cart</h2>
+    <button id="closeCart" aria-label="Close cart">×</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="summary">
+    <div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div>
+    <div><span>Delivery</span><b id="cartDelivery">—</b></div>
+    <div class="grand"><span>Total to pay</span><b id="cartTotal">₹0</b></div>
+  </div>
+  <p class="deliveryNote" id="deliveryNote">Enter your pincode to calculate delivery charge.</p>
+  <form id="checkout">
+    <label>Full name <i>*</i><input id="cname" required placeholder="Enter your full name"></label>
+    <label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter mobile number"></label>
+    <label>Email <span>(optional)</span><input id="email" type="email" placeholder="Enter email address"></label>
+    <label>Delivery address <i>*</i><textarea id="address" required placeholder="House / Street / Area / City"></textarea></label>
+    <label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit pincode"></label>
+    <button class="primary checkoutBtn" type="submit">Pay Securely →</button>
+  </form>
+</aside>
+<div class="shade" id="shade"></div>
+
+<div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.55);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:14px;padding:20px;box-shadow:0 8px 30px rgba(0,0,0,0.25);max-height:85vh;display:flex;flex-direction:column;border:1px solid #ebdcd0;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3 style="margin:0;color:#5a2e10;font-size:1.15rem;">📦 Past Orders & Tracking</h3>
+      <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;">✕</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:9px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:9px 14px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
+    </div>
+    <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
+      <div style="text-align:center;padding:20px;color:#888;font-size:13px;">Enter your mobile number to view past orders and Delhivery tracking.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="config.js"></script>
+<script src="supabase-client.js"></script>
+<script src="app.js?v=801"></script>
+
+<!-- DIRECT INSTANT RENDER GUARD -->
+<script>
+  window.addEventListener('DOMContentLoaded', () => {
+    document.body.classList.remove('noScroll');
+    document.getElementById('shade')?.classList.remove('open');
+    document.getElementById('drawer')?.classList.remove('open');
+    if (typeof renderProducts === 'function') {
+      renderProducts();
+    }
+  });
+</script>
+</body>
+</html>
