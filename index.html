@@ -65,7 +65,7 @@ html, body {
   display: block !important;
 }
 
-/* FORCED CLEAN FOOTER ARCHITECTURE */
+/* FORCED CLEAN FOOTER ARCHITECTURE & KILL DUPLICATE EMOJIS */
 footer#contact {
   background: #04261f !important;
   color: #fff !important;
@@ -75,6 +75,13 @@ footer#contact {
   gap: 32px !important;
   border-top: 2px solid #c59b27 !important;
   align-items: start !important;
+}
+.footerContact p::before, 
+.footerContact li::before, 
+.footerContact a::before,
+.footerColumn p::before {
+  content: none !important;
+  display: none !important;
 }
 .footerBrand { max-width: 320px; }
 .footerLogo {
@@ -265,7 +272,6 @@ footer#contact {
   </div>
 </section>
 
-<!-- CLEAN FIXED BENEFITS -->
 <section class="benefits" aria-label="Our benefits">
   <div class="benefit">
     <span class="benefitIcon">◷</span>
@@ -285,7 +291,6 @@ footer#contact {
   </div>
 </section>
 
-<!-- CLEAN FIXED FOOTER -->
 <footer id="contact">
   <div class="footerBrand">
     <a class="footerLogo" href="index.html">
@@ -313,11 +318,11 @@ footer#contact {
   </div>
   <div class="footerColumn footerContact">
     <h4>CONTACT & BAKERY</h4>
-    <p>📍 HNO 8-6-3/1/A/2</p>
+    <p>HNO 8-6-3/1/A/2</p>
     <p>Rajendranagar, Rangareddy</p>
     <p>Telangana – 500077, India</p>
-    <a href="tel:+917989816250">📞 +91 79898 16250</a>
-    <a href="mailto:chiluverushyam8790@gmail.com">✉️ chiluverushyam8790@gmail.com</a>
+    <a href="tel:+917989816250">+91 79898 16250</a>
+    <a href="mailto:chiluverushyam8790@gmail.com">chiluverushyam8790@gmail.com</a>
     <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
   </div>
   <div class="copy">
