@@ -1,21 +1,24 @@
 {
   "name": "Srivari Cookies",
   "short_name": "Srivari",
-  "start_url": "/",
+  "start_url": "/index.html",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#faf5ef",
   "theme_color": "#7b3f18",
   "orientation": "portrait-primary",
   "icons": [
     {
-      "src": "assets/almond-cashew.jpg",
+      "src": "/assets/almond-cashew.jpg",
       "sizes": "192x192",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     },
     {
-      "src": "assets/almond-cashew.jpg",
+      "src": "/assets/almond-cashew.jpg",
       "sizes": "512x512",
-      "type": "image/jpeg"
+      "type": "image/jpeg",
+      "purpose": "any maskable"
     }
   ]
 }
