@@ -42,13 +42,13 @@ function renderProducts() {
 
   grid.innerHTML = configuredProducts.map(p => {
     const isOutOfStock = Number(p.in_stock) === 0;
-    const badgeText = isOutOfStock ? 'OUT OF STOCK' : p.badge;
+    const badgeText = isOutOfStock ? 'OUT OF STOCK' : (p.badge || 'FRESH');
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
     return `
-      <article class="card" data-product="${p.id}" style="${isOutOfStock ? 'opacity: 0.8;' : ''}">
+      <article class="card" data-product="${p.id}" style="${isOutOfStock ? 'opacity: 0.85;' : ''}">
         <div class="photo">
-          <img src="${p.image}" alt="${p.name}" loading="lazy">
+          <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='assets/hero-cookie.jpg'">
           <span class="badge" style="background:${badgeBg}; color:#fff; font-weight:bold;">${badgeText}</span>
         </div>
 
@@ -566,7 +566,12 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   }
 });
 
-// Live Admin Sync: D1 Database nunchi updates sync avthayi
+// Safe Instant Boot
+renderProducts();
+saveCart();
+autoFillCustomerDetails();
+
+// Cloudflare D1 Sync
 async function syncFromAdmin() {
   try {
     const res = await fetch(`${ORDERS_API}/products`, { cache: 'no-store' });
@@ -581,38 +586,13 @@ async function syncFromAdmin() {
           if (p.mrp200) item.mrp200 = Number(p.mrp200);
           if (p.mrp400) item.mrp400 = Number(p.mrp400);
           item.in_stock = Number(p.in_stock);
-        } else if (p.name) {
-          configuredProducts.push({
-            id: p.id,
-            name: p.name,
-            price200: Number(p.price200) || 250,
-            price400: Number(p.price400) || 500,
-            mrp200: Number(p.mrp200) || Math.round((Number(p.price200) || 250) * 1.25),
-            mrp400: Number(p.mrp400) || Math.round((Number(p.price400) || 500) * 1.25),
-            image: p.image || 'assets/hero-cookie.jpg',
-            badge: p.badge || 'FRESH',
-            in_stock: Number(p.in_stock) ?? 1
-          });
         }
       });
       renderProducts();
     }
   } catch (e) {
-    console.warn('Admin sync offline, keeping default stock display.');
+    console.warn('Sync fallback: default list active.');
   }
 }
 
-// Initial Safe Render on Load
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    renderProducts();
-    saveCart();
-    autoFillCustomerDetails();
-    syncFromAdmin();
-  });
-} else {
-  renderProducts();
-  saveCart();
-  autoFillCustomerDetails();
-  syncFromAdmin();
-}
+syncFromAdmin();
