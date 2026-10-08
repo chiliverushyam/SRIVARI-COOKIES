@@ -4,457 +4,209 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
-<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship.">
+<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship. Pure vegetarian, baked fresh on order.">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#5a2e10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
 <style>
-* { box-sizing: border-box; margin: 0; padding: 0; }
 html, body {
-  overflow-x: hidden !important;
   overflow-y: auto !important;
-  background: #faf6f0;
-  color: #2b221d;
-  font-family: 'Plus Jakarta Sans', sans-serif;
-  scroll-behavior: smooth;
-}
-
-/* TOP STATUS BAR */
-.topbar {
-  background: #04261f;
-  color: #f7e6c4;
-  padding: 10px 14px;
-  font-size: 12.5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 18px;
-  flex-wrap: wrap;
-  text-align: center;
-  border-bottom: 1.5px solid #c59b27;
-}
-
-/* NAVIGATION */
-header.nav {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 14px 6%;
-  background: #ffffff;
-  border-bottom: 1px solid #ebdcd0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-.brand {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  text-decoration: none;
-}
-.brand img {
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 1.5px solid #c59b27;
-}
-.brand b {
-  color: #48230b;
-  font-size: 1.15rem;
-  letter-spacing: 0.5px;
-  display: block;
-}
-.brand small {
-  color: #c59b27;
-  font-size: 10px;
-  letter-spacing: 1.5px;
-  font-weight: 700;
-  display: block;
-}
-nav {
-  display: flex;
-  align-items: center;
-  gap: 18px;
-}
-nav a {
-  color: #48230b;
-  text-decoration: none;
-  font-weight: 600;
-  font-size: 14px;
-}
-nav a:hover { color: #c59b27; }
-.nav-actions {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-}
-.cartBtn, .orderBtn {
-  background: #075e45;
-  color: #fff;
-  border: none;
-  padding: 8px 18px;
-  border-radius: 20px;
-  font-weight: 700;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 13.5px;
-}
-.cartBtn { background: #f4ece4; color: #48230b; border: 1px solid #d4a373; }
-
-/* HERO SECTION */
-.hero {
-  padding: 40px 6%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 30px;
-  background: #faf6f0;
-}
-.heroCopy { max-width: 520px; }
-.eyebrow {
-  color: #c59b27;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  font-size: 11.5px;
-  margin-bottom: 8px;
-  text-transform: uppercase;
-}
-.heroCopy h1 {
-  font-family: 'Playfair Display', serif;
-  font-size: 3rem;
-  line-height: 1.15;
-  color: #48230b;
-  margin-bottom: 14px;
-}
-.heroCopy p {
-  color: #554133;
-  line-height: 1.6;
-  font-size: 15px;
-  margin-bottom: 22px;
-}
-.heroActions { display: flex; gap: 14px; margin-bottom: 24px; }
-.heroActions a.primary {
-  background: #075e45;
-  color: #fff;
-  padding: 12px 22px;
-  border-radius: 24px;
-  text-decoration: none;
-  font-weight: 700;
-}
-.heroActions a.secondary {
-  border: 1px solid #48230b;
-  color: #48230b;
-  padding: 12px 22px;
-  border-radius: 24px;
-  text-decoration: none;
-  font-weight: 600;
-}
-.trust { display: flex; gap: 14px; font-size: 12.5px; color: #48230b; font-weight: 600; flex-wrap: wrap; }
-.heroVisual { position: relative; }
-.heroVisual img {
-  width: 100%;
-  max-width: 480px;
-  border-radius: 18px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-}
-.seal {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  background: #fdf5e6;
-  border: 1.5px solid #c59b27;
-  border-radius: 50%;
-  width: 76px;
-  height: 76px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: 10px;
-  text-align: center;
-  color: #48230b;
-}
-
-/* MASTER MENTORSHIP CARD */
-.master-mentorship-wrap { padding: 10px 6% 30px; }
-.master-card {
-  max-width: 960px;
-  margin: 0 auto;
-  background: #ffffff;
-  border: 1.5px solid #c59b27;
-  border-radius: 16px;
-  padding: 22px 28px;
-  display: flex;
-  align-items: center;
-  gap: 22px;
-  box-shadow: 0 4px 20px rgba(72,35,11,0.05);
-}
-.master-emblem {
-  font-size: 40px;
-  background: #faedcd;
-  width: 68px;
-  height: 68px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  flex-shrink: 0;
-  border: 1.5px solid #c59b27;
-}
-.master-text h3 {
-  font-family: 'Playfair Display', serif;
-  color: #48230b;
-  font-size: 1.25rem;
-  margin: 4px 0 6px;
-}
-.master-text p {
-  color: #554133;
-  font-size: 14px;
-  line-height: 1.6;
-}
-
-/* SHORTCUTS STRIP */
-.shortcuts {
-  padding: 10px 6% 30px;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 16px;
-}
-.shortcuts a {
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
-  border-radius: 12px;
-  padding: 14px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  color: #48230b;
-}
-.shortcuts a b { font-size: 22px; }
-.shortcuts a strong { display: block; font-size: 14px; }
-.shortcuts a small { color: #887263; font-size: 11.5px; }
-
-/* PRODUCT COLLECTION */
-.collection {
-  padding: 40px 6%;
-  background: #faf6f0;
-}
-.sectionHead {
-  display: flex;
-  justify-content: space-between;
-  align-items: flex-end;
-  margin-bottom: 24px;
-}
-.sectionHead h2 {
-  font-family: 'Playfair Display', serif;
-  color: #48230b;
-  font-size: 2.2rem;
-  margin-top: 4px;
-}
-.grid {
-  display: grid !important;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)) !important;
-  gap: 24px !important;
-}
-.card {
-  background: #ffffff;
-  border: 1px solid #ebdcd0;
-  border-radius: 14px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  box-shadow: 0 4px 15px rgba(0,0,0,0.03);
-}
-.card .photo {
-  position: relative;
-  width: 100%;
-  height: 200px;
-}
-.card .photo img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-.card .badge {
-  position: absolute;
-  top: 10px;
-  right: 10px;
-  background: #075e45;
-  color: #fff;
-  font-size: 10.5px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 14px;
-}
-.card .info {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  flex: 1;
-}
-.card h3 {
-  margin: 0 0 10px;
-  font-size: 1.1rem;
-  color: #48230b;
-}
-.weightChoices {
-  display: flex;
-  gap: 8px;
-  margin-bottom: 12px;
-}
-.weightBtn {
-  flex: 1;
-  padding: 6px 0;
-  border: 1px solid #d4a373;
-  background: #fff;
-  border-radius: 6px;
-  cursor: pointer;
-  font-weight: 600;
-  font-size: 13px;
-}
-.weightBtn.active {
-  background: #5a2e10;
-  color: #fff;
-  border-color: #5a2e10;
-}
-.priceRow {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 14px;
-}
-.price {
-  font-size: 1.25rem;
-  font-weight: 800;
-  color: #48230b;
-}
-.mrp {
-  font-size: 0.85rem;
-  text-decoration: line-through;
-  color: #888;
-  margin-left: 6px;
-  font-weight: 400;
-}
-.off {
-  background: #e6f4ea;
-  color: #137333;
-  font-size: 11px;
-  font-weight: 700;
-  padding: 3px 8px;
-  border-radius: 6px;
-}
-button.add {
-  background: #075e45;
-  color: #fff;
-  border: none;
-  padding: 10px;
-  border-radius: 8px;
-  font-weight: 700;
-  cursor: pointer;
-  margin-top: auto;
-  font-size: 13.5px;
-}
-
-/* PHILOSOPHY PROMISE */
-.about {
-  padding: 50px 6%;
-  background: #faf6f0;
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 40px;
-  align-items: center;
-}
-.about h2 {
-  font-family: 'Playfair Display', serif;
-  color: #48230b;
-  font-size: 2.1rem;
-  line-height: 1.2;
-  margin: 6px 0 14px;
-}
-.about p {
-  color: #554133;
-  line-height: 1.6;
-  font-size: 15px;
-}
-.promise {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-}
-.promise span {
-  background: #ffffff;
-  padding: 16px;
-  border-radius: 12px;
-  border: 1px solid #ebdcd0;
-}
-.promise b { display: block; color: #48230b; font-size: 14.5px; margin-top: 4px; }
-.promise small { color: #7a6558; font-size: 12.5px; }
-
-/* SEPARATE CLEAN BENEFITS SECTION */
-.benefits {
-  display: grid !important;
-  grid-template-columns: repeat(4, 1fr) !important;
-  gap: 14px !important;
-  padding: 24px 6% !important;
-  background: #ffffff !important;
-  border-top: 1px solid #ebdcd0 !important;
-  border-bottom: 1px solid #ebdcd0 !important;
-}
-.benefit {
-  display: flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  background: #fbf8f4 !important;
-  padding: 12px 14px !important;
-  border-radius: 10px !important;
-  border: 1px solid #f0e2d5 !important;
-}
-.benefitIcon {
-  width: 42px !important;
-  height: 42px !important;
-  flex: 0 0 42px !important;
-  border-radius: 50% !important;
-  background: #f3e6d8 !important;
-  display: grid !important;
-  place-items: center !important;
-  font-size: 18px !important;
-  color: #48230b !important;
-}
-.benefit b {
-  font-size: 13.5px !important;
-  display: block !important;
-  color: #3d1c08 !important;
-  line-height: 1.3 !important;
-}
-.benefit small {
-  color: #7a6558 !important;
-  font-size: 12px !important;
-  display: block !important;
-  margin-top: 2px !important;
-}
-
-/* ULTRA-LUXURY FOOTER */
-footer#contact {
-  background: #04261f !important;
-  color: #fff !important;
-  padding: 50px 6% 24px !important;
-  display: grid !important;
-  grid-template-columns: 1.5fr 1fr 1fr 1.3fr !important;
-  gap: 36px !important;
-  border-top: 2px solid #c59b27 !important;
-}
-.footerBrand { max-width: 320px; }
-.footerLogo {
-  display: inline-flex !important;
-  align-items: center !important;
-  gap: 12px !important;
-  color: #fff !important;
-  text-decoration: none !important;
-  margin-bottom: 12px !important;
+  height: auto !important;
 }
 .footerLogo img {
-  width: 48px !important;
-  height: 48px
+  width: 50px !important;
+  height: 50px !important;
+  border-radius: 50% !important;
+  object-fit: cover !important;
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <span><b style="color:#ffd54f;">🎖️ 35+ Years Master Confectionery Mentorship</b></span>
+  <span style="color:#52e185;font-weight:bold;">● 100% Pure Vegetarian</span>
+  <span>🌿 Small Batch Fresh Oven Baking</span>
+  <span>🚚 Express Pan-India Delivery</span>
+</div>
+
+<header class="nav">
+  <a class="brand" href="index.html">
+    <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo">
+    <div>
+      <b>SRIVARI COOKIES</b>
+      <small>PURE • FRESH • DELICIOUS</small>
+    </div>
+  </a>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#about">Our Story</a>
+    <a href="#why">Why Us</a>
+    <a href="#contact">Contact</a>
+    <a href="javascript:void(0)" onclick="openOrdersModal()" style="color:#c59b27;font-weight:bold;">📦 My Orders</a>
+  </nav>
+  <button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
+  <a class="orderBtn" href="#shop">Order Now</a>
+</header>
+
+<section class="hero" id="home">
+  <div class="heroCopy">
+    <p class="eyebrow">HOMEMADE • PREMIUM • ARTISANAL</p>
+    <h1>Pure.<br>Fresh.<br><em>Delicious.</em></h1>
+    <p>Handcrafted artisan cookies baked in small batches with genuine butter, roasted nuts, and heritage confectionery recipes.</p>
+    <div class="heroActions">
+      <a class="primary" href="#shop">Shop Gourmet Cookies →</a>
+      <a class="secondary" href="#about">Our Heritage</a>
+    </div>
+    <div class="trust">
+      <span>🌿 100% Pure Vegetarian</span>
+      <span>🧈 Pure Premium Butter</span>
+      <span>👑 35+ Yrs Industry Mentorship</span>
+    </div>
+  </div>
+  <div class="heroVisual">
+    <img src="assets/hero-cookie.jpg" alt="Freshly baked artisanal cookies">
+    <div class="seal">Artisanal<br><b>Premium</b><br>Heritage</div>
+  </div>
+</section>
+
+<!-- MASTER CONFECTIONERY TRUST BADGE -->
+<div style="padding: 24px 8% 8px; background: #faf6f0;">
+  <div style="max-width: 960px; margin: 0 auto; background: linear-gradient(135deg, #fffbf5 0%, #fff6ea 100%); border: 1.5px solid #d4a373; border-radius: 16px; padding: 22px 28px; box-shadow: 0 4px 20px rgba(90,46,16,0.06); display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
+    <div style="font-size: 42px; background: #faedcd; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; border: 2px solid #d4a373;">👨‍🍳</div>
+    <div style="flex: 1; min-width: 260px;">
+      <span style="background: #5a2e10; color: #faedcd; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px;">MASTER BAKERY GUIDANCE</span>
+      <h3 style="margin: 0 0 6px; color: #5a2e10; font-family: 'Playfair Display', serif; font-size: 1.25rem;">Guided by 35+ Years of Confectionery Mastery</h3>
+      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>. From exact baking temperatures to crumb texture, we bring commercial-grade perfection to small-batch baking.</p>
+    </div>
+  </div>
+</div>
+
+<section class="shortcuts">
+  <a href="#shop"><b>🍪</b><span><strong>All Cookies</strong><small>Explore classic flavours →</small></span></a>
+  <a href="#shop"><b>⭐</b><span><strong>Best Sellers</strong><small>Customer favourites →</small></span></a>
+  <a href="#shop"><b>🎁</b><span><strong>Gift Packs</strong><small>Festive & celebration packs →</small></span></a>
+  <a href="#contact"><b>🚚</b><span><strong>Pan-India Delivery</strong><small>Safe & sealed packaging →</small></span></a>
+</section>
+
+<section class="collection" id="shop">
+  <div class="sectionHead">
+    <div>
+      <p class="eyebrow">OUR HANDCRAFTED SELECTION</p>
+      <h2>Cookies Worth Craving</h2>
+      <p>Select your favourite blend, pack size, and crunch.</p>
+    </div>
+    <span>Freshly baked for each order →</span>
+  </div>
+  <div class="grid" id="productGrid"></div>
+</section>
+
+<section class="about" id="about">
+  <div>
+    <p class="eyebrow">OUR PHILOSOPHY</p>
+    <h2>Made with devotion, perfected by mastery.</h2>
+    <p>We blend traditional warmth with seasoned industrial baking techniques so every box opens up with fresh oven-baked aroma and unbeatable texture.</p>
+  </div>
+  <div class="promise" id="why">
+    <span>🌿<b>Small Batch Baking</b><small>Never pre-packaged or stale</small></span>
+    <span>❤️<b>Pure Ingredients</b><small>Pure butter, rich cocoa & real nuts</small></span>
+    <span>👑<b>Master Formulations</b><small>35+ years guided recipes</small></span>
+    <span>🚚<b>Delhivery Express</b><small>Safe delivery across India</small></span>
+  </div>
+</section>
+
+<section class="benefits" aria-label="Our benefits">
+  <div class="benefit"><span class="benefitIcon">◷</span><span><b>Fresh Oven Baking</b><small>Baked fresh on order</small></span></div>
+  <div class="benefit"><span class="benefitIcon">❋</span><span><b>No Preservatives</b><small>100% natural richness</small></span></div>
+  <div class="benefit"><span class="benefitIcon">♧</span><span><b>FSSAI Certified</b><small>Lic. 23626028006050</small></span></div>
+  <div class="benefit"><span class="benefitIcon">🚚</span><span><b>Pan-India Shipping</b><small>Tracked express delivery</small></span></div>
+</section>
+
+<footer id="contact">
+  <div class="footerBrand">
+    <a class="footerLogo" href="index.html">
+      <img src="assets/srivari-logo.jpg" alt="SRIVARI COOKIES logo">
+      <b>SRIVARI COOKIES</b>
+    </a>
+    <p>Gourmet artisanal cookies and confectionery, handcrafted with devotion and guided by over 35 years of industry mastery.</p>
+    <div class="socialLinks">
+      <a href="https://wa.me/917989816250" target="_blank" rel="noopener" aria-label="Chat on WhatsApp" style="display:inline-block;background:#25D366;color:#fff;padding:8px 16px;border-radius:20px;text-decoration:none;font-weight:bold;font-size:13px;margin-top:10px;">
+        💬 Chat on WhatsApp
+      </a>
+    </div>
+  </div>
+  <div class="footerColumn">
+    <h4>COLLECTIONS</h4>
+    <a href="#shop">Almond Cashew</a>
+    <a href="#shop">Double Chocolate</a>
+    <a href="#shop">Dry Fruit Special</a>
+    <a href="#shop">Bestsellers</a>
+  </div>
+  <div class="footerColumn">
+    <h4>SUPPORT</h4>
+    <a href="#contact">Shipping & Delivery</a>
+    <a href="#contact">Refund Policy</a>
+    <a href="#contact">Privacy Policy</a>
+    <a href="#contact">Terms & Conditions</a>
+  </div>
+  <div class="footerColumn footerContact">
+    <h4>CONTACT & BAKERY</h4>
+    <p>📍 HNO 8-6-3/1/A/2</p>
+    <p>Rajendranagar, Rangareddy</p>
+    <p>Telangana – 500077, India</p>
+    <a href="tel:+917989816250">📞 +91 79898 16250</a>
+    <a href="mailto:chiluverushyam8790@gmail.com">✉️ chiluverushyam8790@gmail.com</a>
+    <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
+  </div>
+  <div class="copy" style="grid-column: 1/-1; border-top: 1px solid rgba(255,255,255,0.15); padding-top: 18px; text-align: center; font-size: 12.5px; color: #a4beba;">
+    © 2026 SRIVARI COOKIES. All rights reserved. Handcrafted with devotion.
+  </div>
+</footer>
+
+<aside class="drawer" id="drawer" aria-label="Shopping cart">
+  <div class="drawerHead">
+    <h2>Your Gourmet Cart</h2>
+    <button id="closeCart" aria-label="Close cart">×</button>
+  </div>
+  <div id="cartItems"></div>
+  <div class="summary">
+    <div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div>
+    <div><span>Delivery (Delhivery)</span><b id="cartDelivery">—</b></div>
+    <div class="grand"><span>Total to Pay</span><b id="cartTotal">₹0</b></div>
+  </div>
+  <p class="deliveryNote" id="deliveryNote">Enter your 6-digit pincode to calculate delivery charge.</p>
+  <form id="checkout">
+    <label>Full Name <i>*</i><input id="cname" required placeholder="Enter customer name"></label>
+    <label>WhatsApp / Mobile <i>*</i><input id="phone" required inputmode="tel" pattern="[0-9+ ]{10,15}" placeholder="Enter 10-digit mobile number"></label>
+    <label>Email <span>(optional)</span><input id="email" type="email" placeholder="For instant invoice copy"></label>
+    <label>Complete Delivery Address <i>*</i><textarea id="address" required placeholder="House/Flat No, Street, Landmark, Area"></textarea></label>
+    <label>Pincode <i>*</i><input id="pincode" required inputmode="numeric" pattern="[0-9]{6}" placeholder="6-digit postal code"></label>
+    <button class="primary checkoutBtn" type="submit">Pay Securely via Razorpay →</button>
+  </form>
+</aside>
+<div class="shade" id="shade"></div>
+
+<div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
+  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:16px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,0.3);max-height:85vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
+      <h3 style="margin:0;color:#5a2e10;font-size:1.2rem;font-family:'Playfair Display',serif;">📦 Track Past Orders</h3>
+      <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;">✕</button>
+    </div>
+    <div style="display:flex;gap:8px;margin-bottom:14px;">
+      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
+      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
+    </div>
+    <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
+      <div style="text-align:center;padding:20px;color:#888;font-size:13.5px;">Enter your phone number to view tracking and Delhivery dispatch status.</div>
+    </div>
+  </div>
+</div>
+
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
