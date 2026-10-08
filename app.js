@@ -1,5 +1,5 @@
 const products=[
-  {id:'almond',name:'Almond Cashew Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'BEST SELLER'},
+  {id:'almond',name:'Almond Cashew Cookies (Test ₹1)',price200:1,price400:1,mrp200:250,mrp400:500,image:'assets/almond-cashew.jpg',badge:'TEST ITEM'},
   {id:'butter',name:'Butter Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/butter.jpg',badge:'FRESHLY BAKED'},
   {id:'chip',name:'Classic Choco Chip Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/classic-chip.jpg',badge:'POPULAR'},
   {id:'coconut',name:'Coconut Cookies',price200:250,price400:500,mrp200:250,mrp400:500,image:'assets/coconut.jpg',badge:'FRESH TODAY'},
@@ -349,4 +349,260 @@ async function calculateDelivery(){
 
     if(note){
       note.textContent=
-        'Delivery
+        'Delivery charge could not be calculated for this pincode.';
+    }
+
+    alert(
+      'Delivery charge could not be calculated. Please check the pincode and try again.'
+    );
+
+    return false;
+  }
+}
+
+const pincodeEl=document.getElementById('pincode');
+
+pincodeEl?.addEventListener(
+  'blur',
+  calculateDelivery
+);
+
+pincodeEl?.addEventListener(
+  'input',
+  ()=>{
+    deliveryCharge=null;
+    lastDeliveryPincode='';
+    updateSummary(cartSubtotal());
+  }
+);
+
+/* ================================
+   CLOUDFLARE WORKER D1 API CALL
+================================ */
+
+async function callOrdersApi(payload){
+  const response=await fetch(ORDERS_API, {
+    method:'POST',
+    headers:{
+      'Content-Type':'application/json'
+    },
+    body:JSON.stringify(payload)
+  });
+
+  const data=await response.json().catch(()=>({}));
+
+  if(!response.ok || data.error || data.success===false){
+    throw new Error(
+      (typeof data.error === 'string' ? data.error : data.error?.description) || 'Order service unavailable'
+    );
+  }
+
+  return data;
+}
+
+/* ================================
+   RAZORPAY CHECKOUT
+================================ */
+
+function openRazorpayCheckout(orderInfo, rzpOrderData){
+  return new Promise((resolve,reject)=>{
+    if(typeof Razorpay==='undefined'){
+      reject(
+        new Error('Razorpay Checkout could not load. Please refresh the page.')
+      );
+      return;
+    }
+
+    const options={
+      key: rzpOrderData.key,
+      amount: rzpOrderData.amount,
+      currency: 'INR',
+      name: 'SRIVARI COOKIES',
+      description: 'Test Order Payment',
+      order_id: rzpOrderData.razorpay_order_id,
+      prefill:{
+        name: orderInfo.name,
+        contact: orderInfo.phone,
+        email: orderInfo.email||undefined
+      },
+      notes:{
+        srivari_order_id: rzpOrderData.order_id
+      },
+      theme:{
+        color:'#7b3f18'
+      },
+      handler: response => {
+        resolve(response);
+      },
+      modal:{
+        ondismiss: ()=>{
+          reject(
+            new Error('Payment window closed before payment was completed.')
+          );
+        }
+      }
+    };
+
+    const rzp=new Razorpay(options);
+
+    rzp.on('payment.failed', response=>{
+      reject(
+        new Error(
+          response?.error?.description || 'Payment failed. Please try again.'
+        )
+      );
+    });
+
+    rzp.open();
+  });
+}
+
+/* ================================
+   CHECKOUT PROCESS
+================================ */
+
+document
+.getElementById('checkout')
+?.addEventListener(
+  'submit',
+  async e=>{
+    e.preventDefault();
+
+    if(checkoutBusy)return;
+
+    if(!cart.length){
+      alert('Please add cookies to cart.');
+      return;
+    }
+
+    const name=document.getElementById('cname').value.trim();
+    const phone=document.getElementById('phone').value.trim();
+    const email=document.getElementById('email').value.trim();
+    const address=document.getElementById('address').value.trim();
+    const pincode=document.getElementById('pincode').value.trim();
+
+    if(!name||!phone||!address||!/^\d{6}$/.test(pincode)){
+      alert('Please fill all required details and enter a valid 6-digit pincode.');
+      return;
+    }
+
+    const ready=await calculateDelivery();
+    if(!ready)return;
+
+    // Test Purpose: Testing amount direct ga ₹1
+    const subtotal=cartSubtotal();
+    const total=1; // Test ki direct ₹1 mathrame cut avthundi
+
+    checkoutBusy=true;
+
+    const button=document.querySelector('.checkoutBtn');
+    const oldText=button?.textContent||'Pay Now';
+
+    if(button){
+      button.disabled=true;
+      button.textContent='Creating secure order…';
+    }
+
+    try{
+      // 1. Worker call: Razorpay order create + D1 database entry
+      const rzpOrderData = await callOrdersApi({
+        action: 'create_order',
+        amount: total,
+        customer: {
+          name,
+          phone,
+          email,
+          address: `${address}\nPincode: ${pincode}`,
+          items: cart.map(i=>{
+            const p=configuredProducts.find(x=>x.id===i.id);
+            return {
+              product_id: i.id,
+              product_name: p?.name||i.id,
+              weight_g: i.weight,
+              quantity: i.qty,
+              unit_price: priceFor(p,i.weight),
+              line_total: priceFor(p,i.weight)*i.qty
+            };
+          })
+        }
+      });
+
+      if(button)
+        button.textContent='Opening Razorpay…';
+
+      // 2. Open Razorpay Checkout Window
+      const paymentResponse = await openRazorpayCheckout(
+        { name, phone, email },
+        rzpOrderData
+      );
+
+      if(button)
+        button.textContent='Verifying payment…';
+
+      // 3. Worker call: Payment verification + D1 update status to 'PAID'
+      const verified = await callOrdersApi({
+        action: 'verify_payment',
+        order_id: rzpOrderData.order_id,
+        razorpay_order_id: paymentResponse.razorpay_order_id,
+        razorpay_payment_id: paymentResponse.razorpay_payment_id,
+        razorpay_signature: paymentResponse.razorpay_signature
+      });
+
+      if(!verified.success){
+        throw new Error('Payment could not be verified.');
+      }
+
+      // 4. Save to localStorage for Receipt Page
+      const paidOrder={
+        orderId: rzpOrderData.order_id,
+        name,
+        phone,
+        email,
+        address,
+        pincode,
+        items: cart.map(i=>{
+          const p=configuredProducts.find(x=>x.id===i.id);
+          return {
+            id: i.id,
+            name: p?.name||i.id,
+            weight: i.weight,
+            qty: i.qty,
+            amount: priceFor(p,i.weight)*i.qty
+          };
+        }),
+        subtotal,
+        deliveryCharge,
+        total,
+        paymentId: paymentResponse.razorpay_payment_id,
+        awb: ''
+      };
+
+      localStorage.setItem('srivari_pending_order', JSON.stringify(paidOrder));
+
+      // Cart Empty & Reset
+      cart=[];
+      deliveryCharge=null;
+      lastDeliveryPincode='';
+      saveCart();
+
+      document.getElementById('checkout').reset();
+      closeDrawer();
+
+      // Redirect to receipt
+      window.location.href='receipt.html';
+
+    }catch(error){
+      console.error('Checkout error:', error);
+      alert(error.message || 'Payment could not be completed. Please try again.');
+    }finally{
+      checkoutBusy=false;
+      if(button){
+        button.disabled=false;
+        button.textContent=oldText;
+      }
+    }
+  }
+);
+
+renderProducts();
+saveCart();
