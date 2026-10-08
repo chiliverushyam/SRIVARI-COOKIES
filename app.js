@@ -1,8 +1,8 @@
 let products = [
-  { id: 'almond', name: 'Almond Cashew Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/almond-cashew.jpg', badge: 'BEST SELLER', in_stock: 1 },
+  { id: 'almond', name: 'Almond Cashew Cookies', price200: 1000, price400: 2000, mrp200: 1250, mrp400: 2500, image: 'assets/almond-cashew.jpg', badge: 'BEST SELLER', in_stock: 1 },
   { id: 'butter', name: 'Butter Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/butter.jpg', badge: 'FRESHLY BAKED', in_stock: 1 },
-  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/classic-chip.jpg', badge: 'POPULAR', in_stock: 0 },
-  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/coconut.jpg', badge: 'FRESH TODAY', in_stock: 0 },
+  { id: 'chip', name: 'Classic Choco Chip Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/classic-chip.jpg', badge: 'POPULAR', in_stock: 1 },
+  { id: 'coconut', name: 'Coconut Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/coconut.jpg', badge: 'FRESH TODAY', in_stock: 1 },
   { id: 'double', name: 'Double Chocolate Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/double-chocolate.jpg', badge: 'RICH & FUDGY', in_stock: 1 },
   { id: 'dry', name: 'Dry Fruit Cookies', price200: 600, price400: 1200, mrp200: 750, mrp400: 1500, image: 'assets/dry-fruit.jpg', badge: 'PREMIUM', in_stock: 1 },
   { id: 'oats', name: 'Oats Raisin Cookies', price200: 250, price400: 500, mrp200: 320, mrp400: 650, image: 'assets/oats-raisin.jpg', badge: 'HEALTHY CHOICE', in_stock: 1 },
@@ -10,7 +10,7 @@ let products = [
 ];
 
 let cart = JSON.parse(localStorage.getItem('srivariCart') || '[]');
-let configuredProducts = products.map(p => ({ ...p }));
+let configuredProducts = products.map(p => ({ ...p, in_stock: 1 }));
 
 const DELHIVERY_API = 'https://srivari-delhivery-api.chiluverushyam8790.workers.dev';
 const ORDERS_API = 'https://srivari-orders-api.chiluverushyam8790.workers.dev';
@@ -46,7 +46,7 @@ function renderProducts() {
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
     return `
-      <article class="card" data-product="${p.id}" style="${isOutOfStock ? 'opacity: 0.85;' : ''}">
+      <article class="card" data-product="${p.id}">
         <div class="photo">
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='assets/hero-cookie.jpg'">
           <span class="badge" style="background:${badgeBg}; color:#fff; font-weight:bold;">${badgeText}</span>
@@ -76,7 +76,7 @@ function renderProducts() {
           </div>
 
           ${isOutOfStock 
-            ? `<button class="add" disabled style="background:#888; color:#fff; cursor:not-allowed; opacity:0.85;">✕ Out of Stock</button>`
+            ? `<button class="add" disabled style="background:#888; color:#fff; cursor:not-allowed;">✕ Out of Stock</button>`
             : `<button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>`
           }
         </div>
@@ -566,12 +566,10 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   }
 });
 
-// Safe Instant Boot
 renderProducts();
 saveCart();
 autoFillCustomerDetails();
 
-// Cloudflare D1 Sync
 async function syncFromAdmin() {
   try {
     const res = await fetch(`${ORDERS_API}/products`, { cache: 'no-store' });
@@ -585,7 +583,9 @@ async function syncFromAdmin() {
           if (p.price400) item.price400 = Number(p.price400);
           if (p.mrp200) item.mrp200 = Number(p.mrp200);
           if (p.mrp400) item.mrp400 = Number(p.mrp400);
-          item.in_stock = Number(p.in_stock);
+          if (p.in_stock !== undefined && p.in_stock !== null) {
+            item.in_stock = Number(p.in_stock);
+          }
         }
       });
       renderProducts();
