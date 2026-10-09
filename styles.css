@@ -1079,7 +1079,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   }
 }
 /* ==========================================================================
-   SRIVARI MOBILE BOTTOM NAVIGATION (GREEN & GOLD HERITAGE)
+   SRIVARI LUXURY ARTISANAL BOTTOM DOCK (GLASSMORPHISM & GOLD ACCENTS)
    ========================================================================== */
 .bottom-nav {
   display: none;
@@ -1087,7 +1087,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
 
 @media (max-width: 700px) {
   body {
-    padding-bottom: 68px; /* Screen kinda content bar venuka daagipokunda space */
+    padding-bottom: 74px;
   }
 
   .bottom-nav {
@@ -1096,14 +1096,16 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     bottom: 0;
     left: 0;
     right: 0;
-    height: 64px;
-    background: #063e36;
-    border-top: 1.5px solid rgba(201, 147, 38, 0.4);
-    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.22);
+    height: 66px;
+    background: rgba(255, 255, 255, 0.94);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-top: 1px solid rgba(201, 147, 38, 0.28);
+    box-shadow: 0 -4px 20px rgba(18, 53, 46, 0.08);
     z-index: 1500;
     justify-content: space-around;
     align-items: center;
-    padding: 4px 6px;
+    padding: 0 10px env(safe-area-inset-bottom, 0px);
   }
 
   .bottom-nav-item {
@@ -1112,28 +1114,57 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     align-items: center;
     justify-content: center;
     text-decoration: none;
-    color: #d7e0dc;
-    font-size: 11px;
-    font-weight: 600;
+    color: #697a75;
     flex: 1;
-    transition: all 0.2s ease;
     padding: 6px 0;
+    position: relative;
+    transition: all 0.25s ease;
   }
 
-  .bottom-nav-item:hover,
-  .bottom-nav-item.active {
-    color: #dfa83e;
+  .nav-svg {
+    width: 22px;
+    height: 22px;
+    stroke: #697a75;
+    transition: all 0.25s ease;
   }
 
-  .bottom-nav-item .nav-icon {
-    font-size: 20px;
-    line-height: 1.1;
-    margin-bottom: 2px;
+  .nav-label {
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.4px;
+    margin-top: 3px;
+    transition: color 0.25s ease;
   }
 
-  /* WhatsApp button bottom bar paina float ayyela position */
+  /* Active / Selected Tab (Srivari Heritage Green & Gold Dot) */
+  .bottom-nav-item.active,
+  .bottom-nav-item:active {
+    color: #005448;
+  }
+
+  .bottom-nav-item.active .nav-svg {
+    stroke: #005448;
+    transform: translateY(-1px);
+  }
+
+  .bottom-nav-item.active::after {
+    content: '';
+    position: absolute;
+    bottom: 2px;
+    width: 4px;
+    height: 4px;
+    background: #c99326;
+    border-radius: 50%;
+  }
+
+  .nav-icon-wrap {
+    position: relative;
+    display: inline-flex;
+  }
+
+  /* WhatsApp Floating Button Position */
   .whatsapp-float-btn {
-    bottom: 78px !important;
+    bottom: 80px !important;
     right: 18px !important;
   }
 }
