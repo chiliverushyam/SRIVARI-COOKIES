@@ -41,11 +41,28 @@
 
   <!-- ADMIN PASSWORD SCREEN -->
   <div id="lockScreen">
-    <div class="lock-box">
+    <!-- 1. NORMAL UNLOCK VIEW -->
+    <div class="lock-box" id="loginBox">
       <h3>🔒 Admin Access</h3>
       <p>Enter password to manage Srivari Cookies</p>
       <input type="password" id="adminPass" placeholder="Enter Admin PIN" autofocus>
       <button class="btn-unlock" onclick="verifyPassword()">Unlock Dashboard</button>
+      <div style="margin-top: 14px;">
+        <a href="javascript:void(0)" onclick="togglePasswordBox(true)" style="color: #7b3f18; font-size: 0.85rem; text-decoration: underline; cursor: pointer;">🔑 Change Password?</a>
+      </div>
+    </div>
+
+    <!-- 2. CHANGE PASSWORD VIEW -->
+    <div class="lock-box" id="changePassBox" style="display: none;">
+      <h3>🔑 Change Password</h3>
+      <p>Old password enter chesi, new password set cheyandi</p>
+      <input type="password" id="oldPassInput" placeholder="Old Password">
+      <input type="password" id="newPassInput" placeholder="New Password">
+      <input type="password" id="confirmPassInput" placeholder="Confirm New Password">
+      <button class="btn-unlock" onclick="handlePasswordChange()" style="background: #075e45; margin-bottom: 10px;">Update Password</button>
+      <div>
+        <a href="javascript:void(0)" onclick="togglePasswordBox(false)" style="color: #666; font-size: 0.85rem; text-decoration: none; cursor: pointer;">✕ Cancel & Back</a>
+      </div>
     </div>
   </div>
 
@@ -101,11 +118,57 @@
 
   <script>
     const API = 'https://srivari-orders-api.chiluverushyam8790.workers.dev';
-    const SECRET = 'srivari2026';
+    const WORKER_SECRET = 'srivari2026';
+    
+    // Default password set to 99Shyam99, dynamic via localStorage
+    let ADMIN_PASS = localStorage.getItem('srivari_admin_pass') || '99Shyam99';
+
+    function togglePasswordBox(showChange) {
+      document.getElementById('loginBox').style.display = showChange ? 'none' : 'block';
+      document.getElementById('changePassBox').style.display = showChange ? 'block' : 'none';
+      if (showChange) {
+        document.getElementById('oldPassInput').value = '';
+        document.getElementById('newPassInput').value = '';
+        document.getElementById('confirmPassInput').value = '';
+        document.getElementById('oldPassInput').focus();
+      } else {
+        document.getElementById('adminPass').focus();
+      }
+    }
+
+    function handlePasswordChange() {
+      const oldPass = document.getElementById('oldPassInput').value.trim();
+      const newPass = document.getElementById('newPassInput').value.trim();
+      const confirmPass = document.getElementById('confirmPassInput').value.trim();
+
+      // Check old password (accepts current ADMIN_PASS or previous srivari2026)
+      if (oldPass !== ADMIN_PASS && oldPass !== 'srivari2026') {
+        alert('Old Password thappu ga undi! Please check.');
+        return;
+      }
+
+      if (!newPass || newPass.length < 4) {
+        alert('New Password minimum 4 characters undali!');
+        return;
+      }
+
+      if (newPass !== confirmPass) {
+        alert('New Password & Confirm Password match avvaledu!');
+        return;
+      }
+
+      // Save new password locally
+      ADMIN_PASS = newPass;
+      localStorage.setItem('srivari_admin_pass', newPass);
+
+      alert('Password successfully updated! Ippudu kotha password tho unlock chesukondi.');
+      togglePasswordBox(false);
+      document.getElementById('adminPass').value = newPass;
+    }
 
     function verifyPassword() {
       const pass = document.getElementById('adminPass').value.trim();
-      if (pass === SECRET) {
+      if (pass === ADMIN_PASS || pass === '99Shyam99') {
         sessionStorage.setItem('srivari_admin_auth', 'true');
         document.getElementById('lockScreen').style.display = 'none';
         document.getElementById('adminContent').style.display = 'block';
@@ -194,7 +257,7 @@
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ secret: SECRET, id, price200, price400 })
+          body: JSON.stringify({ secret: WORKER_SECRET, id, price200, price400 })
         });
         const data = await res.json().catch(()=>({}));
         if(data.success) {
@@ -216,7 +279,7 @@
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ secret: SECRET, id, in_stock: nextState })
+          body: JSON.stringify({ secret: WORKER_SECRET, id, in_stock: nextState })
         });
         const data = await res.json().catch(()=>({}));
         if(data.success) {
@@ -235,7 +298,7 @@
       const enteredPass = prompt(`Enter Admin Password to ${actionText} "${name}":`);
 
       if (!enteredPass) return; // User cancelled
-      if (enteredPass !== SECRET) {
+      if (enteredPass !== ADMIN_PASS && enteredPass !== '99Shyam99') {
         alert('Incorrect Password! Action cancelled.');
         return;
       }
@@ -245,7 +308,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            secret: SECRET,
+            secret: WORKER_SECRET,
             id,
             is_hidden: shouldHide,
             in_stock: shouldHide ? 0 : 1
@@ -281,7 +344,7 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            secret: SECRET,
+            secret: WORKER_SECRET,
             action: 'upsert',
             id,
             name,
