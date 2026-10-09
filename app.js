@@ -19,7 +19,9 @@ let deliveryCharge = null;
 let lastDeliveryPincode = '';
 let checkoutBusy = false;
 
-function priceFor(p, w) { return w === 200 ? p.price200 : p.price400; }
+function priceFor(p, w) { 
+  return w === 200 ? p.price200 : p.price400; 
+}
 
 function mrpFor(p, w) {
   const currentPrice = priceFor(p, w);
@@ -314,15 +316,76 @@ function autoFillCustomerDetails() {
   } catch (e) {}
 }
 
+/* ==========================================================================
+   PART C: SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE
+   ========================================================================== */
+window.renderAccountHub = function() {
+  const hub = document.getElementById('accountHubView');
+  if (!hub) return;
+
+  const profile = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
+
+  if (profile.phone) {
+    const initial = (profile.name || 'S').trim().charAt(0).toUpperCase();
+    hub.innerHTML = `
+      <div class="account-card">
+        <div class="account-avatar">${initial}</div>
+        <div class="account-details" style="flex:1;">
+          <h3>${profile.name || 'Srivari Customer'}</h3>
+          <p>+91 ${profile.phone}</p>
+          ${profile.address ? `<div style="font-size:11px; opacity:0.8; margin-top:4px;">📍 ${profile.address.slice(0, 32)}...</div>` : ''}
+        </div>
+      </div>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+        <span style="font-size:12px; color:#12352e; font-weight:600;">Verified Customer</span>
+        <button type="button" class="account-logout-btn" onclick="logoutCustomer()">Sign Out / Change</button>
+      </div>
+    `;
+    fetchCustomerOrders(profile.phone);
+  } else {
+    hub.innerHTML = `
+      <div class="login-box">
+        <h3>Namaskaram 🙏</h3>
+        <p>Mee orders mariyu delivery status chusukodaniki mobile number enter cheyandi</p>
+        <div class="login-input-wrap">
+          <input type="tel" id="loginMobileInput" placeholder="10-digit Mobile Number" maxlength="10">
+          <button type="button" class="login-btn" onclick="loginWithPhone()">Login</button>
+        </div>
+      </div>
+    `;
+  }
+};
+
+window.loginWithPhone = function() {
+  const input = document.getElementById('loginMobileInput');
+  const phone = input ? input.value.replace(/\D/g, '') : '';
+
+  if (phone.length !== 10) {
+    alert('Dhayachesi valid 10-digit mobile number enter cheyandi.');
+    return;
+  }
+
+  const existing = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
+  existing.phone = phone;
+  if (!existing.name) existing.name = 'Valued Customer';
+
+  localStorage.setItem('srivari_customer_profile', JSON.stringify(existing));
+  renderAccountHub();
+};
+
+window.logoutCustomer = function() {
+  localStorage.removeItem('srivari_customer_profile');
+  const container = document.getElementById('ordersListContainer');
+  if (container) {
+    container.innerHTML = '<div style="text-align: center; padding: 20px; color: #777; font-size: 13px;">Login ayyaka mee orders ikkada kanipisthayi.</div>';
+  }
+  renderAccountHub();
+};
+
 window.openOrdersModal = function() {
   const modal = document.getElementById('ordersModal');
   if (modal) modal.style.display = 'flex';
-  const saved = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
-  const input = document.getElementById('lookupPhone');
-  if (input && saved.phone) {
-    input.value = saved.phone;
-    fetchCustomerOrders();
-  }
+  renderAccountHub();
 };
 
 window.closeOrdersModal = function() {
@@ -330,18 +393,17 @@ window.closeOrdersModal = function() {
   if (modal) modal.style.display = 'none';
 };
 
-window.fetchCustomerOrders = async function() {
-  const input = document.getElementById('lookupPhone');
+window.fetchCustomerOrders = async function(customPhone) {
   const container = document.getElementById('ordersListContainer');
-  let phone = input ? input.value.replace(/\D/g, '') : '';
+  const profile = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
+  let phone = customPhone || profile.phone || '';
+
+  phone = phone.replace(/\D/g, '');
   if (phone.length > 10) phone = phone.slice(-10);
 
-  if (!phone || phone.length < 10) {
-    alert('Please enter a valid 10-digit mobile number');
-    return;
-  }
+  if (!phone || phone.length < 10) return;
 
-  if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#666;">Searching your orders...</div>';
+  if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#666;font-size:13px;">Searching your orders...</div>';
 
   try {
     const res = await fetch(`${ORDERS_API}/customer-orders?phone=${phone}`, { cache: 'no-store' });
@@ -349,26 +411,30 @@ window.fetchCustomerOrders = async function() {
     if (!container) return;
 
     if (!data.success || !data.orders || !data.orders.length) {
-      container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;">No previous orders found.</div>';
+      container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;font-size:13px;">No previous orders found for this number.</div>';
       return;
     }
 
     container.innerHTML = data.orders.map(o => `
-      <div style="background:#fff;border:1px solid #ebdcd0;border-radius:10px;padding:12px;margin-bottom:10px;">
-        <div style="display:flex;justify-content:space-between;margin-bottom:4px;">
-          <b style="color:#5a2e10;">Order #${o.id}</b>
-          <span style="color:#137333;font-weight:bold;font-size:12px;text-transform:uppercase;">${o.payment_status}</span>
+      <div style="background:#fff;border:1px solid #ebdcd0;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
+          <b style="color:#063e36;font-size:14px;">Order #${o.id}</b>
+          <span style="color:#005448;background:#eef6f4;padding:3px 8px;border-radius:20px;font-weight:bold;font-size:11px;text-transform:uppercase;">${o.payment_status}</span>
         </div>
         <div style="font-size:13px;color:#444;line-height:1.5;">
-          <div>Amount: ₹${o.total}</div>
-          <div>Date: ${o.created_at ? o.created_at.slice(0, 10) : 'Recent'}</div>
-          ${o.awb ? `<div style="margin-top:4px;">AWB: <code>${o.awb}</code></div>` : ''}
+          <div>Amount: <b>₹${o.total}</b></div>
+          <div style="color:#888;font-size:12px;">Date: ${o.created_at ? o.created_at.slice(0, 10) : 'Recent'}</div>
+          ${o.awb ? `<div style="margin-top:6px;font-size:12px;">AWB: <code>${o.awb}</code></div>` : ''}
         </div>
-        ${o.awb ? `<a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" style="background:#075e45;color:#fff;padding:6px 12px;text-decoration:none;border-radius:6px;font-size:12px;display:inline-block;margin-top:6px;">🚚 Track Live</a>` : ''}
+        ${o.awb ? `
+          <a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" style="background:#005448;color:#fff;padding:8px 14px;text-decoration:none;border-radius:8px;font-size:12px;font-weight:700;display:inline-block;margin-top:10px;">
+            🚚 Track on Delhivery
+          </a>
+        ` : ''}
       </div>
     `).join('');
   } catch (e) {
-    if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#c5221f;">Could not load orders.</div>';
+    if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#c5221f;font-size:13px;">Could not load orders.</div>';
   }
 };
 
