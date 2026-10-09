@@ -37,7 +37,7 @@ function discount(p, w) {
 }
 
 function renderProducts() {
-  const grid = document.getElementById('productGrid');
+  const grid = document.getElementById('productGrid') || document.getElementById('cookie-grid');
   if (!grid) return;
 
   grid.innerHTML = configuredProducts.map(p => {
@@ -147,7 +147,7 @@ function saveCart() {
   localStorage.setItem('srivariCart', JSON.stringify(cart));
   renderCart();
 
-  const count = document.getElementById('cartCount');
+  const count = document.getElementById('cartCount') || document.getElementById('cart-count');
   if (count) {
     count.textContent = cart.reduce((s, i) => s + i.qty, 0);
   }
@@ -166,7 +166,7 @@ function cartSubtotal() {
 }
 
 function renderCart() {
-  const box = document.getElementById('cartItems');
+  const box = document.getElementById('cartItems') || document.getElementById('cart-items');
   if (!box) return;
 
   if (!cart.length) {
@@ -219,7 +219,7 @@ function changeQty(key, d) {
 function updateSummary(subtotal) {
   const subtotalEl = document.getElementById('cartSubtotal');
   const deliveryEl = document.getElementById('cartDelivery');
-  const totalEl = document.getElementById('cartTotal');
+  const totalEl = document.getElementById('cartTotal') || document.getElementById('cart-total');
   const note = document.getElementById('deliveryNote');
 
   if (subtotalEl) subtotalEl.textContent = '₹' + subtotal;
