@@ -179,3 +179,39 @@ footer#contact .footerContact a[href^="tel"]::before{content:"📞"}
 footer#contact .footerContact a[href^="mailto"]::before{content:"✉️"}
 #checkout .checkoutBtn{display:block !important;visibility:visible !important;opacity:1 !important;width:100% !important;min-height:48px;margin:16px 0 24px !important;background:#005448 !important;color:#fff !important;border:0 !important;border-radius:10px;font-size:15px;font-weight:700;cursor:pointer}
 @media(max-width:700px){.topbar{display:none}}
+/* WhatsApp Floating Action Button */
+.whatsapp-float-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  background-color: #25d366;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.whatsapp-float-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.35);
+}
+
+@media (max-width: 768px) {
+  .whatsapp-float-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+  .whatsapp-float-btn svg {
+    width: 28px;
+    height: 28px;
+  }
+}
