@@ -370,7 +370,27 @@ footer#contact {
 </div>
 
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
-<script src="app.js"></script>
+<script src="app.js"></script> 
+  <!-- Mobile App-Style Bottom Navigation Bar (Srivari Heritage Theme) -->
+<nav class="bottom-nav">
+  <a href="#" class="bottom-nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
+    <span class="nav-icon">🏠</span>
+    <span class="nav-label">Home</span>
+  </a>
+  <a href="javascript:void(0)" class="bottom-nav-item" onclick="openOrdersModal()">
+    <span class="nav-icon">📦</span>
+    <span class="nav-label">Orders</span>
+  </a>
+  <a href="javascript:void(0)" class="bottom-nav-item" onclick="openDrawer()">
+    <span class="nav-icon">🛒</span>
+    <span class="nav-label">Cart</span>
+  </a>
+  <a href="javascript:void(0)" class="bottom-nav-item" onclick="openOrdersModal()">
+    <span class="nav-icon">👤</span>
+    <span class="nav-label">Account</span>
+  </a>
+</nav>
+
 </body>
     <!-- Floating WhatsApp Support Button -->
   <a href="https://wa.me/917989816250?text=Hi%20Srivari%20Cookies%2C%20I%20have%20an%20inquiry%20about%20my%20order" 
