@@ -1276,3 +1276,165 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   display: inline-block;
   margin-top: 6px;
 }
+/* ==========================================================================
+   SRIVARI ORDER TRACKING STEPPER & TIMELINE (GREEN & GOLD BOUTIQUE)
+   ========================================================================== */
+.order-tracking-card {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 14px rgba(18, 53, 46, 0.05);
+}
+
+.order-header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--line);
+  padding-bottom: 10px;
+  margin-bottom: 12px;
+}
+
+.order-header-id {
+  font-family: 'Playfair Display', serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.order-status-badge {
+  background: #eaf5f2;
+  color: #005448;
+  border: 1px solid #c2e2d9;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+/* 4-Step Visual Stepper */
+.tracking-stepper {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  margin: 14px 0 16px;
+  padding-left: 8px;
+  position: relative;
+}
+
+.step-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  position: relative;
+  padding-bottom: 18px;
+}
+
+.step-item:last-child {
+  padding-bottom: 4px;
+}
+
+/* Connecting Line */
+.step-item:not(:last-child)::after {
+  content: '';
+  position: absolute;
+  left: 9px;
+  top: 20px;
+  bottom: 0;
+  width: 2px;
+  background: #e2d7c5;
+}
+
+.step-item.completed:not(:last-child)::after {
+  background: var(--green);
+}
+
+/* Step Dot / Circle */
+.step-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 2px solid #cfd8d4;
+  display: grid;
+  place-items: center;
+  font-size: 10px;
+  font-weight: 800;
+  color: #999;
+  z-index: 2;
+  flex: 0 0 20px;
+}
+
+.step-item.completed .step-dot {
+  background: var(--green);
+  border-color: var(--green);
+  color: #ffffff;
+}
+
+.step-item.active .step-dot {
+  background: var(--gold);
+  border-color: var(--gold);
+  color: #ffffff;
+  box-shadow: 0 0 0 4px rgba(201, 147, 38, 0.2);
+}
+
+.step-content b {
+  display: block;
+  font-size: 13px;
+  color: #12352e;
+}
+
+.step-content small {
+  display: block;
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 2px;
+}
+
+.step-item.completed .step-content b {
+  color: var(--green);
+}
+
+/* Order Quick Actions */
+.order-actions-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+  padding-top: 10px;
+  border-top: 1px solid #f2ede4;
+}
+
+.track-delhivery-btn {
+  flex: 1;
+  background: var(--green);
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+  text-align: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  box-shadow: 0 2px 8px rgba(0, 84, 72, 0.18);
+}
+
+.order-wa-help-btn {
+  background: #eafbf0;
+  color: #15803d;
+  border: 1px solid #bbf2cb;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+  padding: 8px 12px;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
