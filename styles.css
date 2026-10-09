@@ -1078,3 +1078,62 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     height: 28px;
   }
 }
+/* ==========================================================================
+   SRIVARI MOBILE BOTTOM NAVIGATION (GREEN & GOLD HERITAGE)
+   ========================================================================== */
+.bottom-nav {
+  display: none;
+}
+
+@media (max-width: 700px) {
+  body {
+    padding-bottom: 68px; /* Screen kinda content bar venuka daagipokunda space */
+  }
+
+  .bottom-nav {
+    display: flex;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 64px;
+    background: #063e36;
+    border-top: 1.5px solid rgba(201, 147, 38, 0.4);
+    box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.22);
+    z-index: 1500;
+    justify-content: space-around;
+    align-items: center;
+    padding: 4px 6px;
+  }
+
+  .bottom-nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: #d7e0dc;
+    font-size: 11px;
+    font-weight: 600;
+    flex: 1;
+    transition: all 0.2s ease;
+    padding: 6px 0;
+  }
+
+  .bottom-nav-item:hover,
+  .bottom-nav-item.active {
+    color: #dfa83e;
+  }
+
+  .bottom-nav-item .nav-icon {
+    font-size: 20px;
+    line-height: 1.1;
+    margin-bottom: 2px;
+  }
+
+  /* WhatsApp button bottom bar paina float ayyela position */
+  .whatsapp-float-btn {
+    bottom: 78px !important;
+    right: 18px !important;
+  }
+}
