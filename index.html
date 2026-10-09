@@ -353,18 +353,26 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
+<!-- SRIVARI ACCOUNT & ORDERS MODAL (PART B ENGINE) -->
 <div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
-  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:16px;padding:22px;box-shadow:0 12px 35px rgba(0,0,0,0.3);max-height:85vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;">
+  <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:18px;padding:24px;box-shadow:0 14px 40px rgba(0,0,0,0.35);max-height:88vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;position:relative;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
-      <h3 style="margin:0;color:#5a2e10;font-size:1.2rem;font-family:'Playfair Display',serif;">📦 Track Past Orders</h3>
-      <button onclick="closeOrdersModal()" style="background:none;border:none;font-size:22px;cursor:pointer;color:#777;">✕</button>
+      <h3 style="margin:0;color:#5a2e10;font-size:1.25rem;font-family:'Playfair Display',serif;">📦 Srivari Account & Orders</h3>
+      <button onclick="closeOrdersModal()" aria-label="Close modal" style="background:none;border:none;font-size:24px;cursor:pointer;color:#777;line-height:1;">✕</button>
     </div>
-    <div style="display:flex;gap:8px;margin-bottom:14px;">
-      <input id="lookupPhone" type="tel" placeholder="Enter 10-digit mobile number" style="flex:1;padding:10px 12px;border:1px solid #ccc;border-radius:8px;font-size:14px;">
-      <button onclick="fetchCustomerOrders()" style="background:#7b3f18;color:#fff;border:none;padding:10px 16px;border-radius:8px;font-weight:bold;cursor:pointer;">Search</button>
+    
+    <!-- Dynamic Profile & Login Hub -->
+    <div id="accountHubView"></div>
+
+    <!-- Orders Section Header -->
+    <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px;padding-top:10px;border-top:1px dashed #eadfcd;">
+      <span style="font-size:13px;font-weight:700;color:#12352e;">Mee Previous Orders</span>
+      <small style="font-size:11px;color:#697a75;">Live Delhivery Status</small>
     </div>
-    <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:55vh;">
-      <div style="text-align:center;padding:20px;color:#888;font-size:13.5px;">Enter your phone number to view tracking and Delhivery dispatch status.</div>
+
+    <!-- Orders List Container -->
+    <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:50vh;padding-right:2px;">
+      <div style="text-align:center;padding:20px;color:#777;font-size:13px;">Login ayyaka mee orders ikkada kanipisthayi.</div>
     </div>
   </div>
 </div>
@@ -410,16 +418,16 @@ footer#contact {
   </a>
 </nav>
 
-</body>
-    <!-- Floating WhatsApp Support Button -->
-  <a href="https://wa.me/917989816250?text=Hi%20Srivari%20Cookies%2C%20I%20have%20an%20inquiry%20about%20my%20order" 
-     class="whatsapp-float-btn" 
-     target="_blank" 
-     rel="noopener noreferrer" 
-     aria-label="Chat on WhatsApp">
-    <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
-      <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91A9.92 9.92 0 0 0 12.04 2zm0 18.15c-1.48 0-2.94-.39-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.11 8.11 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.26.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23z"/>
-    </svg>
-  </a>
+<!-- Floating WhatsApp Support Button -->
+<a href="https://wa.me/917989816250?text=Hi%20Srivari%20Cookies%2C%20I%20have%20an%20inquiry%20about%20my%20order" 
+   class="whatsapp-float-btn" 
+   target="_blank" 
+   rel="noopener noreferrer" 
+   aria-label="Chat on WhatsApp">
+  <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91A9.92 9.92 0 0 0 12.04 2zm0 18.15c-1.48 0-2.94-.39-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.11 8.11 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.26.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23z"/>
+  </svg>
+</a>
 
+</body>
 </html>
