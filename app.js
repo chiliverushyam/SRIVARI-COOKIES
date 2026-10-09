@@ -317,7 +317,7 @@ function autoFillCustomerDetails() {
 }
 
 /* ==========================================================================
-   SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE
+   SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE (LIVE PRODUCTION)
    ========================================================================== */
 window.renderAccountHub = function() {
   const hub = document.getElementById('accountHubView');
@@ -397,7 +397,7 @@ window.closeOrdersModal = function() {
    4-STAGE VISUAL TRACKING STEPPER GENERATOR
    ========================================================================== */
 function generateOrderTimelineHTML(o) {
-  let stage = 3; // Default to Handed to Delhivery for live demo clarity
+  let stage = 2; // Real Confirmed Order starts at Stage 2
   const statusStr = (o.delivery_status || o.payment_status || '').toLowerCase();
 
   if (statusStr.includes('deliver')) {
@@ -497,34 +497,19 @@ window.fetchCustomerOrders = async function(customPhone) {
       return;
     }
 
-    // INSTANT LIVE PREVIEW FALLBACK: If 0 orders found in DB, show active sample order so preview is visible immediately!
-    const sampleDemoOrder = [{
-      id: 'SRV-1024',
-      total: 500,
-      payment_status: 'PAID',
-      delivery_status: 'in transit',
-      created_at: new Date().toISOString(),
-      awb: '42691510051074'
-    }];
-
+    // REAL EMPTY STATE: Clean messaging when no orders are found in database
     container.innerHTML = `
-      <div style="background:#fef9ee;border:1px solid #ebd8a8;border-radius:10px;padding:8px 12px;margin-bottom:12px;font-size:11.5px;color:#7a5214;text-align:center;">
-        ✨ <b>Live Stepper Demo Preview</b> (Sample Order Representation)
+      <div style="text-align:center;padding:26px 14px;color:#697a75;font-size:13px;line-height:1.6;">
+        Ee mobile number tho inthavaraku orders emi levu.<br>
+        <a href="#shop" onclick="closeOrdersModal()" style="display:inline-block;margin-top:10px;background:#005448;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:12px;">
+          🛒 Order Gourmet Cookies
+        </a>
       </div>
-      ${renderOrderCards(sampleDemoOrder)}
     `;
 
   } catch (e) {
     if (container) {
-      const sampleDemoOrder = [{
-        id: 'SRV-1024',
-        total: 500,
-        payment_status: 'PAID',
-        delivery_status: 'in transit',
-        created_at: new Date().toISOString(),
-        awb: '42691510051074'
-      }];
-      container.innerHTML = renderOrderCards(sampleDemoOrder);
+      container.innerHTML = '<div style="text-align:center;padding:18px;color:#c5221f;font-size:13px;">Orders load cheyadam kudaraledu. Dhayachesi malli try cheyandi.</div>';
     }
   }
 };
