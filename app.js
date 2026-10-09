@@ -317,7 +317,7 @@ function autoFillCustomerDetails() {
 }
 
 /* ==========================================================================
-   PART C: SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE
+   SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE
    ========================================================================== */
 window.renderAccountHub = function() {
   const hub = document.getElementById('accountHubView');
@@ -393,6 +393,53 @@ window.closeOrdersModal = function() {
   if (modal) modal.style.display = 'none';
 };
 
+/* ==========================================================================
+   STEP 3 ENGINE: 4-STAGE VISUAL TRACKING STEPPER GENERATOR
+   ========================================================================== */
+function generateOrderTimelineHTML(o) {
+  let stage = 2; // Default confirmed order starts at baking & packed
+  const statusStr = (o.delivery_status || o.payment_status || '').toLowerCase();
+
+  if (statusStr.includes('deliver')) {
+    stage = 4;
+  } else if (o.awb || statusStr.includes('transit') || statusStr.includes('shipped') || statusStr.includes('dispatch')) {
+    stage = 3;
+  } else if (statusStr.includes('paid') || statusStr.includes('success') || statusStr.includes('captured')) {
+    stage = 2;
+  } else {
+    stage = 1;
+  }
+
+  const steps = [
+    { title: 'Order Received', desc: 'Order confirmed & queued' },
+    { title: 'Freshly Baked & Packed', desc: 'Baked with pure butter in small batches' },
+    { title: 'Handed to Delhivery', desc: o.awb ? `Dispatched (AWB: ${o.awb})` : 'Dispatched via express delivery' },
+    { title: 'Delivered', desc: 'Safely delivered to customer' }
+  ];
+
+  return `
+    <div class="tracking-stepper">
+      ${steps.map((s, idx) => {
+        const stepNum = idx + 1;
+        const isCompleted = stepNum < stage || (stepNum === 4 && stage === 4);
+        const isActive = stepNum === stage && stage !== 4;
+        const stateClass = isCompleted ? 'completed' : (isActive ? 'active' : '');
+        const dotText = isCompleted ? '✓' : (isActive ? '●' : stepNum);
+
+        return `
+          <div class="step-item ${stateClass}">
+            <div class="step-dot">${dotText}</div>
+            <div class="step-content">
+              <b>${s.title}</b>
+              <small>${s.desc}</small>
+            </div>
+          </div>
+        `;
+      }).join('')}
+    </div>
+  `;
+}
+
 window.fetchCustomerOrders = async function(customPhone) {
   const container = document.getElementById('ordersListContainer');
   const profile = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
@@ -415,24 +462,38 @@ window.fetchCustomerOrders = async function(customPhone) {
       return;
     }
 
-    container.innerHTML = data.orders.map(o => `
-      <div style="background:#fff;border:1px solid #ebdcd0;border-radius:12px;padding:14px;margin-bottom:12px;box-shadow:0 2px 8px rgba(0,0,0,0.04);">
-        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;">
-          <b style="color:#063e36;font-size:14px;">Order #${o.id}</b>
-          <span style="color:#005448;background:#eef6f4;padding:3px 8px;border-radius:20px;font-weight:bold;font-size:11px;text-transform:uppercase;">${o.payment_status}</span>
+    container.innerHTML = data.orders.map(o => {
+      const waHelpMessage = encodeURIComponent(`Hi Srivari Cookies, I need assistance regarding my Order #${o.id}.`);
+      return `
+        <div class="order-tracking-card">
+          <div class="order-header-row">
+            <div>
+              <span class="order-header-id">Order #${o.id}</span>
+              <div style="font-size:11px;color:#888;margin-top:2px;">${o.created_at ? o.created_at.slice(0, 10) : 'Recent'}</div>
+            </div>
+            <div style="text-align:right;">
+              <span class="order-status-badge">${o.payment_status || 'CONFIRMED'}</span>
+              <div style="font-size:13px;font-weight:700;color:#12352e;margin-top:2px;">₹${o.total}</div>
+            </div>
+          </div>
+
+          ${generateOrderTimelineHTML(o)}
+
+          <div class="order-actions-row">
+            ${o.awb ? `
+              <a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" rel="noopener" class="track-delhivery-btn">
+                🚚 Delhivery Track
+              </a>
+            ` : `
+              <span style="font-size:11px;color:#697a75;display:inline-flex;align-items:center;">⏳ Courier tracking updating...</span>
+            `}
+            <a href="https://wa.me/917989816250?text=${waHelpMessage}" target="_blank" rel="noopener" class="order-wa-help-btn">
+              💬 Order Help
+            </a>
+          </div>
         </div>
-        <div style="font-size:13px;color:#444;line-height:1.5;">
-          <div>Amount: <b>₹${o.total}</b></div>
-          <div style="color:#888;font-size:12px;">Date: ${o.created_at ? o.created_at.slice(0, 10) : 'Recent'}</div>
-          ${o.awb ? `<div style="margin-top:6px;font-size:12px;">AWB: <code>${o.awb}</code></div>` : ''}
-        </div>
-        ${o.awb ? `
-          <a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" style="background:#005448;color:#fff;padding:8px 14px;text-decoration:none;border-radius:8px;font-size:12px;font-weight:700;display:inline-block;margin-top:10px;">
-            🚚 Track on Delhivery
-          </a>
-        ` : ''}
-      </div>
-    `).join('');
+      `;
+    }).join('');
   } catch (e) {
     if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#c5221f;font-size:13px;">Could not load orders.</div>';
   }
