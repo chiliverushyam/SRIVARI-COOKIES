@@ -6,29 +6,35 @@
   <title>Srivari Cookies - Quick Admin</title>
   <style>
     * { box-sizing: border-box; }
-    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #faf5ef; padding: 16px; margin: 0; color: #333; max-width: 650px; margin: 0 auto; }
-    h2 { color: #5a2e10; margin-top: 0; font-size: 1.3rem; }
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background: #faf5ef; padding: 16px; margin: 0; color: #333; max-width: 680px; margin: 0 auto; }
+    h2 { color: #5a2e10; margin-top: 0; font-size: 1.25rem; }
     .card { background: #fff; padding: 14px; border-radius: 12px; margin-bottom: 12px; box-shadow: 0 2px 6px rgba(0,0,0,0.06); border: 1px solid #ebdcd0; }
     .card.hidden-product { opacity: 0.65; background: #fdf8f4; border: 1px dashed #c49a7a; }
-    .title { font-size: 1.05rem; font-weight: bold; color: #431f06; display: flex; justify-content: space-between; align-items: center; }
+    .title { font-size: 1.05rem; font-weight: bold; color: #431f06; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 6px; }
     .badge-tag { font-size: 0.7rem; background: #f0e2d5; color: #5a2e10; padding: 2px 8px; border-radius: 6px; }
+    .badge-cat { font-size: 0.7rem; background: #faedcd; color: #5a2e10; padding: 2px 8px; border-radius: 6px; font-weight: bold; border: 1px solid #e9d8a6; }
     .hidden-badge { font-size: 0.7rem; background: #c5221f; color: #fff; padding: 2px 8px; border-radius: 6px; font-weight: bold; }
     .row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
     .input-group { display: flex; flex-direction: column; flex: 1; }
     .input-group label { font-size: 0.75rem; color: #777; margin-bottom: 3px; }
-    input { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 1rem; width: 100%; }
+    input, select { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; width: 100%; background: #fff; }
     .actions { display: flex; gap: 8px; margin-top: 12px; }
     button { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
     .btn-save { background: #7b3f18; color: #fff; }
     .btn-remove { background: #fef2f2; color: #991b1b; border: 1px solid #fecaca; flex: 0.7; }
     .btn-restore { background: #ecfdf5; color: #065f46; border: 1px solid #a7f3d0; flex: 0.7; }
     .btn-add { background: #075e45; color: #fff; width: 100%; padding: 12px; font-size: 0.95rem; }
+    .btn-backup { background: #1e3a8a; color: #fff; padding: 6px 12px; border-radius: 6px; border: none; font-size: 0.8rem; font-weight: bold; cursor: pointer; }
     .in { background: #e6f4ea; color: #137333; border: 1px solid #ceead6; }
     .out { background: #fce8e6; color: #c5221f; border: 1px solid #fad2cf; }
     .status-msg { text-align: center; color: #666; margin: 20px 0; }
     .add-box { background: #fff; border: 2px dashed #bfa38e; padding: 16px; border-radius: 12px; margin-bottom: 20px; }
     .add-box h3 { margin: 0 0 10px 0; color: #5a2e10; font-size: 1.1rem; }
     
+    .filter-tabs { display: flex; gap: 6px; overflow-x: auto; padding-bottom: 10px; margin-bottom: 12px; }
+    .tab-btn { background: #fff; border: 1px solid #d4a373; color: #5a2e10; padding: 6px 14px; border-radius: 20px; font-size: 0.8rem; font-weight: 600; cursor: pointer; white-space: nowrap; flex: none; }
+    .tab-btn.active { background: #5a2e10; color: #fff; border-color: #5a2e10; }
+
     #lockScreen { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #5a2e10; display: flex; align-items: center; justify-content: center; z-index: 99999; padding: 20px; }
     .lock-box { background: #fff; padding: 26px 20px; border-radius: 16px; width: 100%; max-width: 360px; text-align: center; box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
     .lock-box h3 { margin: 0 0 8px; color: #5a2e10; font-size: 1.3rem; }
@@ -44,7 +50,7 @@
     <!-- 1. NORMAL UNLOCK VIEW -->
     <div class="lock-box" id="loginBox">
       <h3>🔒 Admin Access</h3>
-      <p>Enter password to manage Srivari Cookies</p>
+      <p>Enter password to manage Srivari Cookies & Bakes</p>
       <input type="password" id="adminPass" placeholder="Enter Admin PIN" autofocus>
       <button class="btn-unlock" onclick="verifyPassword()">Unlock Dashboard</button>
       <div style="margin-top: 14px;">
@@ -67,49 +73,77 @@
   </div>
 
   <div id="adminContent" style="display:none;">
-    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-      <h2>🍪 Srivari Quick Stock & Price Manager</h2>
-      <button onclick="logoutAdmin()" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:6px 12px; border-radius:6px; flex:none; cursor:pointer;">Logout ✕</button>
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px; flex-wrap:wrap; gap:8px;">
+      <h2>🍪 Srivari Stock & Store Manager</h2>
+      <div style="display:flex; gap:8px;">
+        <button class="btn-backup" id="btnExport" onclick="exportOrdersCSV()">📥 Backup Orders (CSV)</button>
+        <button onclick="logoutAdmin()" style="background:#fee2e2; color:#b91c1c; border:1px solid #fca5a5; padding:6px 12px; border-radius:6px; flex:none; cursor:pointer;">Logout ✕</button>
+      </div>
     </div>
 
-    <!-- ADD NEW PRODUCT FORM -->
+    <!-- ADD NEW PRODUCT FORM (Cookies, Cakes, Buns, Puffs & Video Support) -->
     <div class="add-box">
-      <h3>＋ Add New Cookie Product</h3>
+      <h3>＋ Add New Item (Cookies / Cakes / Buns / Puffs)</h3>
       <form id="addForm" onsubmit="handleCreateProduct(event)">
         <div class="row">
           <div class="input-group">
-            <label>Cookie Name *</label>
-            <input id="new-name" placeholder="e.g. Kaju Pista Crunch" required>
+            <label>Category *</label>
+            <select id="new-category" required>
+              <option value="Cookies">🍪 Cookies</option>
+              <option value="Cakes">🎂 Cakes</option>
+              <option value="Buns">🍞 Buns</option>
+              <option value="Puffs">🥐 Puffs</option>
+              <option value="Special">⭐ Special Bakes</option>
+            </select>
           </div>
           <div class="input-group">
-            <label>Product Slug (ID) *</label>
-            <input id="new-id" placeholder="e.g. kaju-pista" required pattern="[a-z0-9_-]+">
+            <label>Item Name *</label>
+            <input id="new-name" placeholder="e.g. Plum Cake / Veg Puff" required>
           </div>
         </div>
         <div class="row">
           <div class="input-group">
-            <label>200g Price (₹) *</label>
+            <label>Product Slug (ID) *</label>
+            <input id="new-id" placeholder="e.g. plum-cake-500g" required pattern="[a-z0-9_-]+">
+          </div>
+          <div class="input-group">
+            <label>Badge Text</label>
+            <input id="new-badge" placeholder="e.g. SPECIAL / NEW / FRESH">
+          </div>
+        </div>
+        <div class="row">
+          <div class="input-group">
+            <label>Standard / 200g Price (₹) *</label>
             <input id="new-p2" type="number" placeholder="250" required>
           </div>
           <div class="input-group">
-            <label>400g Price (₹) *</label>
+            <label>Large / 400g / 1kg Price (₹) *</label>
             <input id="new-p4" type="number" placeholder="500" required>
           </div>
         </div>
         <div class="row">
           <div class="input-group">
-            <label>Badge Text</label>
-            <input id="new-badge" placeholder="e.g. SPECIAL / NEW">
-          </div>
-          <div class="input-group">
             <label>Image URL / Path</label>
             <input id="new-image" value="assets/hero-cookie.jpg">
           </div>
+          <div class="input-group">
+            <label>Video URL (YouTube/Reel - Optional)</label>
+            <input id="new-video" placeholder="e.g. https://youtu.be/...">
+          </div>
         </div>
         <div style="margin-top: 14px;">
-          <button type="submit" class="btn-add">Add Cookie to Store</button>
+          <button type="submit" class="btn-add">Add Item to Store</button>
         </div>
       </form>
+    </div>
+
+    <!-- CATEGORY FILTER TABS -->
+    <div class="filter-tabs">
+      <button class="tab-btn active" onclick="filterCategory('All', this)">All Items</button>
+      <button class="tab-btn" onclick="filterCategory('Cookies', this)">🍪 Cookies</button>
+      <button class="tab-btn" onclick="filterCategory('Cakes', this)">🎂 Cakes</button>
+      <button class="tab-btn" onclick="filterCategory('Buns', this)">🍞 Buns</button>
+      <button class="tab-btn" onclick="filterCategory('Puffs', this)">🥐 Puffs</button>
     </div>
 
     <!-- PRODUCT LIST -->
@@ -122,6 +156,8 @@
     
     // Default password set to 99Shyam99, dynamic via localStorage
     let ADMIN_PASS = localStorage.getItem('srivari_admin_pass') || '99Shyam99';
+    let allProducts = [];
+    let activeFilter = 'All';
 
     function togglePasswordBox(showChange) {
       document.getElementById('loginBox').style.display = showChange ? 'none' : 'block';
@@ -204,44 +240,75 @@
           return;
         }
 
-        box.innerHTML = data.products.map(p => {
-          const isHidden = Number(p.is_hidden) === 1;
-
-          return `
-            <div class="card ${isHidden ? 'hidden-product' : ''}" id="card-${p.id}">
-              <div class="title">
-                <span>${p.name}</span>
-                ${isHidden 
-                  ? `<span class="hidden-badge">HIDDEN FROM STORE</span>` 
-                  : `<span class="badge-tag">${p.badge || 'FRESH'}</span>`
-                }
-              </div>
-              <div class="row">
-                <div class="input-group">
-                  <label>200g Price (₹)</label>
-                  <input id="p2-${p.id}" type="number" value="${p.price200}">
-                </div>
-                <div class="input-group">
-                  <label>400g Price (₹)</label>
-                  <input id="p4-${p.id}" type="number" value="${p.price400}">
-                </div>
-              </div>
-              <div class="actions">
-                <button class="btn-save" onclick="savePrice('${p.id}')">Save Price</button>
-                <button class="${p.in_stock ? 'in' : 'out'}" onclick="toggleStock('${p.id}', ${p.in_stock ? 0 : 1})">
-                  ${p.in_stock ? '● In Stock' : '✕ Out of Stock'}
-                </button>
-                ${isHidden
-                  ? `<button class="btn-restore" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 0)">🔄 Restore</button>`
-                  : `<button class="btn-remove" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 1)">👁️ Remove</button>`
-                }
-              </div>
-            </div>
-          `;
-        }).join('');
+        allProducts = data.products;
+        renderProducts();
       } catch (err) {
         box.innerHTML = 'Error loading products. Check internet or Worker.';
       }
+    }
+
+    function filterCategory(cat, btn) {
+      activeFilter = cat;
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      if(btn) btn.classList.add('active');
+      renderProducts();
+    }
+
+    function renderProducts() {
+      const box = document.getElementById('list');
+      let filtered = allProducts;
+      if (activeFilter !== 'All') {
+        filtered = allProducts.filter(p => (p.category || 'Cookies').toLowerCase() === activeFilter.toLowerCase());
+      }
+
+      if (!filtered.length) {
+        box.innerHTML = `<div class="card" style="text-align:center; color:#888;">No items in ${activeFilter} category. Add one above!</div>`;
+        return;
+      }
+
+      box.innerHTML = filtered.map(p => {
+        const isHidden = Number(p.is_hidden) === 1;
+        const categoryTag = p.category ? `<span class="badge-cat">${p.category}</span>` : `<span class="badge-cat">Cookies</span>`;
+        const videoLink = p.video_url ? `<a href="${p.video_url}" target="_blank" style="font-size:0.75rem; color:#075e45; font-weight:bold; text-decoration:underline; margin-left:6px;">▶ Video</a>` : '';
+
+        return `
+          <div class="card ${isHidden ? 'hidden-product' : ''}" id="card-${p.id}">
+            <div class="title">
+              <div>
+                <span>${p.name}</span>
+                ${videoLink}
+              </div>
+              <div style="display:flex; gap:6px; align-items:center;">
+                ${categoryTag}
+                ${isHidden 
+                  ? `<span class="hidden-badge">HIDDEN</span>` 
+                  : `<span class="badge-tag">${p.badge || 'FRESH'}</span>`
+                }
+              </div>
+            </div>
+            <div class="row">
+              <div class="input-group">
+                <label>200g / Std Price (₹)</label>
+                <input id="p2-${p.id}" type="number" value="${p.price200}">
+              </div>
+              <div class="input-group">
+                <label>400g / Large Price (₹)</label>
+                <input id="p4-${p.id}" type="number" value="${p.price400}">
+              </div>
+            </div>
+            <div class="actions">
+              <button class="btn-save" onclick="savePrice('${p.id}')">Save Price</button>
+              <button class="${p.in_stock ? 'in' : 'out'}" onclick="toggleStock('${p.id}', ${p.in_stock ? 0 : 1})">
+                ${p.in_stock ? '● In Stock' : '✕ Out of Stock'}
+              </button>
+              ${isHidden
+                ? `<button class="btn-restore" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 0)">🔄 Restore</button>`
+                : `<button class="btn-remove" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 1)">👁️ Remove</button>`
+              }
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     async function savePrice(id) {
@@ -292,12 +359,12 @@
       }
     }
 
-    // PASSWORD PROTECTED REMOVE / RESTORE (No permanent delete, image & details are safely preserved)
+    // PASSWORD PROTECTED REMOVE / RESTORE
     async function toggleStoreVisibility(id, name, shouldHide) {
       const actionText = shouldHide ? 'remove (hide)' : 'restore (show)';
       const enteredPass = prompt(`Enter Admin Password to ${actionText} "${name}":`);
 
-      if (!enteredPass) return; // User cancelled
+      if (!enteredPass) return;
       if (enteredPass !== ADMIN_PASS && enteredPass !== '99Shyam99') {
         alert('Incorrect Password! Action cancelled.');
         return;
@@ -328,16 +395,18 @@
 
     async function handleCreateProduct(e) {
       e.preventDefault();
+      const category = document.getElementById('new-category').value;
       const id = document.getElementById('new-id').value.trim().toLowerCase();
       const name = document.getElementById('new-name').value.trim();
       const price200 = Number(document.getElementById('new-p2').value);
       const price400 = Number(document.getElementById('new-p4').value);
       const badge = document.getElementById('new-badge').value.trim() || 'FRESH';
       const image = document.getElementById('new-image').value.trim() || 'assets/hero-cookie.jpg';
+      const video_url = document.getElementById('new-video').value.trim() || '';
 
       const btn = e.target.querySelector('button[type="submit"]');
       btn.disabled = true;
-      btn.textContent = 'Adding Product...';
+      btn.textContent = 'Adding Item...';
 
       try {
         const res = await fetch(`${API}/admin/update-product`, {
@@ -348,6 +417,8 @@
             action: 'upsert',
             id,
             name,
+            category,
+            video_url,
             price200,
             price400,
             badge,
@@ -358,7 +429,7 @@
         });
         const data = await res.json().catch(()=>({}));
         if(data.success) {
-          alert(`Cookie "${name}" added successfully!`);
+          alert(`"${name}" added successfully to ${category}!`);
           document.getElementById('addForm').reset();
           document.getElementById('new-image').value = 'assets/hero-cookie.jpg';
           loadProducts();
@@ -369,9 +440,80 @@
         alert('Network error while adding product.');
       } finally {
         btn.disabled = false;
-        btn.textContent = 'Add Cookie to Store';
+        btn.textContent = 'Add Item to Store';
+      }
+    }
+
+    // 📥 1-CLICK EXPORT ORDERS TO CSV / EXCEL BACKUP
+    async function exportOrdersCSV() {
+      const btn = document.getElementById('btnExport');
+      const oldText = btn.textContent;
+      btn.textContent = 'Exporting...';
+      btn.disabled = true;
+
+      try {
+        const res = await fetch(`${API}/orders`, { cache: 'no-store' });
+        const data = await res.json();
+        const orders = data.orders || [];
+
+        if (!orders.length) {
+          alert('Export cheyadaniki orders emi levu!');
+          return;
+        }
+
+        const headers = ['Order ID', 'Date', 'Customer Name', 'Phone', 'Address', 'Pincode', 'Items', 'Subtotal', 'Delivery', 'Total', 'Payment Status', 'Payment ID', 'AWB'];
+        const csvRows = [headers.join(',')];
+
+        orders.forEach(o => {
+          let itemsText = '';
+          try {
+            const parsed = typeof o.items === 'string' ? JSON.parse(o.items) : o.items;
+            if (Array.isArray(parsed)) {
+              itemsText = parsed.map(i => `${i.name || i.id} (${i.size || ''} x ${i.qty || 1})`).join('; ');
+            } else {
+              itemsText = JSON.stringify(o.items);
+            }
+          } catch(e) {
+            itemsText = String(o.items || '');
+          }
+
+          const row = [
+            `"${o.id || ''}"`,
+            `"${o.created_at || ''}"`,
+            `"${(o.customer_name || '').replace(/"/g, '""')}"`,
+            `"${o.customer_phone || ''}"`,
+            `"${(o.address || '').replace(/"/g, '""')}"`,
+            `"${o.pincode || ''}"`,
+            `"${itemsText.replace(/"/g, '""')}"`,
+            o.subtotal || 0,
+            o.delivery_charge || 0,
+            o.total || 0,
+            `"${o.payment_status || ''}"`,
+            `"${o.razorpay_payment_id || ''}"`,
+            `"${o.awb || ''}"`
+          ];
+          csvRows.push(row.join(','));
+        });
+
+        const blob = new Blob([csvRows.join('\n')], { type: 'text/csv;charset=utf-8;' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `srivari-orders-backup-${new Date().toISOString().slice(0,10)}.csv`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+
+        alert('Mee orders backup CSV file successfully download ayindi!');
+      } catch(err) {
+        alert('Orders download failed: ' + err.message);
+      } finally {
+        btn.textContent = oldText;
+        btn.disabled = false;
       }
     }
   </script>
 </body>
 </html>
+a
