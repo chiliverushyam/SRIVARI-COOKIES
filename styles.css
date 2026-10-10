@@ -1475,3 +1475,61 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   top: 0;
   left: 0;
   width: 32%;
+} 
+.hero-image-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 20px;
+}
+
+/* Jemný prechod na ľavej strane obrázka */
+.hero-image-wrap::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 25%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #fcf8f2 0%,
+    rgba(252, 248, 242, 0.7) 40%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+} 
+/* ========================================================
+   MOBILE VIEW FIX (GŌMĀTHA & TEMPLE FULL VIEW)
+   ======================================================== */
+@media (max-width: 768px) {
+  /* 1. Hero Image Container Full Width */
+  .hero-image-wrap,
+  .hero-right,
+  .hero-blend-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: auto !important;
+    margin: 15px 0 !important;
+    padding: 0 !important;
+  }
+
+  /* 2. Image Full 16:9 Fit - Cow Cut Avvakunda */
+  .hero-image-wrap img,
+  .hero-blend-wrapper img,
+  .hero-right-img {
+    width: 100% !important;
+    height: auto !important;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: contain !important;
+    border-radius: 14px !important;
+    display: block !important;
+  }
+
+  /* 3. Addamaina Round Badge Mobile lo Hide Cheyadam */
+  .hero-badge-circle,
+  .badge-circle,
+  .hero-badge {
+    display: none !important;
+  }
+}
