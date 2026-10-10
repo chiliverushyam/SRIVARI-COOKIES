@@ -39,7 +39,7 @@ function discount(p, w) {
 }
 
 function renderProducts() {
-  const grid = document.getElementById('productGrid') || document.getElementById('cookie-grid') || document.getElementById('productsGrid');
+  const grid = document.getElementById('productGrid') || document.getElementById('cookie-grid');
   if (!grid) return;
 
   grid.innerHTML = configuredProducts.map(p => {
@@ -48,38 +48,38 @@ function renderProducts() {
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
     return `
-      <article class="card product-card" data-product="${p.id}">
+      <article class="card" data-product="${p.id}">
         <div class="photo">
-          <img src="${p.image}" alt="${p.name}" class="product-img" loading="lazy" onerror="this.src='assets/hero-cookie.jpg'">
-          <span class="badge card-badge" style="background:${badgeBg}; color:#fff; font-weight:bold;">${badgeText}</span>
+          <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='assets/hero-cookie.jpg'">
+          <span class="badge" style="background:${badgeBg}; color:#fff; font-weight:bold;">${badgeText}</span>
         </div>
 
         <div class="info">
-          <h3 class="product-name">${p.name}</h3>
+          <h3>${p.name}</h3>
 
-          <div class="weightChoices weight-selector" role="group">
+          <div class="weightChoices" role="group">
             <button type="button"
-              class="weightBtn weight-btn active"
+              class="weightBtn active"
               data-weight="200"
               onclick="selectWeight('${p.id}', 200)">
               200g
             </button>
 
             <button type="button"
-              class="weightBtn weight-btn"
+              class="weightBtn"
               data-weight="400"
               onclick="selectWeight('${p.id}', 400)">
               400g
             </button>
           </div>
 
-          <div class="priceArea price-text" id="price-${p.id}">
+          <div class="priceArea" id="price-${p.id}">
             ${priceBlock(p, 200)}
           </div>
 
           ${isOutOfStock 
-            ? `<button class="add add-btn" disabled style="background:#888; color:#fff; cursor:not-allowed;">✕ Out of Stock</button>`
-            : `<button class="add add-btn" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>`
+            ? `<button class="add" disabled style="background:#888; color:#fff; cursor:not-allowed;">✕ Out of Stock</button>`
+            : `<button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>`
           }
         </div>
       </article>
@@ -149,18 +149,9 @@ function saveCart() {
   localStorage.setItem('srivariCart', JSON.stringify(cart));
   renderCart();
 
-  const totalCount = cart.reduce((s, i) => s + i.qty, 0);
-
-  // Update Header Badges
-  const count = document.getElementById('cartCount') || document.getElementById('cart-count') || document.getElementById('header-cart-badge');
+  const count = document.getElementById('cartCount') || document.getElementById('cart-count');
   if (count) {
-    count.textContent = totalCount;
-  }
-
-  // Update Mobile Bottom Bar Badge
-  const bottomBadge = document.getElementById('bottom-cart-badge');
-  if (bottomBadge) {
-    bottomBadge.textContent = totalCount;
+    count.textContent = cart.reduce((s, i) => s + i.qty, 0);
   }
 }
 
@@ -177,7 +168,7 @@ function cartSubtotal() {
 }
 
 function renderCart() {
-  const box = document.getElementById('cartItems') || document.getElementById('cart-items') || document.getElementById('cartItemsList');
+  const box = document.getElementById('cartItems') || document.getElementById('cart-items');
   if (!box) return;
 
   if (!cart.length) {
@@ -195,7 +186,7 @@ function renderCart() {
     subtotal += price * i.qty;
 
     return `
-      <div class="cartLine cart-item-row">
+      <div class="cartLine">
         <img src="${p.image}" alt="">
         <div>
           <b>${p.name}</b>
@@ -229,7 +220,7 @@ function changeQty(key, d) {
 
 function updateSummary(subtotal) {
   const subtotalEl = document.getElementById('cartSubtotal');
-  const deliveryEl = document.getElementById('cartDelivery') || document.getElementById('cartShipping');
+  const deliveryEl = document.getElementById('cartDelivery');
   const totalEl = document.getElementById('cartTotal') || document.getElementById('cart-total');
   const note = document.getElementById('deliveryNote');
 
@@ -244,38 +235,23 @@ function updateSummary(subtotal) {
 }
 
 function openDrawer() {
-  const drawer = document.getElementById('drawer') || document.getElementById('cartDrawer');
-  const shade = document.getElementById('shade') || document.getElementById('cartOverlay');
-  if (drawer) drawer.classList.add('open');
-  if (shade) {
-    shade.classList.add('open');
-    shade.style.display = 'block';
-  }
+  document.getElementById('drawer')?.classList.add('open');
+  document.getElementById('shade')?.classList.add('open');
   document.body.classList.add('noScroll');
 }
 
 function closeDrawer() {
-  const drawer = document.getElementById('drawer') || document.getElementById('cartDrawer');
-  const shade = document.getElementById('shade') || document.getElementById('cartOverlay');
-  if (drawer) drawer.classList.remove('open');
-  if (shade) {
-    shade.classList.remove('open');
-    shade.style.display = 'none';
-  }
+  document.getElementById('drawer')?.classList.remove('open');
+  document.getElementById('shade')?.classList.remove('open');
   document.body.classList.remove('noScroll');
 }
-
-// Aliases for bottom nav & header clicks
-window.openCart = openDrawer;
-window.closeCart = closeDrawer;
 
 document.getElementById('openCart')?.addEventListener('click', openDrawer);
 document.getElementById('closeCart')?.addEventListener('click', closeDrawer);
 document.getElementById('shade')?.addEventListener('click', closeDrawer);
-document.getElementById('cartOverlay')?.addEventListener('click', closeDrawer);
 
 async function calculateDelivery() {
-  const pincodeEl = document.getElementById('pincode') || document.getElementById('cartPincode');
+  const pincodeEl = document.getElementById('pincode');
   if (!pincodeEl) return false;
   const pincode = pincodeEl.value.trim();
 
@@ -292,7 +268,7 @@ async function calculateDelivery() {
     return false;
   }
 
-  const note = document.getElementById('deliveryNote') || document.getElementById('pincodeStatus');
+  const note = document.getElementById('deliveryNote');
   if (note) note.textContent = 'Calculating delivery charge…';
 
   try {
@@ -307,7 +283,6 @@ async function calculateDelivery() {
     deliveryCharge = Number(data.shippingCharge);
     lastDeliveryPincode = pincode;
     updateSummary(cartSubtotal());
-    if (note) note.textContent = '✅ Delivery available: ₹' + Math.round(deliveryCharge);
     return true;
   } catch (error) {
     deliveryCharge = null;
@@ -319,9 +294,7 @@ async function calculateDelivery() {
   }
 }
 
-window.checkPincodeDelivery = calculateDelivery;
-
-const pincodeEl = document.getElementById('pincode') || document.getElementById('cartPincode');
+const pincodeEl = document.getElementById('pincode');
 pincodeEl?.addEventListener('blur', calculateDelivery);
 pincodeEl?.addEventListener('input', () => {
   deliveryCharge = null;
@@ -332,18 +305,12 @@ pincodeEl?.addEventListener('input', () => {
 function autoFillCustomerDetails() {
   try {
     const saved = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
-    const nameEl = document.getElementById('cname') || document.getElementById('custName');
-    const phoneEl = document.getElementById('phone') || document.getElementById('custPhone');
-    const emailEl = document.getElementById('email');
-    const addrEl = document.getElementById('address') || document.getElementById('custAddress');
-    const pinEl = document.getElementById('pincode') || document.getElementById('cartPincode');
-
-    if (saved.name && nameEl) nameEl.value = saved.name;
-    if (saved.phone && phoneEl) phoneEl.value = saved.phone;
-    if (saved.email && emailEl) emailEl.value = saved.email;
-    if (saved.address && addrEl) addrEl.value = saved.address;
-    if (saved.pincode && pinEl) {
-      pinEl.value = saved.pincode;
+    if (saved.name && document.getElementById('cname')) document.getElementById('cname').value = saved.name;
+    if (saved.phone && document.getElementById('phone')) document.getElementById('phone').value = saved.phone;
+    if (saved.email && document.getElementById('email')) document.getElementById('email').value = saved.email;
+    if (saved.address && document.getElementById('address')) document.getElementById('address').value = saved.address;
+    if (saved.pincode && document.getElementById('pincode')) {
+      document.getElementById('pincode').value = saved.pincode;
       if (cart.length > 0) calculateDelivery();
     }
   } catch (e) {}
@@ -530,6 +497,7 @@ window.fetchCustomerOrders = async function(customPhone) {
       return;
     }
 
+    // REAL EMPTY STATE: Clean messaging when no orders are found in database
     container.innerHTML = `
       <div style="text-align:center;padding:26px 14px;color:#697a75;font-size:13px;line-height:1.6;">
         Ee mobile number tho inthavaraku orders emi levu.<br>
@@ -580,9 +548,7 @@ function openRazorpayCheckout(orderInfo, rzpOrderData) {
   });
 }
 
-// 7. Checkout Form Submit (Live Razorpay & Delhivery Booking)
-const checkoutForm = document.getElementById('checkout');
-checkoutForm?.addEventListener('submit', async e => {
+document.getElementById('checkout')?.addEventListener('submit', async e => {
   e.preventDefault();
   if (checkoutBusy) return;
   if (!cart.length) {
@@ -590,11 +556,11 @@ checkoutForm?.addEventListener('submit', async e => {
     return;
   }
 
-  const name = (document.getElementById('cname') || document.getElementById('custName'))?.value.trim();
-  const phone = (document.getElementById('phone') || document.getElementById('custPhone'))?.value.trim();
-  const email = document.getElementById('email')?.value.trim() || '';
-  const address = (document.getElementById('address') || document.getElementById('custAddress'))?.value.trim();
-  const pincode = (document.getElementById('pincode') || document.getElementById('cartPincode'))?.value.trim();
+  const name = document.getElementById('cname').value.trim();
+  const phone = document.getElementById('phone').value.trim();
+  const email = document.getElementById('email').value.trim();
+  const address = document.getElementById('address').value.trim();
+  const pincode = document.getElementById('pincode').value.trim();
 
   if (!name || !phone || !address || !/^\d{6}$/.test(pincode)) {
     alert('Please fill all required details and enter a valid 6-digit pincode.');
@@ -611,7 +577,7 @@ checkoutForm?.addEventListener('submit', async e => {
   const fullAddressText = `${address}, Pincode: ${pincode}`;
 
   checkoutBusy = true;
-  const button = document.querySelector('.checkoutBtn') || document.getElementById('payNowBtn');
+  const button = document.querySelector('.checkoutBtn');
   const oldText = button?.textContent || 'Pay Now';
 
   if (button) {
@@ -725,7 +691,7 @@ checkoutForm?.addEventListener('submit', async e => {
     lastDeliveryPincode = '';
     saveCart();
 
-    checkoutForm.reset();
+    document.getElementById('checkout').reset();
     closeDrawer();
 
     window.location.href = 'receipt.html';
@@ -742,47 +708,6 @@ checkoutForm?.addEventListener('submit', async e => {
   }
 });
 
-/* ==========================================================================
-   NEW: SRIVARI SEVA DESK & BOTTOM MOBILE NAVIGATION CONTROLS
-   ========================================================================== */
-window.openSupportDrawer = function() {
-  const drawer = document.getElementById('supportDrawer');
-  const overlay = document.getElementById('supportOverlay') || document.getElementById('supportDrawerOverlay');
-  if (drawer) drawer.classList.add('open');
-  if (overlay) overlay.style.display = 'block';
-};
-
-window.closeSupportDrawer = function() {
-  const drawer = document.getElementById('supportDrawer');
-  const overlay = document.getElementById('supportOverlay') || document.getElementById('supportDrawerOverlay');
-  if (drawer) drawer.classList.remove('open');
-  if (overlay) overlay.style.display = 'none';
-};
-
-window.handleSupportSubmit = function(e) {
-  e.preventDefault();
-  const name = (document.getElementById('sevaName') || document.getElementById('supName'))?.value.trim() || '';
-  const phone = (document.getElementById('sevaPhone') || document.getElementById('supPhone'))?.value.trim() || '';
-  const msg = (document.getElementById('sevaMsg') || document.getElementById('supMsg'))?.value.trim() || '';
-
-  const formattedMsg = `Namaskaram Shyam garu,\nNa peru: ${name}\nMobile: ${phone}\nBulk/Special Requirement: ${msg}\n(Srivari Cookies Website Seva Enquiry)`;
-  const url = `https://wa.me/917989816250?text=${encodeURIComponent(formattedMsg)}`;
-  window.open(url, '_blank');
-  closeSupportDrawer();
-};
-
-window.scrollToProducts = function() {
-  const el = document.getElementById('products-section') || document.getElementById('productGrid') || document.getElementById('cookie-grid') || document.getElementById('shop');
-  if (el) el.scrollIntoView({ behavior: 'smooth' });
-};
-
-window.scrollToTop = function() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-
-/* ==========================================================================
-   INITIALIZATION & ADMIN REALTIME SYNC
-   ========================================================================== */
 renderProducts();
 saveCart();
 autoFillCustomerDetails();
