@@ -192,18 +192,19 @@ img {
 }
 
 /* ==========================================================================
-   HERO SECTION (DESKTOP & BASE)
+   HERO SECTION (DESKTOP & BASE) - CRISP LOGO, DEEPAM & ROYAL FRAME
    ========================================================================== */
 .hero {
   display: grid;
-  grid-template-columns: 45% 55%;
+  grid-template-columns: 46% 54%;
   min-height: 520px;
   background: linear-gradient(135deg, #fdf5e6 0%, #f7ead4 100%);
   border-bottom: 1px solid var(--line);
+  align-items: center;
 }
 
 .heroCopy {
-  padding: 72px 7% 48px;
+  padding: 60px 6% 48px 7%;
 }
 
 .eyebrow {
@@ -217,8 +218,8 @@ img {
 
 .hero h1 {
   font-family: 'Playfair Display', serif;
-  font-size: 68px;
-  line-height: 1;
+  font-size: 64px;
+  line-height: 1.05;
   margin: 0 0 20px;
   color: var(--ink);
   letter-spacing: -1px;
@@ -230,7 +231,7 @@ img {
 }
 
 .heroCopy > p:not(.eyebrow) {
-  font-size: 17px;
+  font-size: 16.5px;
   color: #4f635e;
   max-width: 520px;
   line-height: 1.6;
@@ -253,42 +254,38 @@ img {
 
 .heroVisual {
   position: relative;
-  overflow: hidden;
-  min-height: 520px;
+  overflow: visible;
+  min-height: 500px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding: 30px 6% 30px 2%;
 }
 
+/* Logo mariyu Deepam ni cover chesina milky fog overlay ni pūrthigā disable cheyadam */
+.heroVisual::before,
+.hero-image-wrap::before,
+.hero-blend-wrapper::before {
+  display: none !important;
+}
+
+/* 100% HD Crisp Image, Temple Gold Border mariyu Warm Royal Shadow */
 .heroVisual img,
 .hero-right-img,
 .hero-blend-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: block;
+  width: 100% !important;
+  height: auto !important;
+  max-height: 470px !important;
+  aspect-ratio: 16 / 9;
+  object-fit: cover !important;
+  object-position: center !important;
+  border-radius: 20px !important;
+  border: 1.5px solid rgba(201, 147, 38, 0.45) !important;
+  box-shadow: 0 16px 45px rgba(18, 53, 46, 0.16) !important;
+  display: block !important;
 }
 
-/* Seamless Luxury Feather Gradient pada paparan Desktop */
-.heroVisual::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 26%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    #fdf5e6 0%,
-    rgba(253, 245, 230, 0.75) 45%,
-    transparent 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-}
-
-/* Sembunyikan badge bulat lama yang menghalang gerbang kuil */
+/* Pātha circular badge ni hide cheyadam */
 .seal,
 .hero-badge-circle,
 .badge-circle,
@@ -1360,7 +1357,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   .orderBtn { padding: 10px 14px; font-size: 12px; }
   .cartBtn { width: 44px; height: 44px; flex-basis: 44px; }
 
-  /* 1. Bahagian Teks Hero Mudah Alih yang Padat & Kemas */
+  /* 1. Mobile Hero Typography Compact Cheyadam */
   .hero {
     display: flex !important;
     flex-direction: column !important;
@@ -1406,7 +1403,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     margin-bottom: 12px !important;
   }
 
-  /* 2. Imej Hero Suci Penuh (Tiada Potongan Lembu / Teks Kuil) */
+  /* 2. Mobile Hero Visual - Gōmātha & Stone Banner Full 16:9 View (Cutting Lekunda) */
   .heroVisual,
   .hero-image-wrap,
   .hero-blend-wrapper {
@@ -1416,12 +1413,11 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     min-height: 0 !important;
     aspect-ratio: 16 / 9 !important;
     margin: 8px 0 0 !important;
-    padding: 0 12px 14px !important;
+    padding: 0 14px 16px !important;
     position: relative !important;
     display: block !important;
   }
 
-  /* Matikan kecerunan kabur sebelah kiri pada paparan telefon */
   .heroVisual::before,
   .hero-blend-wrapper::before,
   .hero-image-wrap::before {
@@ -1445,7 +1441,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     display: block !important;
   }
 
-  /* 3. Grid Produk & Ruangan Lain */
+  /* 3. Product Cards & Shortcuts Mobile Fit */
   .shortcuts {
     grid-template-columns: 1fr 1fr;
     gap: 12px;
