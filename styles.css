@@ -1447,3 +1447,31 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
   display: block;
 }
+/* =======================================================
+   SRIVARI HERO SEAMLESS LUXURY BLEND & ULTRA CLARITY
+   ======================================================= */
+
+.hero-blend-wrapper {
+  position: relative;
+  width: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 15px 40px rgba(40, 20, 5, 0.12);
+}
+
+/* Ultra-HD Image Clarity */
+.hero-blend-img {
+  width: 100%;
+  height: 100%;
+  min-height: 440px;
+  object-fit: cover;
+  display: block;
+}
+
+/* Left-Side Soft Feather Fade (Left text tho seamless blend) */
+.hero-blend-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 32%;
