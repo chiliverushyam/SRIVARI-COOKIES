@@ -1438,3 +1438,12 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   align-items: center;
   gap: 5px;
 }
+.hero-right-img {
+  width: 100%;
+  height: auto;
+  max-height: 480px;
+  object-fit: cover;
+  border-radius: 18px;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
+  display: block;
+}
