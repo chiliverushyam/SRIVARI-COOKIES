@@ -1,6 +1,6 @@
 /* ==========================================================================
    SRIVARI COOKIES - AUTHENTIC HERITAGE & LUXURY ARTISANAL STYLESHEET
-   100% Matched to Original HTML Class Architecture
+   100% Matched to Original HTML Class Architecture (Fully Unified & Fixed)
    ========================================================================== */
 
 :root {
@@ -192,7 +192,7 @@ img {
 }
 
 /* ==========================================================================
-   HERO SECTION
+   HERO SECTION (DESKTOP & BASE)
    ========================================================================== */
 .hero {
   display: grid;
@@ -255,32 +255,45 @@ img {
   position: relative;
   overflow: hidden;
   min-height: 520px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.heroVisual img {
+.heroVisual img,
+.hero-right-img,
+.hero-blend-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center;
+  display: block;
 }
 
-.seal {
+/* Seamless Luxury Feather Gradient pada paparan Desktop */
+.heroVisual::before {
+  content: '';
   position: absolute;
-  right: 6%;
-  top: 10%;
-  background: #fff8e1;
-  border: 2px solid var(--gold);
-  border-radius: 50%;
-  width: 108px;
-  height: 108px;
-  display: grid;
-  place-content: center;
-  text-align: center;
-  font-size: 11px;
-  font-weight: 700;
-  color: var(--ink);
-  box-shadow: 0 8px 24px rgba(107, 77, 21, 0.2);
-  line-height: 1.3;
+  top: 0;
+  left: 0;
+  width: 26%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    #fdf5e6 0%,
+    rgba(253, 245, 230, 0.75) 45%,
+    transparent 100%
+  );
+  z-index: 2;
+  pointer-events: none;
+}
+
+/* Sembunyikan badge bulat lama yang menghalang gerbang kuil */
+.seal,
+.hero-badge-circle,
+.badge-circle,
+.hero-badge {
+  display: none !important;
 }
 
 /* ==========================================================================
@@ -959,127 +972,7 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
 }
 
 /* ==========================================================================
-   RESPONSIVE DESIGN (MEDIA QUERIES)
-   ========================================================================== */
-@media (max-width: 1000px) {
-  .nav nav { gap: 13px; }
-  .nav nav a { font-size: 12px; }
-  .grid { grid-template-columns: repeat(2, 1fr); }
-}
-
-@media (max-width: 700px) {
-  .topbar { display: none; }
-  .nav {
-    height: 72px;
-    padding: 8px 14px;
-    gap: 8px;
-  }
-  .brand { overflow: hidden; }
-  .brand img {
-    width: 52px;
-    height: 52px;
-    flex: 0 0 52px;
-  }
-  .brand b { font-size: 15px; }
-  .brand small { font-size: 7px; letter-spacing: 1.5px; }
-  .nav nav { display: none; }
-  .orderBtn { padding: 10px 14px; font-size: 12px; }
-  .cartBtn { width: 44px; height: 44px; flex-basis: 44px; }
-  
-  .hero { display: flex; flex-direction: column; }
-  .heroCopy { padding: 34px 20px 25px; }
-  .hero h1 { font-size: 48px; line-height: 0.95; }
-  .heroCopy > p:not(.eyebrow) { font-size: 15px; }
-  
-  .heroVisual {
-    height: auto;
-    min-height: 0;
-    aspect-ratio: 4/3;
-  }
-  .heroVisual img {
-    object-fit: cover;
-    object-position: center;
-  }
-  .seal {
-    width: 82px;
-    height: 82px;
-    font-size: 9px;
-    right: 14px;
-    top: 14px;
-  }
-  
-  .shortcuts {
-    grid-template-columns: 1fr 1fr;
-    gap: 12px;
-    padding: 16px;
-  }
-  .shortcuts a {
-    padding: 14px 10px;
-    gap: 10px;
-  }
-  .shortcuts b { font-size: 24px; }
-  .shortcuts strong { font-size: 12px; }
-  .shortcuts small { font-size: 10px; }
-  
-  .collection { padding: 30px 14px 44px; }
-  .sectionHead { display: block; }
-  .sectionHead span { display: none; }
-  .sectionHead h2 { font-size: 30px; line-height: 1.1; }
-  .sectionHead p:not(.eyebrow) { font-size: 13px; }
-  
-  .grid {
-    grid-template-columns: 1fr;
-    gap: 18px;
-  }
-  .card { display: block; }
-  .photo { aspect-ratio: 4/3; }
-  .info { padding: 14px; }
-  .info h3 { font-size: 16px; min-height: auto; }
-  
-  .about {
-    grid-template-columns: 1fr;
-    padding: 40px 18px;
-    gap: 24px;
-  }
-  .about h2 { font-size: 30px; }
-  .promise {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-  .promise span { padding: 16px; }
-  
-  footer {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 16px;
-    padding: 30px 20px;
-  }
-  .contactTitle, .contactItem, .footerOrder, .copy { width: 100%; }
-  .contactItem { padding: 5px 0; }
-  .contactItem b { font-size: 14px; overflow-wrap: anywhere; }
-  .contactItem small { font-size: 12px; }
-  .footerOrder { display: block; }
-  .copy { padding-top: 17px; }
-  
-  .drawer { padding: 20px 16px; }
-  .drawerHead h2 { font-size: 26px; }
-  .cartLine { grid-template-columns: 62px 1fr auto; }
-  .cartLine img { width: 62px; height: 50px; }
-
-  .whatsapp-float-btn {
-    bottom: 20px;
-    right: 20px;
-    width: 50px;
-    height: 50px;
-  }
-  .whatsapp-float-btn svg {
-    width: 28px;
-    height: 28px;
-  }
-}
-/* ==========================================================================
-   SRIVARI LUXURY ARTISANAL BOTTOM DOCK (GLASSMORPHISM & GOLD ACCENTS)
+   SRIVARI LUXURY ARTISANAL BOTTOM DOCK
    ========================================================================== */
 .bottom-nav {
   display: none;
@@ -1136,7 +1029,6 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     transition: color 0.25s ease;
   }
 
-  /* Active / Selected Tab (Srivari Heritage Green & Gold Dot) */
   .bottom-nav-item.active,
   .bottom-nav-item:active {
     color: #005448;
@@ -1162,14 +1054,14 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     display: inline-flex;
   }
 
-  /* WhatsApp Floating Button Position */
   .whatsapp-float-btn {
     bottom: 80px !important;
     right: 18px !important;
   }
 }
+
 /* ==========================================================================
-   SRIVARI ACCOUNT HUB & ONE-CLICK LOGIN (GREEN & GOLD BOUTIQUE)
+   SRIVARI ACCOUNT HUB & ONE-CLICK LOGIN
    ========================================================================== */
 .account-card {
   background: linear-gradient(135deg, #063e36 0%, #005448 100%);
@@ -1276,8 +1168,9 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   display: inline-block;
   margin-top: 6px;
 }
+
 /* ==========================================================================
-   SRIVARI ORDER TRACKING STEPPER & TIMELINE (GREEN & GOLD BOUTIQUE)
+   SRIVARI ORDER TRACKING STEPPER & TIMELINE
    ========================================================================== */
 .order-tracking-card {
   background: #ffffff;
@@ -1316,7 +1209,6 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   text-transform: uppercase;
 }
 
-/* 4-Step Visual Stepper */
 .tracking-stepper {
   display: flex;
   flex-direction: column;
@@ -1338,7 +1230,6 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   padding-bottom: 4px;
 }
 
-/* Connecting Line */
 .step-item:not(:last-child)::after {
   content: '';
   position: absolute;
@@ -1353,7 +1244,6 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   background: var(--green);
 }
 
-/* Step Dot / Circle */
 .step-dot {
   width: 20px;
   height: 20px;
@@ -1399,7 +1289,6 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   color: var(--green);
 }
 
-/* Order Quick Actions */
 .order-actions-row {
   display: flex;
   gap: 8px;
@@ -1438,178 +1327,192 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
   align-items: center;
   gap: 5px;
 }
-.hero-right-img {
-  width: 100%;
-  height: auto;
-  max-height: 480px;
-  object-fit: cover;
-  border-radius: 18px;
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.15);
-  display: block;
-}
-/* =======================================================
-   SRIVARI HERO SEAMLESS LUXURY BLEND & ULTRA CLARITY
-   ======================================================= */
 
-.hero-blend-wrapper {
-  position: relative;
-  width: 100%;
-  border-radius: 20px;
-  overflow: hidden;
-  box-shadow: 0 15px 40px rgba(40, 20, 5, 0.12);
+/* ==========================================================================
+   RESPONSIVE DESIGN (TABLET & DESKTOP TUNING)
+   ========================================================================== */
+@media (max-width: 1000px) {
+  .nav nav { gap: 13px; }
+  .nav nav a { font-size: 12px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
 }
 
-/* Ultra-HD Image Clarity */
-.hero-blend-img {
-  width: 100%;
-  height: 100%;
-  min-height: 440px;
-  object-fit: cover;
-  display: block;
-}
-
-/* Left-Side Soft Feather Fade (Left text tho seamless blend) */
-.hero-blend-wrapper::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 32%;
-} 
-.hero-image-wrap {
-  position: relative;
-  overflow: hidden;
-  border-radius: 20px;
-}
-
-/* Jemný prechod na ľavej strane obrázka */
-.hero-image-wrap::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 25%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    #fcf8f2 0%,
-    rgba(252, 248, 242, 0.7) 40%,
-    transparent 100%
-  );
-  z-index: 2;
-  pointer-events: none;
-} 
-/* ========================================================
-   MOBILE VIEW FIX (GŌMĀTHA & TEMPLE FULL VIEW)
-   ======================================================== */
+/* ==========================================================================
+   PENYELARASAN PENUH MUDAH ALIH (MOBILE FULL VIEW - NO CLIPPING)
+   ========================================================================== */
 @media (max-width: 768px) {
-  /* 1. Hero Image Container Full Width */
-  .hero-image-wrap,
-  .hero-right,
-  .hero-blend-wrapper {
-    width: 100% !important;
-    max-width: 100% !important;
-    height: auto !important;
-    margin: 15px 0 !important;
-    padding: 0 !important;
+  .topbar { display: none; }
+  
+  .nav {
+    height: 72px;
+    padding: 8px 14px;
+    gap: 8px;
+  }
+  .brand { overflow: hidden; }
+  .brand img {
+    width: 52px;
+    height: 52px;
+    flex: 0 0 52px;
+  }
+  .brand b { font-size: 15px; }
+  .brand small { font-size: 7px; letter-spacing: 1.5px; }
+  .nav nav { display: none; }
+  .orderBtn { padding: 10px 14px; font-size: 12px; }
+  .cartBtn { width: 44px; height: 44px; flex-basis: 44px; }
+
+  /* 1. Bahagian Teks Hero Mudah Alih yang Padat & Kemas */
+  .hero {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: auto !important;
   }
 
-  /* 2. Image Full 16:9 Fit - Cow Cut Avvakunda */
-  .hero-image-wrap img,
-  .hero-blend-wrapper img,
-  .hero-right-img {
-    width: 100% !important;
-    height: auto !important;
-    aspect-ratio: 16 / 9 !important;
-    object-fit: contain !important;
-    border-radius: 14px !important;
-    display: block !important;
+  .heroCopy {
+    padding: 26px 16px 14px !important;
   }
 
-  /* 3. Addamaina Round Badge Mobile lo Hide Cheyadam */
-  .hero-badge-circle,
-  .badge-circle,
-  .hero-badge {
-    display: none !important;
-  }
-}
-/* =======================================================
-   MOBILE VIEW FIX: COMPACT TEXT & PROMINENT DIVINE HERO
-   ======================================================= */
-@media (max-width: 768px) {
-
-  /* 1. Hero Section Padding Gap Tagginchadam */
-  .hero, 
-  .hero-section {
-    padding: 16px 16px 20px !important;
-    gap: 16px !important;
-  }
-
-  /* 2. Paina Peddha Words ('Pure. Fresh. Delicious.') Compact Cheyadam */
   .hero h1,
   .hero-title,
   .hero-text h1 {
-    font-size: 30px !important;        /* 50px nunchi neat 30px ki */
+    font-size: 32px !important;
     line-height: 1.15 !important;
-    margin-bottom: 10px !important;
+    margin-bottom: 12px !important;
     letter-spacing: -0.5px !important;
   }
 
-  /* Paragraph Text */
-  .hero p,
-  .hero-desc,
-  .hero-subtitle {
+  .heroCopy > p:not(.eyebrow),
+  .hero p {
     font-size: 13.5px !important;
-    line-height: 1.45 !important;
-    margin-bottom: 14px !important;
+    line-height: 1.5 !important;
+    margin-bottom: 16px !important;
   }
 
-  /* Buttons Compact Fit */
-  .hero-buttons,
-  .hero-actions,
-  .hero-btns {
+  .heroActions,
+  .hero-buttons {
     display: flex !important;
     gap: 10px !important;
-    margin-bottom: 14px !important;
+    margin: 16px 0 !important;
   }
 
-  .hero-buttons a,
-  .hero-buttons button,
-  .hero-actions a,
-  .hero-actions button {
+  .heroActions a,
+  .heroActions button {
     padding: 10px 16px !important;
     font-size: 13px !important;
   }
 
-  /* Trust Points (100% Veg, Pure Butter, 35+ Yrs) */
-  .hero-trust,
-  .trust-row,
-  .hero-features {
+  .trust {
     font-size: 11.5px !important;
-    gap: 8px !important;
-    margin-bottom: 16px !important;
+    gap: 10px !important;
+    margin-bottom: 12px !important;
   }
 
-  /* 3. Hero Divine Image - Mobile Lō Peddhadhigā, Clear Gā Fit Ayyēla */
+  /* 2. Imej Hero Suci Penuh (Tiada Potongan Lembu / Teks Kuil) */
+  .heroVisual,
   .hero-image-wrap,
-  .hero-blend-wrapper,
-  .hero-right,
-  .hero-image {
+  .hero-blend-wrapper {
     width: 100% !important;
-    margin: 0 auto !important;
+    max-width: 100% !important;
+    height: auto !important;
+    min-height: 0 !important;
+    aspect-ratio: 16 / 9 !important;
+    margin: 8px 0 0 !important;
+    padding: 0 12px 14px !important;
+    position: relative !important;
+    display: block !important;
   }
 
+  /* Matikan kecerunan kabur sebelah kiri pada paparan telefon */
+  .heroVisual::before,
+  .hero-blend-wrapper::before,
+  .hero-image-wrap::before {
+    display: none !important;
+  }
+
+  .heroVisual img,
   .hero-image-wrap img,
   .hero-blend-wrapper img,
   .hero-right-img,
   .hero-image img,
   .hero-blend-img {
     width: 100% !important;
-    height: 250px !important;                /* Squished kākunḍā prominent height */
-    object-fit: cover !important;             /* Stretch kākunḍā clean coverage */
-    object-position: center bottom !important;/* Cookies, Deepam, Gōmātha clear ga kanipinchela */
-    border-radius: 16px !important;
-    box-shadow: 0 8px 24px rgba(40, 20, 5, 0.15) !important;
+    height: auto !important;
+    max-height: none !important;
+    aspect-ratio: 16 / 9 !important;
+    object-fit: contain !important;
+    object-position: center !important;
+    border-radius: 14px !important;
+    box-shadow: 0 6px 20px rgba(40, 20, 5, 0.12) !important;
     display: block !important;
+  }
+
+  /* 3. Grid Produk & Ruangan Lain */
+  .shortcuts {
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 16px;
+  }
+  .shortcuts a {
+    padding: 14px 10px;
+    gap: 10px;
+  }
+  .shortcuts b { font-size: 24px; }
+  .shortcuts strong { font-size: 12px; }
+  .shortcuts small { font-size: 10px; }
+
+  .collection { padding: 30px 14px 44px; }
+  .sectionHead { display: block; }
+  .sectionHead span { display: none; }
+  .sectionHead h2 { font-size: 30px; line-height: 1.1; }
+  .sectionHead p:not(.eyebrow) { font-size: 13px; }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .card { display: block; }
+  .photo { aspect-ratio: 4/3; }
+  .info { padding: 14px; }
+  .info h3 { font-size: 16px; min-height: auto; }
+
+  .about {
+    grid-template-columns: 1fr;
+    padding: 40px 18px;
+    gap: 24px;
+  }
+  .about h2 { font-size: 30px; }
+  .promise {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+  .promise span { padding: 16px; }
+
+  footer {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 30px 20px;
+  }
+  .contactTitle, .contactItem, .footerOrder, .copy { width: 100%; }
+  .contactItem { padding: 5px 0; }
+  .contactItem b { font-size: 14px; overflow-wrap: anywhere; }
+  .contactItem small { font-size: 12px; }
+  .footerOrder { display: block; }
+  .copy { padding-top: 17px; }
+
+  .drawer { padding: 20px 16px; }
+  .drawerHead h2 { font-size: 26px; }
+  .cartLine { grid-template-columns: 62px 1fr auto; }
+  .cartLine img { width: 62px; height: 50px; }
+
+  .whatsapp-float-btn {
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+  }
+  .whatsapp-float-btn svg {
+    width: 28px;
+    height: 28px;
   }
 }
