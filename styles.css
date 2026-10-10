@@ -1533,3 +1533,83 @@ footer#contact .footerContact a[href^="mailto"]::before { content: "✉️"; }
     display: none !important;
   }
 }
+/* =======================================================
+   MOBILE VIEW FIX: COMPACT TEXT & PROMINENT DIVINE HERO
+   ======================================================= */
+@media (max-width: 768px) {
+
+  /* 1. Hero Section Padding Gap Tagginchadam */
+  .hero, 
+  .hero-section {
+    padding: 16px 16px 20px !important;
+    gap: 16px !important;
+  }
+
+  /* 2. Paina Peddha Words ('Pure. Fresh. Delicious.') Compact Cheyadam */
+  .hero h1,
+  .hero-title,
+  .hero-text h1 {
+    font-size: 30px !important;        /* 50px nunchi neat 30px ki */
+    line-height: 1.15 !important;
+    margin-bottom: 10px !important;
+    letter-spacing: -0.5px !important;
+  }
+
+  /* Paragraph Text */
+  .hero p,
+  .hero-desc,
+  .hero-subtitle {
+    font-size: 13.5px !important;
+    line-height: 1.45 !important;
+    margin-bottom: 14px !important;
+  }
+
+  /* Buttons Compact Fit */
+  .hero-buttons,
+  .hero-actions,
+  .hero-btns {
+    display: flex !important;
+    gap: 10px !important;
+    margin-bottom: 14px !important;
+  }
+
+  .hero-buttons a,
+  .hero-buttons button,
+  .hero-actions a,
+  .hero-actions button {
+    padding: 10px 16px !important;
+    font-size: 13px !important;
+  }
+
+  /* Trust Points (100% Veg, Pure Butter, 35+ Yrs) */
+  .hero-trust,
+  .trust-row,
+  .hero-features {
+    font-size: 11.5px !important;
+    gap: 8px !important;
+    margin-bottom: 16px !important;
+  }
+
+  /* 3. Hero Divine Image - Mobile Lō Peddhadhigā, Clear Gā Fit Ayyēla */
+  .hero-image-wrap,
+  .hero-blend-wrapper,
+  .hero-right,
+  .hero-image {
+    width: 100% !important;
+    margin: 0 auto !important;
+  }
+
+  .hero-image-wrap img,
+  .hero-blend-wrapper img,
+  .hero-right-img,
+  .hero-image img,
+  .hero-blend-img {
+    width: 100% !important;
+    height: 250px !important;                /* Squished kākunḍā prominent height */
+    object-fit: cover !important;             /* Stretch kākunḍā clean coverage */
+    object-position: center bottom !important;/* Cookies, Deepam, Gōmātha clear ga kanipinchela */
+    border-radius: 16px !important;
+    box-shadow: 0 8px 24px rgba(40, 20, 5, 0.15) !important;
+    display: block !important;
+  }
+}
