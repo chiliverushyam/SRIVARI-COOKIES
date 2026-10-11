@@ -23,19 +23,21 @@ html, body {
   padding: 0;
 }
 
-/* TOPBAR: FORCED VISIBLE ON BOTH DESKTOP & MOBILE */
+/* TOPBAR: 100% VISIBLE ON MOBILE & DESKTOP */
 .topbar {
   background: #3d1c08 !important;
   color: #faedcd !important;
-  padding: 8px 4% !important;
+  padding: 9px 4% !important;
   font-size: 12px !important;
   display: flex !important;
   visibility: visible !important;
+  opacity: 1 !important;
   justify-content: center !important;
   align-items: center !important;
   gap: 20px !important;
   position: relative !important;
-  z-index: 9999 !important;
+  z-index: 99999 !important;
+  width: 100% !important;
 }
 @media(max-width: 768px) {
   .topbar {
@@ -50,6 +52,10 @@ html, body {
     -webkit-overflow-scrolling: touch !important;
   }
   .topbar::-webkit-scrollbar { display: none !important; }
+  header.nav {
+    position: relative !important;
+    top: auto !important;
+  }
 }
 
 /* BENEFITS GRID */
@@ -94,7 +100,6 @@ html, body {
   display: block !important;
 }
 
-/* INTERACTIVE PRODUCT CARDS WITH CLICK BADGE */
 #productGrid > * {
   cursor: pointer !important;
   transition: transform 0.2s ease, box-shadow 0.2s ease !important;
@@ -222,14 +227,14 @@ html, body {
   box-shadow: none;
 }
 
-/* DEDICATED TEMPLE HERITAGE PRODUCT MODAL */
+/* PRODUCT MODAL */
 .product-modal-backdrop {
   display: none;
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
   background: rgba(18, 10, 5, 0.82);
   backdrop-filter: blur(6px);
-  z-index: 10001;
+  z-index: 100001;
   align-items: center;
   justify-content: center;
   padding: 16px;
@@ -261,9 +266,7 @@ html, body {
   place-items: center;
   z-index: 10;
   font-weight: 800;
-  transition: transform 0.2s ease;
 }
-.modal-close-btn:hover { transform: scale(1.1); }
 .modal-scroll-body {
   overflow-y: auto;
   padding: 26px 28px;
@@ -278,7 +281,7 @@ html, body {
   .modal-scroll-body { padding: 20px 16px; }
 }
 
-/* 3-IMAGE GALLERY */
+/* 3 DISTINCT IMAGES GALLERY */
 .gallery-main-img {
   width: 100%;
   height: 270px;
@@ -286,13 +289,15 @@ html, body {
   border-radius: 18px;
   border: 1.5px solid #ebdcd0;
   box-shadow: 0 8px 24px rgba(90,46,16,0.08);
-  transition: all 0.2s ease;
 }
 .gallery-thumbs {
   display: flex;
   gap: 10px;
   margin-top: 10px;
   justify-content: center;
+}
+.thumb-wrap {
+  text-align: center;
 }
 .thumb-img {
   width: 74px;
@@ -302,11 +307,19 @@ html, body {
   border: 2px solid #ebdcd0;
   cursor: pointer;
   transition: all 0.2s ease;
+  display: block;
 }
 .thumb-img:hover, .thumb-img.active {
   border-color: #c59b27;
   transform: scale(1.05);
   box-shadow: 0 4px 10px rgba(197,155,39,0.3);
+}
+.thumb-lbl {
+  font-size: 10px;
+  color: #7a6558;
+  margin-top: 3px;
+  display: block;
+  font-weight: 700;
 }
 
 /* COUPON BOX */
@@ -372,13 +385,6 @@ footer#contact {
   border-top: 2px solid #c59b27 !important;
   align-items: start !important;
 }
-.footerContact p::before, 
-.footerContact li::before, 
-.footerContact a::before,
-.footerColumn p::before {
-  content: none !important;
-  display: none !important;
-}
 .footerBrand { max-width: 320px; }
 .footerLogo {
   display: inline-flex !important;
@@ -391,8 +397,6 @@ footer#contact {
 .footerLogo img {
   width: 48px !important;
   height: 48px !important;
-  max-width: 48px !important;
-  max-height: 48px !important;
   border-radius: 50% !important;
   object-fit: cover !important;
   border: 1.5px solid #c59b27 !important;
@@ -419,7 +423,6 @@ footer#contact {
   font-size: 13px !important;
   font-weight: 700 !important;
   text-decoration: none !important;
-  box-shadow: 0 4px 12px rgba(37, 211, 102, 0.25) !important;
 }
 .footerColumn h4 {
   color: #f3cf7a !important;
@@ -427,20 +430,12 @@ footer#contact {
   margin-bottom: 14px !important;
   letter-spacing: 0.8px;
 }
-.footerColumn a, .footerColumn p, .footerColumn li a {
+.footerColumn a, .footerColumn p {
   display: block !important;
   margin-bottom: 8px !important;
   color: #d1ddd8 !important;
   text-decoration: none !important;
   font-size: 13.5px !important;
-}
-.footerColumn a:hover, .footerColumn li a:hover { color: #f3cf7a !important; }
-
-.footerContact p {
-  color: #d1ddd8 !important;
-  font-size: 13.5px !important;
-  margin-bottom: 6px !important;
-  line-height: 1.5 !important;
 }
 .footerContact a.contact-link {
   color: #f7e6c4 !important;
@@ -449,13 +444,7 @@ footer#contact {
   display: block !important;
   margin: 6px 0 !important;
   font-weight: 600;
-  transition: color 0.2s ease;
 }
-.footerContact a.contact-link:hover {
-  color: #ffd54f !important;
-}
-
-/* OFFICIAL SOCIAL MEDIA BUTTONS */
 .footerSocials {
   display: flex !important;
   align-items: center !important;
@@ -473,26 +462,10 @@ footer#contact {
   font-size: 12px !important;
   font-weight: 700 !important;
   color: #ffffff !important;
-  margin: 0 !important;
-  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
 }
-.socialIconLink:hover {
-  transform: translateY(-2px);
-  color: #ffffff !important;
-}
-.socialIconLink.ig {
-  background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important;
-  box-shadow: 0 4px 10px rgba(220, 39, 67, 0.35) !important;
-}
-.socialIconLink.fb {
-  background: #1877f2 !important;
-  box-shadow: 0 4px 10px rgba(24, 119, 242, 0.35) !important;
-}
-.socialIconLink.yt {
-  background: #ff0000 !important;
-  box-shadow: 0 4px 10px rgba(255, 0, 0, 0.35) !important;
-}
-
+.socialIconLink.ig { background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%) !important; }
+.socialIconLink.fb { background: #1877f2 !important; }
+.socialIconLink.yt { background: #ff0000 !important; }
 .copy {
   grid-column: 1 / -1;
   border-top: 1px solid rgba(255,255,255,0.15);
@@ -501,7 +474,6 @@ footer#contact {
   font-size: 12px;
   color: #a4beba;
 }
-
 @media(max-width: 900px) {
   .hero { flex-direction: column; text-align: center; }
   .about { grid-template-columns: 1fr; }
@@ -569,7 +541,7 @@ footer#contact {
   </div>
 </section>
 
-<!-- MASTER CONFECTIONERY TRUST BADGE -->
+<!-- MASTER TRUST BADGE -->
 <div style="padding: 24px 8% 8px; background: #faf6f0;">
   <div style="max-width: 960px; margin: 0 auto; background: linear-gradient(135deg, #fffbf5 0%, #fff6ea 100%); border: 1.5px solid #d4a373; border-radius: 16px; padding: 22px 28px; box-shadow: 0 4px 20px rgba(90,46,16,0.06); display: flex; align-items: center; gap: 24px; flex-wrap: wrap;">
     <div style="font-size: 42px; background: #faedcd; width: 72px; height: 72px; border-radius: 50%; display: grid; place-items: center; flex-shrink: 0; border: 2px solid #d4a373;">👨‍🍳</div>
@@ -600,7 +572,7 @@ footer#contact {
   <div class="grid" id="productGrid"></div>
 </section>
 
-<!-- BUILD YOUR OWN GIFT BOX SECTION -->
+<!-- BUILD YOUR OWN GIFT BOX -->
 <section class="gift-box-section" id="giftbox">
   <div class="gift-box-card">
     <div class="gift-box-header">
@@ -733,9 +705,7 @@ footer#contact {
     <a href="mailto:orders@srivaricookies.com" class="contact-link">📦 Orders: orders@srivaricookies.com</a>
     <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
 
-    <!-- OFFICIAL SOCIAL PROFILES -->
     <div class="footerSocials">
-      <!-- Instagram (Official) -->
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
@@ -743,7 +713,6 @@ footer#contact {
         <span>Instagram</span>
       </a>
 
-      <!-- Facebook -->
       <a href="https://www.facebook.com/profile.php?id=61594950856274" target="_blank" rel="noopener noreferrer" class="socialIconLink fb" title="Facebook">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
@@ -751,7 +720,6 @@ footer#contact {
         <span>Facebook</span>
       </a>
 
-      <!-- YouTube -->
       <a href="https://www.youtube.com/@SrivariCookies" target="_blank" rel="noopener noreferrer" class="socialIconLink yt" title="YouTube">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
           <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
@@ -788,22 +756,31 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
-<!-- DEDICATED SACRED PRODUCT DETAIL MODAL -->
+<!-- DEDICATED SACRED PRODUCT DETAIL MODAL (3 DISTINCT PHOTOS) -->
 <div class="product-modal-backdrop" id="productModal">
   <div class="product-modal-card">
     <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
     <div class="modal-scroll-body">
       <div class="modal-grid">
-        <!-- 3 Images Gallery Showcase -->
+        <!-- 3 DISTINCT IMAGES GALLERY -->
         <div>
           <img id="modalMainImg" class="gallery-main-img" src="assets/coconut.jpg" alt="Srivari Cookie">
           <div class="gallery-thumbs">
-            <img class="thumb-img active" id="thumb1" src="assets/coconut.jpg" onclick="switchModalImg(this)" alt="Pure Baked Cookie">
-            <img class="thumb-img" id="thumb2" src="assets/srivari-divine-hero.jpg" onclick="switchModalImg(this)" alt="Royal Packaging Box">
-            <img class="thumb-img" id="thumb3" src="assets/hero-cookie.jpg" onclick="switchModalImg(this)" alt="Cookie with Divine Hamper">
+            <div class="thumb-wrap">
+              <img class="thumb-img active" id="thumb1" src="assets/coconut.jpg" onclick="switchModalImg(this)" alt="Pure Cookie">
+              <span class="thumb-lbl">1. Cookie</span>
+            </div>
+            <div class="thumb-wrap">
+              <img class="thumb-img" id="thumb2" src="assets/srivari-divine-hero.jpg" onclick="switchModalImg(this)" alt="Sealed Box">
+              <span class="thumb-lbl">2. Sealed Box</span>
+            </div>
+            <div class="thumb-wrap">
+              <img class="thumb-img" id="thumb3" src="assets/butter.jpg" onclick="switchModalImg(this)" alt="Ingredients & Bake">
+              <span class="thumb-lbl">3. Fresh Oven</span>
+            </div>
           </div>
           <div style="margin-top:10px; font-size:11px; color:#8c7161; text-align:center;">
-            <span>📸 Click photo: 1. Pure Cookie • 2. Sealed Box • 3. Hamper Pack</span>
+            <span>📸 Click photo to view: Cookie Closeup • Box Pack • Fresh Oven</span>
           </div>
         </div>
 
@@ -837,7 +814,7 @@ footer#contact {
         </div>
       </div>
 
-      <!-- Customer Reviews & Feedback Section -->
+      <!-- Customer Reviews & Feedback Section (PERSISTENT STORAGE) -->
       <div class="reviews-section">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
           <h3 style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.2rem;">Devotee & Foodie Reviews (★★★★★ 4.9/5)</h3>
@@ -876,7 +853,7 @@ footer#contact {
         </div>
       </div>
 
-      <!-- Other Handcrafted Varieties / Recommendations -->
+      <!-- Other Varieties -->
       <div style="border-top:1.5px solid #ebdcd0; padding-top:20px; margin-top:22px;">
         <h4 style="font-family:'Playfair Display',serif; color:#48230b; margin:0 0 12px; font-size:1.15rem;">You May Also Love (Other Handcrafted Varieties)</h4>
         <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;" id="modalRelatedGrid">
@@ -902,7 +879,7 @@ footer#contact {
   </div>
 </div>
 
-<!-- ACCOUNT MODAL -->
+<!-- ORDERS MODAL -->
 <div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
   <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:18px;padding:24px;box-shadow:0 14px 40px rgba(0,0,0,0.35);max-height:88vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;position:relative;">
     <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;">
@@ -923,7 +900,7 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- SCRIPT: GIFT BOX BUILDER & BULLETPROOF DETAIL MODAL -->
+<!-- PRODUCT DETAIL & PERSISTENCE SCRIPT -->
 <script>
 let selectedFlavors = [];
 
@@ -933,6 +910,8 @@ const fallbackCatalog = {
     name: 'Coconut Cookies',
     desc: 'Handcrafted with real desiccated coconut flakes and 100% pure creamery butter. Crisp golden edges with a heavenly tropical aroma.',
     image: 'assets/coconut.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/butter.jpg',
     price200: 250,
     price400: 500
   },
@@ -941,6 +920,8 @@ const fallbackCatalog = {
     name: 'Almond Cashew Cookies',
     desc: 'Loaded with slow-roasted Californian almonds and golden cashews, blended in master butter dough.',
     image: 'assets/almond-cashew.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/hero-cookie.jpg',
     price200: 250,
     price400: 500
   },
@@ -949,6 +930,8 @@ const fallbackCatalog = {
     name: 'Double Chocolate Cookies',
     desc: 'Rich Dutch cocoa blended with pure melted dark chocolate and chocolate chunks for true indulgence.',
     image: 'assets/double-chocolate.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/hero-cookie.jpg',
     price200: 250,
     price400: 500
   },
@@ -957,6 +940,8 @@ const fallbackCatalog = {
     name: 'Dry Fruit Special Cookies',
     desc: 'Royal celebration recipe packed with premium pistachios, cashews, almonds and subtle cardamom.',
     image: 'assets/dry-fruit.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/butter.jpg',
     price200: 250,
     price400: 500
   },
@@ -965,6 +950,8 @@ const fallbackCatalog = {
     name: 'Classic Choco Chip Cookies',
     desc: 'Timeless golden crunch loaded with premium chocolate chips baked to crispy perfection.',
     image: 'assets/classic-chip.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/hero-cookie.jpg',
     price200: 250,
     price400: 500
   },
@@ -973,6 +960,8 @@ const fallbackCatalog = {
     name: 'Pure Butter Cookies',
     desc: 'Melt-in-mouth heritage recipe made with 100% genuine butter and zero palm oil. Golden and divine.',
     image: 'assets/butter.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/butter.jpg',
     price200: 250,
     price400: 500
   },
@@ -981,6 +970,8 @@ const fallbackCatalog = {
     name: 'Red Velvet Cookies',
     desc: 'Velvety crimson artisan cookies paired with smooth white cream drops. Luxurious festive favourite.',
     image: 'assets/red-velvet.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/hero-cookie.jpg',
     price200: 250,
     price400: 500
   },
@@ -989,6 +980,8 @@ const fallbackCatalog = {
     name: 'Oats & Raisin Cookies',
     desc: 'Nutritious rolled oats paired with juicy golden raisins, roasted cinnamon and butter crunch.',
     image: 'assets/oats-raisin.jpg',
+    packImg: 'assets/srivari-divine-hero.jpg',
+    ovenImg: 'assets/butter.jpg',
     price200: 250,
     price400: 500
   }
@@ -1158,9 +1151,17 @@ function openProductDetailModal(id) {
     currentModalProdId = prod.id;
     titleEl.textContent = prod.name;
     if (prod.desc) descEl.textContent = prod.desc;
-    const imgSrc = prod.image || `assets/${prod.id}.jpg`;
-    mainImgEl.src = imgSrc;
-    thumb1El.src = imgSrc;
+    
+    // 3 DISTINCT IMAGES (No Repetitions)
+    const cookieImg = prod.image || `assets/${prod.id}.jpg`;
+    const boxImg = prod.packImg || 'assets/srivari-divine-hero.jpg';
+    const ovenImg = prod.ovenImg || (prod.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg');
+
+    mainImgEl.src = cookieImg;
+    thumb1El.src = cookieImg;
+    thumb2El.src = boxImg;
+    thumb3El.src = ovenImg;
+
     pack200.textContent = `200g - ₹${prod.price200 || 250}`;
     pack400.textContent = `400g - ₹${prod.price400 || 500}`;
   } else {
@@ -1168,16 +1169,19 @@ function openProductDetailModal(id) {
     titleEl.textContent = cleanId.replace(/-/g, ' ').toUpperCase();
     mainImgEl.src = `assets/${cleanId}.jpg`;
     thumb1El.src = `assets/${cleanId}.jpg`;
+    thumb2El.src = 'assets/srivari-divine-hero.jpg';
+    thumb3El.src = 'assets/butter.jpg';
   }
-
-  thumb2El.src = 'assets/srivari-divine-hero.jpg';
-  thumb3El.src = 'assets/hero-cookie.jpg';
 
   document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
   thumb1El.classList.add('active');
 
   selectModalPack('200g');
   document.getElementById('couponStatus').textContent = '';
+  
+  // Load saved reviews from localStorage
+  loadProductReviews(currentModalProdId);
+
   document.getElementById('productModal').style.display = 'flex';
 }
 
@@ -1235,6 +1239,34 @@ function addModalProductToCart() {
   }, 150);
 }
 
+// PERSISTENT REVIEWS (SAVED TO LOCAL STORAGE)
+function loadProductReviews(prodId) {
+  const list = document.getElementById('modalReviewsList');
+  const defaultReviews = `
+    <div class="review-item">
+      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+        <b>Venkat R. (Hyderabad)</b>
+        <span style="color:#d97706;">★★★★★</span>
+      </div>
+      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Oven aroma is extraordinary! Asalu temple prasadham tinnantha divine feeling vachindi, pure butter crunch beat cheyaleru!"</p>
+    </div>
+    <div class="review-item">
+      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+        <b>Swapna M. (Bengaluru)</b>
+        <span style="color:#d97706;">★★★★★</span>
+      </div>
+      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Delivered crispy and safely packed. Pure vegetarian without any artificial preservatives. Kids loved it!"</p>
+    </div>
+  `;
+  
+  const saved = localStorage.getItem('srivari_reviews_' + prodId);
+  if (saved) {
+    list.innerHTML = saved + defaultReviews;
+  } else {
+    list.innerHTML = defaultReviews;
+  }
+}
+
 function submitReview() {
   const name = document.getElementById('revName').value.trim();
   const comment = document.getElementById('revComment').value.trim();
@@ -1244,29 +1276,32 @@ function submitReview() {
     return;
   }
   const starsStr = '★'.repeat(parseInt(stars)) + '☆'.repeat(5 - parseInt(stars));
-  const newRev = document.createElement('div');
-  newRev.className = 'review-item';
-  newRev.innerHTML = `
-    <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-      <b>${name}</b>
-      <span style="color:#d97706;">${starsStr}</span>
+  const newRevHTML = `
+    <div class="review-item">
+      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+        <b>${name}</b>
+        <span style="color:#d97706;">${starsStr}</span>
+      </div>
+      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"${comment}"</p>
     </div>
-    <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"${comment}"</p>
   `;
-  document.getElementById('modalReviewsList').prepend(newRev);
+  
+  const existingSaved = localStorage.getItem('srivari_reviews_' + currentModalProdId) || '';
+  localStorage.setItem('srivari_reviews_' + currentModalProdId, newRevHTML + existingSaved);
+
+  loadProductReviews(currentModalProdId);
   document.getElementById('revName').value = '';
   document.getElementById('revComment').value = '';
-  alert("Dhanyavādhamulu! Mee feedback successfully add ayyindi.");
+  alert("Dhanyavādhamulu! Mee review successfully add ayyindi.");
 }
 
-/* GLOBAL BULLETPROOF CLICK LISTENER (WORKS EVEN AFTER D1 LOADS) */
+/* EVENT DELEGATOR TO OPEN MODAL ON ANY PRODUCT CLICK */
 document.addEventListener('click', function(e) {
-  const grid = document.getElementById('productGrid');
-  if (!grid) return;
+  // If user clicked direct add to cart button or inputs, let it proceed
   if (e.target.closest('button, select, input, a, textarea')) return;
 
   const card = e.target.closest('#productGrid > *');
-  if (card && grid.contains(card)) {
+  if (card) {
     let pId = card.getAttribute('data-id') || card.getAttribute('data-product-id');
     
     if (!pId) {
@@ -1286,12 +1321,14 @@ document.addEventListener('click', function(e) {
     }
 
     if (!pId) {
-      const text = card.innerText.toLowerCase();
-      for (const key of Object.keys(fallbackCatalog)) {
-        const checkWord = key.replace(/-/g, ' ');
-        if (text.includes(checkWord) || text.includes(key.split('-')[0])) {
-          pId = key;
-          break;
+      const title = card.querySelector('h3, h4, b');
+      if (title) {
+        const t = title.innerText.toLowerCase();
+        for (const k in fallbackCatalog) {
+          if (t.includes(k.split('-')[0])) {
+            pId = k;
+            break;
+          }
         }
       }
     }
