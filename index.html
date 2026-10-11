@@ -23,6 +23,31 @@ html, body {
   padding: 0;
 }
 
+/* TOPBAR & MOBILE HORIZONTAL SCROLL FIX */
+.topbar {
+  background: #3d1c08;
+  color: #faedcd;
+  padding: 8px 4%;
+  font-size: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+@media(max-width: 600px) {
+  .topbar {
+    display: flex !important;
+    justify-content: flex-start !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    padding: 8px 14px !important;
+    font-size: 11.5px !important;
+    gap: 16px !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  .topbar::-webkit-scrollbar { display: none !important; }
+}
+
 /* BENEFITS GRID */
 .benefits {
   display: grid !important;
@@ -63,6 +88,16 @@ html, body {
   color: #7a6558 !important;
   font-size: 12px !important;
   display: block !important;
+}
+
+/* PRODUCT GRID CARDS CLICKABLE */
+#productGrid .card, #productGrid > div {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+#productGrid .card:hover, #productGrid > div:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(90,46,16,0.12);
 }
 
 /* BUILD YOUR GIFT BOX SECTION */
@@ -180,6 +215,145 @@ html, body {
   background: #b0a49c;
   cursor: not-allowed;
   box-shadow: none;
+}
+
+/* ROYAL PRODUCT DETAIL MODAL */
+.product-modal-backdrop {
+  display: none;
+  position: fixed;
+  top: 0; left: 0; width: 100%; height: 100%;
+  background: rgba(18, 10, 5, 0.78);
+  backdrop-filter: blur(5px);
+  z-index: 10001;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+.product-modal-card {
+  background: #fffdfa;
+  width: 100%;
+  max-width: 780px;
+  max-height: 90vh;
+  border-radius: 24px;
+  border: 2px solid #c59b27;
+  box-shadow: 0 20px 60px rgba(90,46,16,0.35);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+}
+.modal-close-btn {
+  position: absolute;
+  top: 14px; right: 16px;
+  background: #faedcd;
+  border: 1px solid #d4a373;
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  font-size: 18px;
+  cursor: pointer;
+  color: #5a2e10;
+  display: grid;
+  place-items: center;
+  z-index: 10;
+  font-weight: 800;
+  transition: transform 0.2s ease;
+}
+.modal-close-btn:hover { transform: scale(1.1); }
+.modal-scroll-body {
+  overflow-y: auto;
+  padding: 26px 28px;
+}
+.modal-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 26px;
+}
+@media(max-width: 700px) {
+  .modal-grid { grid-template-columns: 1fr; }
+  .modal-scroll-body { padding: 20px 16px; }
+}
+
+/* 3-IMAGE GALLERY */
+.gallery-main-img {
+  width: 100%;
+  height: 270px;
+  object-fit: cover;
+  border-radius: 18px;
+  border: 1.5px solid #ebdcd0;
+  box-shadow: 0 8px 24px rgba(90,46,16,0.08);
+  transition: all 0.2s ease;
+}
+.gallery-thumbs {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+  justify-content: center;
+}
+.thumb-img {
+  width: 74px;
+  height: 74px;
+  object-fit: cover;
+  border-radius: 12px;
+  border: 2px solid #ebdcd0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.thumb-img:hover, .thumb-img.active {
+  border-color: #c59b27;
+  transform: scale(1.05);
+  box-shadow: 0 4px 10px rgba(197,155,39,0.3);
+}
+
+/* COUPON BOX */
+.coupon-box-wrap {
+  background: #fff8eb;
+  border: 1.5px dashed #c59b27;
+  border-radius: 12px;
+  padding: 10px 12px;
+  margin: 14px 0 10px;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+.coupon-input {
+  flex: 1;
+  padding: 8px 10px;
+  border: 1px solid #d4a373;
+  border-radius: 8px;
+  font-family: inherit;
+  font-size: 13px;
+  text-transform: uppercase;
+  font-weight: 700;
+}
+.coupon-btn {
+  background: #5a2e10;
+  color: #faedcd;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 8px;
+  font-weight: 700;
+  font-size: 12.5px;
+  cursor: pointer;
+}
+
+/* REVIEWS & FEEDBACK */
+.reviews-section {
+  border-top: 1.5px solid #ebdcd0;
+  padding-top: 20px;
+  margin-top: 22px;
+}
+.review-item {
+  background: #faf6f0;
+  border-radius: 12px;
+  padding: 12px 14px;
+  margin-bottom: 10px;
+}
+.review-form {
+  background: #fdfbf7;
+  border: 1px solid #ebdcd0;
+  border-radius: 14px;
+  padding: 14px;
+  margin-top: 14px;
 }
 
 /* FOOTER ARCHITECTURE */
@@ -414,7 +588,7 @@ footer#contact {
     <div>
       <p class="eyebrow">OUR HANDCRAFTED SELECTION</p>
       <h2>Cookies Worth Craving</h2>
-      <p>Select your favourite blend, pack size, and crunch.</p>
+      <p>Click any cookie to view box packaging, ingredients, reviews & discounts.</p>
     </div>
     <span>Freshly baked for each order →</span>
   </div>
@@ -554,7 +728,7 @@ footer#contact {
     <a href="mailto:orders@srivaricookies.com" class="contact-link">📦 Orders: orders@srivaricookies.com</a>
     <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
 
-   <!-- OFFICIAL SOCIAL PROFILES -->
+    <!-- OFFICIAL SOCIAL PROFILES -->
     <div class="footerSocials">
       <!-- Instagram (Official) -->
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
@@ -609,6 +783,120 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
+<!-- SRIVARI SACRED PRODUCT DETAIL MODAL -->
+<div class="product-modal-backdrop" id="productModal">
+  <div class="product-modal-card">
+    <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
+    <div class="modal-scroll-body">
+      <div class="modal-grid">
+        <!-- 3 Images Gallery Showcase -->
+        <div>
+          <img id="modalMainImg" class="gallery-main-img" src="assets/coconut.jpg" alt="Srivari Cookie">
+          <div class="gallery-thumbs">
+            <img class="thumb-img active" id="thumb1" src="assets/coconut.jpg" onclick="switchModalImg(this)" alt="Pure Baked Cookie">
+            <img class="thumb-img" id="thumb2" src="assets/srivari-divine-hero.jpg" onclick="switchModalImg(this)" alt="Royal Packaging Box">
+            <img class="thumb-img" id="thumb3" src="assets/hero-cookie.jpg" onclick="switchModalImg(this)" alt="Cookie with Divine Hamper">
+          </div>
+          <div style="margin-top:10px; font-size:11px; color:#8c7161; text-align:center;">
+            <span>📸 Click photo: 1. Pure Cookie • 2. Sealed Box • 3. Hamper Pack</span>
+          </div>
+        </div>
+
+        <!-- Product Details & Pricing -->
+        <div>
+          <span style="background:#5a2e10; color:#faedcd; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800; letter-spacing:1px;">SRIVARI HERITAGE</span>
+          <h2 id="modalTitle" style="font-family:'Playfair Display',serif; color:#48230b; margin:6px 0; font-size:1.6rem;">Coconut Cookies</h2>
+          <p id="modalDesc" style="color:#6d5345; font-size:13px; line-height:1.6; margin:0 0 14px;">Handcrafted artisanal cookies baked fresh on order with pure butter, roasted richness and traditional recipes under 35+ years mentorship.</p>
+
+          <!-- Weight Selection -->
+          <div style="margin-bottom:14px;">
+            <label style="font-size:12.5px; font-weight:700; color:#48230b; display:block; margin-bottom:6px;">Select Pack Size:</label>
+            <div style="display:flex; gap:10px;">
+              <button id="pack200Btn" onclick="selectModalPack('200g')" style="flex:1; padding:9px; border-radius:10px; border:2px solid #5a2e10; background:#faedcd; font-weight:700; cursor:pointer;">200g - ₹250</button>
+              <button id="pack400Btn" onclick="selectModalPack('400g')" style="flex:1; padding:9px; border-radius:10px; border:1px solid #ebdcd0; background:#fff; font-weight:700; cursor:pointer;">400g - ₹500</button>
+            </div>
+          </div>
+
+          <!-- Coupon Code Box -->
+          <div class="coupon-box-wrap">
+            <span>🏷️</span>
+            <input type="text" id="modalCouponCode" class="coupon-input" placeholder="Coupon Code (e.g. SRIVARI50)" />
+            <button class="coupon-btn" onclick="applyModalCoupon()">Apply</button>
+          </div>
+          <div id="couponStatus" style="font-size:11.5px; margin-top:-6px; margin-bottom:12px; font-weight:700;"></div>
+
+          <!-- Add to Cart CTA -->
+          <button id="modalAddToCartBtn" onclick="addModalProductToCart()" style="width:100%; background:#5a2e10; color:#faedcd; border:none; padding:13px; border-radius:30px; font-size:14.5px; font-weight:700; cursor:pointer; box-shadow:0 6px 18px rgba(90,46,16,0.25);">
+            🛒 Add Fresh Baked Pack to Cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Customer Reviews & Feedback Section -->
+      <div class="reviews-section">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
+          <h3 style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.2rem;">Devotee & Foodie Reviews (★★★★★ 4.9/5)</h3>
+          <span style="font-size:11.5px; color:#15803d; font-weight:700;">✓ 100% Verified Taste</span>
+        </div>
+
+        <div id="modalReviewsList">
+          <div class="review-item">
+            <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+              <b>Venkat R. (Hyderabad)</b>
+              <span style="color:#d97706;">★★★★★</span>
+            </div>
+            <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Oven aroma is extraordinary! Asalu temple prasadham tinnantha divine feeling vachindi, pure butter crunch beat cheyaleru!"</p>
+          </div>
+          <div class="review-item">
+            <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+              <b>Swapna M. (Bengaluru)</b>
+              <span style="color:#d97706;">★★★★★</span>
+            </div>
+            <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Delivered crispy and safely packed. Pure vegetarian without any artificial preservatives. Kids loved it!"</p>
+          </div>
+        </div>
+
+        <!-- Add Your Feedback Form -->
+        <div class="review-form">
+          <b style="font-size:13px; color:#48230b; display:block; margin-bottom:8px;">✍️ Write Your Review / Feedback</b>
+          <div style="display:flex; gap:10px; margin-bottom:8px;">
+            <input type="text" id="revName" placeholder="Your Name" style="flex:1; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px;" />
+            <select id="revStars" style="padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; background:#fff;">
+              <option value="5">★★★★★ (5 Stars - Divine)</option>
+              <option value="4">★★★★☆ (4 Stars - Delicious)</option>
+            </select>
+          </div>
+          <textarea id="revComment" placeholder="Share your experience (taste, crunch, box packing)..." style="width:100%; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; margin-bottom:8px; font-family:inherit;"></textarea>
+          <button onclick="submitReview()" style="background:#5a2e10; color:#faedcd; border:none; padding:7px 18px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">Submit Review</button>
+        </div>
+      </div>
+
+      <!-- Other Handcrafted Varieties / Recommendations -->
+      <div style="border-top:1.5px solid #ebdcd0; padding-top:20px; margin-top:22px;">
+        <h4 style="font-family:'Playfair Display',serif; color:#48230b; margin:0 0 12px; font-size:1.15rem;">You May Also Love (Other Handcrafted Varieties)</h4>
+        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;" id="modalRelatedGrid">
+          <div onclick="openProductDetailModal('almond-cashew')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
+            <b style="font-size:12px; color:#48230b;">Almond Cashew</b>
+            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
+          </div>
+          <div onclick="openProductDetailModal('double-chocolate')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
+            <b style="font-size:12px; color:#48230b;">Double Choc</b>
+            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
+          </div>
+          <div onclick="openProductDetailModal('dry-fruit')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
+            <b style="font-size:12px; color:#48230b;">Dry Fruit Spl</b>
+            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
+          </div>
+          <div onclick="openProductDetailModal('red-velvet')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
+            <b style="font-size:12px; color:#48230b;">Red Velvet</b>
+            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- ACCOUNT MODAL -->
 <div id="ordersModal" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.65);z-index:10000;align-items:center;justify-content:center;padding:16px;box-sizing:border-box;">
   <div style="background:#faf5ef;width:100%;max-width:440px;border-radius:18px;padding:24px;box-shadow:0 14px 40px rgba(0,0,0,0.35);max-height:88vh;display:flex;flex-direction:column;border:1.5px solid #c59b27;position:relative;">
@@ -630,7 +918,7 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- DYNAMIC REAL-DATABASE STOCK MATCHER SCRIPT -->
+<!-- SCRIPT: GIFT BOX BUILDER & DYNAMIC DETAIL MODAL -->
 <script>
 let selectedFlavors = [];
 
@@ -666,7 +954,6 @@ function updateGiftBoxUI() {
   }
 }
 
-// Live database nun̄chi real product ni match chēsē function
 function findMatchingLiveProduct(flavorName) {
   const prods = (window.configuredProducts && window.configuredProducts.length)
     ? window.configuredProducts
@@ -687,7 +974,6 @@ function findMatchingLiveProduct(flavorName) {
 
   const keys = kwMap[flavorName] || [flavorName.toLowerCase().split(' ')[0]];
 
-  // 1. Live array lo search
   if (prods && prods.length > 0) {
     const found = prods.find(p => {
       const pStr = ((p.id || '') + ' ' + (p.name || '')).toLowerCase();
@@ -696,7 +982,6 @@ function findMatchingLiveProduct(flavorName) {
     if (found) return found;
   }
 
-  // 2. DOM rendered buttons lo search
   const cards = document.querySelectorAll('#productGrid > div, #productGrid .card, .product-card');
   for (const card of cards) {
     const text = card.innerText.toLowerCase();
@@ -704,9 +989,7 @@ function findMatchingLiveProduct(flavorName) {
       const btn = card.querySelector("button[onclick*='addToCart']");
       if (btn) {
         const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
-        if (m && m[1]) {
-          return { id: m[1], in_stock: 1, name: flavorName };
-        }
+        if (m && m[1]) return { id: m[1], in_stock: 1, name: flavorName };
       }
       const anyBtn = card.querySelector('button');
       if (anyBtn) return { fallbackBtn: anyBtn, in_stock: 1, name: flavorName };
@@ -723,9 +1006,7 @@ function addGiftBoxToCart() {
   }
 
   const note = document.getElementById('giftCardNote').value.trim();
-  if (note) {
-    localStorage.setItem('srivari_gift_note', note);
-  }
+  if (note) localStorage.setItem('srivari_gift_note', note);
 
   const addFn = (typeof window.addToCart === 'function') ? window.addToCart : (typeof addToCart === 'function' ? addToCart : null);
 
@@ -744,11 +1025,10 @@ function addGiftBoxToCart() {
   });
 
   if (outOfStockList.length > 0) {
-    alert("Ee cookies admin lo out-of-stock lo unnayi: " + outOfStockList.join(', ') + ". Dayachesi vere cookie select cheyandi leda admin lo in-stock cheyandi!");
+    alert("Ee cookies admin lo out-of-stock lo unnayi: " + outOfStockList.join(', ') + ". Dayachesi vere cookie select cheyandi!");
     return;
   }
 
-  // Real matching product IDs tho cart loki direct add
   itemsToAdd.forEach(item => {
     if (item.id && addFn) {
       addFn(item.id, '200g');
@@ -757,7 +1037,6 @@ function addGiftBoxToCart() {
     }
   });
 
-  // Automatically open cart drawer
   setTimeout(() => {
     if (typeof openDrawer === 'function') {
       openDrawer();
@@ -767,6 +1046,158 @@ function addGiftBoxToCart() {
     }
   }, 200);
 }
+
+/* ================= PRODUCT DETAIL MODAL SYSTEM ================= */
+let currentModalProdId = '';
+let currentModalPack = '200g';
+
+function openProductDetailModal(id) {
+  const prods = (window.configuredProducts && window.configuredProducts.length)
+    ? window.configuredProducts
+    : (window.products || []);
+  
+  let prod = prods.find(p => p.id === id);
+  if (!prod) {
+    prod = prods.find(p => (p.name || '').toLowerCase().includes(id.toLowerCase()));
+  }
+
+  const titleEl = document.getElementById('modalTitle');
+  const mainImgEl = document.getElementById('modalMainImg');
+  const thumb1El = document.getElementById('thumb1');
+  const thumb2El = document.getElementById('thumb2');
+  const thumb3El = document.getElementById('thumb3');
+  const pack200 = document.getElementById('pack200Btn');
+  const pack400 = document.getElementById('pack400Btn');
+
+  if (prod) {
+    currentModalProdId = prod.id;
+    titleEl.textContent = prod.name;
+    const imgSrc = prod.image || `assets/${prod.id}.jpg`;
+    mainImgEl.src = imgSrc;
+    thumb1El.src = imgSrc;
+    pack200.textContent = `200g - ₹${prod.price200 || 250}`;
+    pack400.textContent = `400g - ₹${prod.price400 || 500}`;
+  } else {
+    currentModalProdId = id;
+    titleEl.textContent = id.replace(/-/g, ' ').toUpperCase() + ' COOKIES';
+    mainImgEl.src = `assets/${id}.jpg`;
+    thumb1El.src = `assets/${id}.jpg`;
+  }
+
+  thumb2El.src = 'assets/srivari-divine-hero.jpg';
+  thumb3El.src = 'assets/hero-cookie.jpg';
+
+  document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+  thumb1El.classList.add('active');
+
+  selectModalPack('200g');
+  document.getElementById('couponStatus').textContent = '';
+  document.getElementById('productModal').style.display = 'flex';
+}
+
+function closeProductModal() {
+  document.getElementById('productModal').style.display = 'none';
+}
+
+function switchModalImg(thumb) {
+  document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
+  thumb.classList.add('active');
+  document.getElementById('modalMainImg').src = thumb.src;
+}
+
+function selectModalPack(weight) {
+  currentModalPack = weight;
+  const b200 = document.getElementById('pack200Btn');
+  const b400 = document.getElementById('pack400Btn');
+  if (weight === '200g') {
+    b200.style.border = '2px solid #5a2e10';
+    b200.style.background = '#faedcd';
+    b400.style.border = '1px solid #ebdcd0';
+    b400.style.background = '#fff';
+  } else {
+    b400.style.border = '2px solid #5a2e10';
+    b400.style.background = '#faedcd';
+    b200.style.border = '1px solid #ebdcd0';
+    b200.style.background = '#fff';
+  }
+}
+
+function applyModalCoupon() {
+  const code = document.getElementById('modalCouponCode').value.trim().toUpperCase();
+  const status = document.getElementById('couponStatus');
+  if (code === 'SRIVARI50' || code === 'FIRST50' || code === 'DIVINE50') {
+    status.style.color = '#15803d';
+    status.textContent = '✓ Coupon Applied: Flat ₹50 Discount activated for your order!';
+    localStorage.setItem('srivari_coupon', code);
+  } else {
+    status.style.color = '#dc2626';
+    status.textContent = '✕ Invalid Coupon. Try code "SRIVARI50" for ₹50 OFF!';
+  }
+}
+
+function addModalProductToCart() {
+  const addFn = (typeof window.addToCart === 'function') ? window.addToCart : (typeof addToCart === 'function' ? addToCart : null);
+  if (addFn && currentModalProdId) {
+    addFn(currentModalProdId, currentModalPack);
+  } else {
+    const cardBtn = document.querySelector(`button[onclick*="'${currentModalProdId}'"]`);
+    if (cardBtn) cardBtn.click();
+  }
+  closeProductModal();
+  setTimeout(() => {
+    if (typeof openDrawer === 'function') openDrawer();
+  }, 150);
+}
+
+function submitReview() {
+  const name = document.getElementById('revName').value.trim();
+  const comment = document.getElementById('revComment').value.trim();
+  const stars = document.getElementById('revStars').value;
+  if (!name || !comment) {
+    alert("Dayachēsi mee Peru mariyu Review rāyandi!");
+    return;
+  }
+  const starsStr = '★'.repeat(parseInt(stars)) + '☆'.repeat(5 - parseInt(stars));
+  const newRev = document.createElement('div');
+  newRev.className = 'review-item';
+  newRev.innerHTML = `
+    <div style="display:flex; justify-content:space-between; font-size:12.5px;">
+      <b>${name}</b>
+      <span style="color:#d97706;">${starsStr}</span>
+    </div>
+    <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"${comment}"</p>
+  `;
+  document.getElementById('modalReviewsList').prepend(newRev);
+  document.getElementById('revName').value = '';
+  document.getElementById('revComment').value = '';
+  alert("Dhanyavādhamulu! Mee feedback successfully add ayyindi.");
+}
+
+// Global click delegator: clicking product card opens detail view
+document.addEventListener('DOMContentLoaded', () => {
+  const grid = document.getElementById('productGrid');
+  if (grid) {
+    grid.addEventListener('click', (e) => {
+      if (e.target.closest('button, select, input, a')) return;
+      const card = e.target.closest('.card, .product-card, [data-id], div');
+      if (card && grid.contains(card) && card !== grid) {
+        let pId = card.getAttribute('data-id') || card.getAttribute('data-product-id');
+        if (!pId) {
+          const btn = card.querySelector('button[onclick*="addToCart"]');
+          if (btn) {
+            const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
+            if (m) pId = m[1];
+          }
+        }
+        if (!pId) {
+          const title = card.querySelector('h3, h4, b');
+          if (title) pId = title.innerText.toLowerCase().replace(/cookies/g, '').trim().replace(/\s+/g, '-');
+        }
+        if (pId) openProductDetailModal(pId);
+      }
+    });
+  }
+});
 </script>
 
 <!-- Mobile Bottom Navigation -->
