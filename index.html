@@ -23,7 +23,7 @@ html, body {
   padding: 0;
 }
 
-/* FORCED CLEAN BENEFITS GRID */
+/* BENEFITS GRID */
 .benefits {
   display: grid !important;
   grid-template-columns: repeat(4, 1fr) !important;
@@ -65,7 +65,124 @@ html, body {
   display: block !important;
 }
 
-/* FORCED CLEAN FOOTER ARCHITECTURE & KILL DUPLICATE EMOJIS */
+/* NEXT-LEVEL BUILD YOUR GIFT BOX SECTION */
+.gift-box-section {
+  padding: 50px 6%;
+  background: linear-gradient(180deg, #faf6f0 0%, #f4eae0 100%);
+  border-top: 2px solid #e8d5c4;
+  border-bottom: 2px solid #e8d5c4;
+}
+.gift-box-card {
+  max-width: 1040px;
+  margin: 0 auto;
+  background: #ffffff;
+  border-radius: 24px;
+  border: 2px solid #d4a373;
+  padding: 36px 32px;
+  box-shadow: 0 16px 40px rgba(90,46,16,0.08);
+}
+.gift-box-header {
+  text-align: center;
+  margin-bottom: 28px;
+}
+.gift-badge {
+  background: #5a2e10;
+  color: #f7e6c4;
+  padding: 4px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-bottom: 8px;
+}
+.gift-box-header h2 {
+  font-family: 'Playfair Display', serif;
+  color: #5a2e10;
+  font-size: 2rem;
+  margin: 4px 0 8px;
+}
+.gift-box-header p {
+  color: #7a6558;
+  font-size: 0.95rem;
+  margin: 0;
+}
+.flavors-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+  margin: 22px 0;
+}
+.flavor-btn {
+  background: #fdfbf7;
+  border: 1.5px solid #ebdcd0;
+  border-radius: 14px;
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+.flavor-btn:hover {
+  border-color: #c59b27;
+  transform: translateY(-2px);
+}
+.flavor-btn.selected {
+  background: #faedcd;
+  border-color: #5a2e10;
+  box-shadow: 0 4px 12px rgba(90,46,16,0.15);
+}
+.flavor-btn b {
+  display: block;
+  font-size: 13px;
+  color: #48230b;
+  margin-top: 4px;
+}
+.flavor-btn span {
+  font-size: 22px;
+  display: block;
+}
+.box-summary-bar {
+  background: #faf6f0;
+  border-radius: 16px;
+  padding: 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+  margin-top: 20px;
+  border: 1px dashed #d4a373;
+}
+.box-note-input {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid #ebdcd0;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  margin-top: 10px;
+  background: #fff;
+}
+.add-gift-btn {
+  background: #5a2e10;
+  color: #faedcd;
+  border: none;
+  padding: 12px 28px;
+  border-radius: 30px;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  box-shadow: 0 6px 18px rgba(90,46,16,0.25);
+}
+.add-gift-btn:disabled {
+  background: #b0a49c;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+/* FOOTER ARCHITECTURE */
 footer#contact {
   background: #04261f !important;
   color: #fff !important;
@@ -211,6 +328,7 @@ footer#contact {
   .about { grid-template-columns: 1fr; }
   .benefits { grid-template-columns: 1fr 1fr !important; }
   footer#contact { grid-template-columns: 1fr 1fr !important; }
+  .flavors-grid { grid-template-columns: repeat(2, 1fr) !important; }
 }
 @media(max-width: 600px) {
   nav { display: none; }
@@ -240,6 +358,7 @@ footer#contact {
   <nav>
     <a href="index.html">Home</a>
     <a href="#shop">Shop</a>
+    <a href="#giftbox">Gift Hampers</a>
     <a href="#about">Our Story</a>
     <a href="#why">Why Us</a>
     <a href="#contact">Contact</a>
@@ -256,7 +375,7 @@ footer#contact {
     <p>Handcrafted artisan cookies baked in small batches with genuine butter, roasted nuts, and heritage confectionery recipes.</p>
     <div class="heroActions">
       <a class="primary" href="#shop">Shop Gourmet Cookies →</a>
-      <a class="secondary" href="#about">Our Heritage</a>
+      <a class="secondary" href="#giftbox">🎁 Build Gift Box (₹949)</a>
     </div>
     <div class="trust">
       <span>🌿 100% Pure Vegetarian</span>
@@ -285,8 +404,8 @@ footer#contact {
 
 <section class="shortcuts">
   <a href="#shop"><b>🍪</b><span><strong>All Cookies</strong><small>Explore classic flavours →</small></span></a>
+  <a href="#giftbox"><b>🎁</b><span><strong>Divine Gift Box</strong><small>Build 4-in-1 Hamper →</small></span></a>
   <a href="#shop"><b>⭐</b><span><strong>Best Sellers</strong><small>Customer favourites →</small></span></a>
-  <a href="#shop"><b>🎁</b><span><strong>Gift Packs</strong><small>Festive & celebration packs →</small></span></a>
   <a href="#contact"><b>🚚</b><span><strong>Pan-India Delivery</strong><small>Safe & sealed packaging →</small></span></a>
 </section>
 
@@ -300,6 +419,71 @@ footer#contact {
     <span>Freshly baked for each order →</span>
   </div>
   <div class="grid" id="productGrid"></div>
+</section>
+
+<!-- NEXT LEVEL: BUILD YOUR OWN GIFT BOX -->
+<section class="gift-box-section" id="giftbox">
+  <div class="gift-box-card">
+    <div class="gift-box-header">
+      <span class="gift-badge">✨ HIGH VALUE FESTIVE HAMPER</span>
+      <h2>Build Your Divine Gift Box (800g)</h2>
+      <p>Pick any <b>4 flavours</b> (200g each) to craft your royal personalized gift box.</p>
+    </div>
+
+    <div class="flavors-grid" id="flavorsGrid">
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Almond Cashew')">
+        <span>🥜</span>
+        <b>Almond Cashew</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Double Chocolate')">
+        <span>🍫</span>
+        <b>Double Chocolate</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Dry Fruit Special')">
+        <span>🌰</span>
+        <b>Dry Fruit Special</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Classic Chocochip')">
+        <span>🍪</span>
+        <b>Classic Chocochip</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Pure Butter')">
+        <span>🧈</span>
+        <b>Pure Butter</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Red Velvet')">
+        <span>❤️</span>
+        <b>Red Velvet</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Oats & Raisin')">
+        <span>🌾</span>
+        <b>Oats & Raisin</b>
+      </div>
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Coconut Crunch')">
+        <span>🥥</span>
+        <b>Coconut Crunch</b>
+      </div>
+    </div>
+
+    <div>
+      <input type="text" id="giftCardNote" class="box-note-input" placeholder="💌 Personalized Greeting Card Note (e.g. 'To dear Family, Happy Celebrations! With Love')" />
+    </div>
+
+    <div class="box-summary-bar">
+      <div>
+        <div style="font-size: 14px; font-weight: 700; color: #5a2e10;">
+          Selected: <span id="selectedCount" style="color:#d97706;">0</span> / 4 Flavours
+        </div>
+        <small id="selectedListText" style="color: #7a6558;">Choose 4 varieties above to unlock box</small>
+      </div>
+      <div style="display:flex; align-items:center; gap:16px;">
+        <span style="font-size: 22px; font-weight: 800; color: #5a2e10;">₹949</span>
+        <button class="add-gift-btn" id="addGiftBoxBtn" disabled onclick="addGiftBoxToCart()">
+          Add Divine Box to Cart 🛒
+        </button>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="about" id="about">
@@ -351,7 +535,7 @@ footer#contact {
     <a href="#shop">Almond Cashew</a>
     <a href="#shop">Double Chocolate</a>
     <a href="#shop">Dry Fruit Special</a>
-    <a href="#shop">Bestsellers</a>
+    <a href="#giftbox">Divine Gift Box (800g)</a>
   </div>
   <div class="footerColumn">
     <h4>SUPPORT</h4>
@@ -432,17 +616,14 @@ footer#contact {
       <h3 style="margin:0;color:#5a2e10;font-size:1.25rem;font-family:'Playfair Display',serif;">📦 Srivari Account & Orders</h3>
       <button onclick="closeOrdersModal()" aria-label="Close modal" style="background:none;border:none;font-size:24px;cursor:pointer;color:#777;line-height:1;">✕</button>
     </div>
-
-    <!-- Dynamic Profile & Login Hub -->
+    
     <div id="accountHubView"></div>
 
-    <!-- Orders Section Header -->
     <div style="display:flex;justify-content:space-between;align-items:center;margin:14px 0 8px;padding-top:10px;border-top:1px dashed #eadfcd;">
       <span style="font-size:13px;font-weight:700;color:#12352e;">Mee Previous Orders</span>
       <small style="font-size:11px;color:#697a75;">Live Delhivery Status</small>
     </div>
 
-    <!-- Orders List Container -->
     <div id="ordersListContainer" style="overflow-y:auto;flex:1;max-height:50vh;padding-right:2px;">
       <div style="text-align:center;padding:20px;color:#777;font-size:13px;">Login ayyaka mee orders ikkada kanipisthayi.</div>
     </div>
@@ -452,7 +633,64 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- Premium Boutique Mobile Bottom Navigation -->
+<!-- GIFT BOX LOGIC (LIGHTWEIGHT & SAFE) -->
+<script>
+let selectedFlavors = [];
+function toggleFlavor(btn, name) {
+  const index = selectedFlavors.indexOf(name);
+  if (index > -1) {
+    selectedFlavors.splice(index, 1);
+    btn.classList.remove('selected');
+  } else {
+    if (selectedFlavors.length >= 4) {
+      alert("Mīru already 4 flavours select chēsāru! Inkoti add chēyālanṭē okadānni unselect cheyandi.");
+      return;
+    }
+    selectedFlavors.push(name);
+    btn.classList.add('selected');
+  }
+  updateGiftBoxUI();
+}
+
+function updateGiftBoxUI() {
+  document.getElementById('selectedCount').textContent = selectedFlavors.length;
+  const listText = document.getElementById('selectedListText');
+  const btn = document.getElementById('addGiftBoxBtn');
+  if (selectedFlavors.length === 0) {
+    listText.textContent = "Choose 4 varieties above to unlock box";
+    btn.disabled = true;
+  } else if (selectedFlavors.length < 4) {
+    listText.textContent = selectedFlavors.join(', ') + ` (Select ${4 - selectedFlavors.length} more)`;
+    btn.disabled = true;
+  } else {
+    listText.textContent = "✓ Ready: " + selectedFlavors.join(' • ');
+    btn.disabled = false;
+  }
+}
+
+function addGiftBoxToCart() {
+  if (selectedFlavors.length !== 4) return;
+  const note = document.getElementById('giftCardNote').value.trim();
+  const giftItem = {
+    id: 'gift-box-' + Date.now(),
+    name: '🎁 Divine Gift Box (4x200g)',
+    weight: '800g',
+    price: 949,
+    qty: 1,
+    desc: selectedFlavors.join(' + ') + (note ? ' | Note: ' + note : '')
+  };
+  
+  if (window.cart && Array.isArray(window.cart)) {
+    window.cart.push(giftItem);
+    if (typeof updateCartUI === 'function') updateCartUI();
+    if (typeof openDrawer === 'function') openDrawer();
+  } else {
+    alert("🎁 Divine Gift Box added to cart!");
+  }
+}
+</script>
+
+<!-- Mobile Bottom Navigation -->
 <nav class="bottom-nav">
   <a href="#" class="bottom-nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
     <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
