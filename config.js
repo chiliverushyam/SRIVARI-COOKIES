@@ -9,6 +9,6 @@ window.SRIVARI_CONFIG={
   RAZORPAY_FUNCTION_URL:"https://szsqbqcodtlruorcsgpq.supabase.co/functions/v1/create-razorpay-order",
 
   WHATSAPP_NUMBER:"917989816250",
-  CONTACT_EMAIL:"chiluverushyam8790@gmail.com",
+  CONTACT_EMAIL: "support@srivaricookies.com",
   DELIVERY_CHARGE:null
 };
