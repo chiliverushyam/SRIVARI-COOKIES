@@ -459,9 +459,9 @@ footer#contact {
         <span>🌾</span>
         <b>Oats & Raisin</b>
       </div>
-      <div class="flavor-btn" onclick="toggleFlavor(this, 'Coconut Crunch')">
+      <div class="flavor-btn" onclick="toggleFlavor(this, 'Coconut Cookies')">
         <span>🥥</span>
-        <b>Coconut Crunch</b>
+        <b>Coconut Cookies</b>
       </div>
     </div>
 
@@ -627,20 +627,9 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- DIRECT APP.JS CART BRIDGE FOR 4-COOKIE PACK -->
+<!-- DYNAMIC REAL-DATABASE STOCK MATCHER SCRIPT -->
 <script>
 let selectedFlavors = [];
-
-const flavorIdMap = {
-  'Almond Cashew': 'almond-cashew',
-  'Double Chocolate': 'double-chocolate',
-  'Dry Fruit Special': 'dry-fruit',
-  'Classic Chocochip': 'classic-chip',
-  'Pure Butter': 'butter',
-  'Red Velvet': 'red-velvet',
-  'Oats & Raisin': 'oats-raisin',
-  'Coconut Crunch': 'coconut'
-};
 
 function toggleFlavor(btn, name) {
   const index = selectedFlavors.indexOf(name);
@@ -674,6 +663,56 @@ function updateGiftBoxUI() {
   }
 }
 
+// Live database nun̄chi real product ni match chēsē function
+function findMatchingLiveProduct(flavorName) {
+  const prods = (window.configuredProducts && window.configuredProducts.length)
+    ? window.configuredProducts
+    : (window.products && window.products.length
+      ? window.products
+      : (typeof configuredProducts !== 'undefined' ? configuredProducts : (typeof products !== 'undefined' ? products : [])));
+
+  const kwMap = {
+    'Almond Cashew': ['almond'],
+    'Double Chocolate': ['double', 'chocolate'],
+    'Dry Fruit Special': ['dry'],
+    'Classic Chocochip': ['chip', 'classic'],
+    'Pure Butter': ['butter'],
+    'Red Velvet': ['velvet', 'red'],
+    'Oats & Raisin': ['oat', 'raisin'],
+    'Coconut Cookies': ['coconut']
+  };
+
+  const keys = kwMap[flavorName] || [flavorName.toLowerCase().split(' ')[0]];
+
+  // 1. Live array lo search
+  if (prods && prods.length > 0) {
+    const found = prods.find(p => {
+      const pStr = ((p.id || '') + ' ' + (p.name || '')).toLowerCase();
+      return keys.some(k => pStr.includes(k));
+    });
+    if (found) return found;
+  }
+
+  // 2. DOM rendered buttons lo search
+  const cards = document.querySelectorAll('#productGrid > div, #productGrid .card, .product-card');
+  for (const card of cards) {
+    const text = card.innerText.toLowerCase();
+    if (keys.some(k => text.includes(k))) {
+      const btn = card.querySelector("button[onclick*='addToCart']");
+      if (btn) {
+        const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
+        if (m && m[1]) {
+          return { id: m[1], in_stock: 1, name: flavorName };
+        }
+      }
+      const anyBtn = card.querySelector('button');
+      if (anyBtn) return { fallbackBtn: anyBtn, in_stock: 1, name: flavorName };
+    }
+  }
+
+  return null;
+}
+
 function addGiftBoxToCart() {
   if (selectedFlavors.length !== 4) {
     alert("Dayachēsi mundhu 4 varieties select cheyandi!");
@@ -685,42 +724,45 @@ function addGiftBoxToCart() {
     localStorage.setItem('srivari_gift_note', note);
   }
 
-  // 1. Check for global addToCart function from app.js
   const addFn = (typeof window.addToCart === 'function') ? window.addToCart : (typeof addToCart === 'function' ? addToCart : null);
 
-  // 2. Check if admin added a single dedicated "4-Box" product in stock
-  let dedicatedBox = null;
-  if (window.products && Array.isArray(window.products)) {
-    dedicatedBox = window.products.find(p => 
-      (p.id && (p.id.includes('box') || p.id.includes('gift'))) || 
-      (p.name && (p.name.toLowerCase().includes('box') || p.name.toLowerCase().includes('gift')))
-    );
+  let outOfStockList = [];
+  let itemsToAdd = [];
+
+  selectedFlavors.forEach(flavor => {
+    const match = findMatchingLiveProduct(flavor);
+    if (!match) {
+      outOfStockList.push(flavor);
+    } else if (match.in_stock === 0 || match.in_stock === false || match.in_stock === '0') {
+      outOfStockList.push(match.name || flavor);
+    } else {
+      itemsToAdd.push(match);
+    }
+  });
+
+  if (outOfStockList.length > 0) {
+    alert("Ee cookies admin lo out-of-stock lo unnayi: " + outOfStockList.join(', ') + ". Dayachesi vere cookie select cheyandi leda admin lo in-stock cheyandi!");
+    return;
   }
 
-  if (dedicatedBox && addFn) {
-    addFn(dedicatedBox.id, '200g');
-  } else if (addFn) {
-    // Add all 4 selected cookies (200g each) directly via app.js
-    selectedFlavors.forEach(flavorName => {
-      const id = flavorIdMap[flavorName];
-      if (id) {
-        addFn(id, '200g');
-      }
-    });
-  } else {
-    // Fallback: Programmatically click the 200g Add buttons on the real product cards
-    selectedFlavors.forEach(flavorName => {
-      const id = flavorIdMap[flavorName];
-      const btn = document.querySelector(`button[onclick*="'${id}'"], [data-id="${id}"] button, [data-product-id="${id}"] button`);
-      if (btn) btn.click();
-    });
-  }
+  // Real matching product IDs tho cart loki direct add
+  itemsToAdd.forEach(item => {
+    if (item.id && addFn) {
+      addFn(item.id, '200g');
+    } else if (item.fallbackBtn) {
+      item.fallbackBtn.click();
+    }
+  });
 
-  // Automatically trigger cart drawer open
+  // Automatically open cart drawer
   setTimeout(() => {
-    const openCartBtn = document.getElementById('openCart');
-    if (openCartBtn) openCartBtn.click();
-  }, 150);
+    if (typeof openDrawer === 'function') {
+      openDrawer();
+    } else {
+      const openCartBtn = document.getElementById('openCart');
+      if (openCartBtn) openCartBtn.click();
+    }
+  }, 200);
 }
 </script>
 
@@ -742,7 +784,7 @@ function addGiftBoxToCart() {
     <span class="nav-label">Orders</span>
   </a>
 
-  <a href="javascript:void(0)" class="bottom-nav-item" onclick="document.getElementById('openCart').click();">
+  <a href="javascript:void(0)" class="bottom-nav-item" onclick="if(typeof openDrawer === 'function'){openDrawer();}else{document.getElementById('openCart').click();}">
     <div class="nav-icon-wrap">
       <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
         <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
