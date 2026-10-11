@@ -42,39 +42,51 @@
     .lock-box input { margin-bottom: 12px; text-align: center; font-size: 1.1rem; letter-spacing: 2px; }
     .btn-unlock { background: #7b3f18; color: #fff; width: 100%; padding: 12px; font-size: 1rem; border-radius: 8px; border: none; font-weight: bold; cursor: pointer; }
 
-    /* IMAGE UPLOAD & REVIEW STYLES */
-    .image-upload-card {
+    /* 3-IMAGE GALLERY MANAGER STYLES */
+    .images-manager-box {
       margin-top: 10px;
-      padding: 10px 12px;
+      padding: 12px;
       background: #fff8eb;
-      border: 1px dashed #d4a373;
-      border-radius: 10px;
+      border: 1.5px dashed #d4a373;
+      border-radius: 12px;
+    }
+    .photo-slot {
+      background: #fffdfa;
+      border: 1px solid #ebdcd0;
+      border-radius: 8px;
+      padding: 6px;
+      text-align: center;
       display: flex;
+      flex-direction: column;
       align-items: center;
-      justify-content: space-between;
-      gap: 10px;
+      gap: 4px;
+    }
+    .slot-title {
+      font-size: 0.7rem;
+      font-weight: 700;
+      color: #5a2e10;
     }
     .thumb-preview {
-      width: 52px;
-      height: 52px;
+      width: 56px;
+      height: 56px;
       border-radius: 8px;
       object-fit: cover;
       border: 1.5px solid #d4a373;
       background: #faf5ef;
     }
-    .btn-file-label {
+    .btn-slot-upload {
       background: #5a2e10;
       color: #faedcd;
-      padding: 7px 14px;
-      border-radius: 8px;
-      font-size: 0.75rem;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 0.7rem;
       font-weight: bold;
       cursor: pointer;
       display: inline-block;
-      white-space: nowrap;
+      margin-top: 2px;
       transition: background 0.2s ease;
     }
-    .btn-file-label:hover { background: #431f06; }
+    .btn-slot-upload:hover { background: #431f06; }
     .review-item-admin {
       background: #faf6f0;
       border-radius: 10px;
@@ -88,7 +100,6 @@
 
   <!-- ADMIN PASSWORD SCREEN -->
   <div id="lockScreen">
-    <!-- 1. NORMAL UNLOCK VIEW -->
     <div class="lock-box" id="loginBox">
       <h3>🔒 Admin Access</h3>
       <p>Enter password to manage Srivari Cookies & Bakes</p>
@@ -99,7 +110,6 @@
       </div>
     </div>
 
-    <!-- 2. CHANGE PASSWORD VIEW -->
     <div class="lock-box" id="changePassBox" style="display: none;">
       <h3>🔑 Change Password</h3>
       <p>Old password enter chesi, new password set cheyandi</p>
@@ -123,7 +133,7 @@
       </div>
     </div>
 
-    <!-- CUSTOMER REVIEWS & FEEDBACK MANAGER (EXPANDABLE) -->
+    <!-- CUSTOMER REVIEWS & FEEDBACK MANAGER -->
     <div id="reviewsBox" class="card" style="display:none; background:#fffdfa; border:2px solid #d4a373; margin-bottom:16px;">
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
         <h3 style="margin:0; color:#5a2e10; font-size:1.1rem;">⭐ Customer Reviews & Feedback Hub</h3>
@@ -132,7 +142,6 @@
 
       <p style="font-size:0.8rem; color:#7a6558; margin-top:0;">Customers website lō ichina feedback mariyu WhatsApp lō vachina reviews ikkada manage cheyachu.</p>
 
-      <!-- ADD WHATSAPP / OFFLINE CUSTOMER REVIEW FORM -->
       <div style="background:#faf5ef; padding:12px; border-radius:10px; margin-bottom:14px; border:1px dashed #d4a373;">
         <b style="font-size:0.85rem; color:#5a2e10; display:block; margin-bottom:6px;">＋ Add Review (From WhatsApp / Stalls):</b>
         <div style="display:flex; gap:8px; margin-bottom:8px;">
@@ -147,12 +156,10 @@
         <button onclick="saveAdminReview()" style="background:#5a2e10; color:#faedcd; width:100%; padding:8px; font-size:0.85rem; border-radius:6px;">Add to Live Website Reviews</button>
       </div>
 
-      <div id="adminReviewsList">
-        <!-- Live Reviews Loaded via JS -->
-      </div>
+      <div id="adminReviewsList"></div>
     </div>
 
-    <!-- ADD NEW PRODUCT FORM (WITH DIRECT IMAGE UPLOAD) -->
+    <!-- ADD NEW PRODUCT FORM -->
     <div class="add-box">
       <h3>＋ Add New Item (Cookies / Cakes / Buns / Puffs)</h3>
       <form id="addForm" onsubmit="handleCreateProduct(event)">
@@ -194,10 +201,10 @@
         </div>
         <div class="row">
           <div class="input-group">
-            <label>Image File (Upload Direct Photo) or Path</label>
+            <label>Main Cookie Photo</label>
             <div style="display:flex; gap:8px; align-items:center;">
               <input id="new-image" value="assets/hero-cookie.jpg" style="flex:1;">
-              <label class="btn-file-label" style="flex:none; padding:8px 12px;">
+              <label class="btn-slot-upload" style="flex:none; padding:8px 12px;">
                 📁 Pick Photo
                 <input type="file" accept="image/*" style="display:none;" onchange="handleNewItemImagePicker(event)">
               </label>
@@ -348,7 +355,22 @@
         const isHidden = Number(p.is_hidden) === 1;
         const categoryTag = p.category ? `<span class="badge-cat">${p.category}</span>` : `<span class="badge-cat">Cookies</span>`;
         const videoLink = p.video_url ? `<a href="${p.video_url}" target="_blank" style="font-size:0.75rem; color:#075e45; font-weight:bold; text-decoration:underline; margin-left:6px;">▶ Video</a>` : '';
-        const currentImg = p.image || 'assets/hero-cookie.jpg';
+
+        // Extract 3 distinct photo slots from p.image
+        let img1 = `assets/${p.id}.jpg`;
+        let img2 = 'assets/srivari-divine-hero.jpg';
+        let img3 = p.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg';
+
+        if (p.image) {
+          if (p.image.includes('~SRIVARI~')) {
+            const parts = p.image.split('~SRIVARI~');
+            if (parts[0]) img1 = parts[0];
+            if (parts[1]) img2 = parts[1];
+            if (parts[2]) img3 = parts[2];
+          } else {
+            img1 = p.image;
+          }
+        }
 
         return `
           <div class="card ${isHidden ? 'hidden-product' : ''}" id="card-${p.id}">
@@ -366,19 +388,43 @@
               </div>
             </div>
 
-            <!-- DYNAMIC IMAGE PREVIEW & 1-CLICK REPLACE COMPONENT -->
-            <div class="image-upload-card">
-              <div style="display:flex; align-items:center; gap:10px;">
-                <img id="img-preview-${p.id}" class="thumb-preview" src="${currentImg}" alt="${p.name}">
-                <div>
-                  <span style="font-size:0.8rem; font-weight:bold; color:#5a2e10; display:block;">Live Photo</span>
-                  <small style="font-size:0.7rem; color:#7a6558;">Auto-overwrites old photo in database</small>
+            <!-- 📸 DYNAMIC 3-PHOTO UPLOAD & AUTO-REPLACE MANAGER -->
+            <div class="images-manager-box">
+              <div style="font-size:0.8rem; font-weight:bold; color:#5a2e10; margin-bottom:8px;">
+                📸 Manage 3 Photos (Cookie • Box • Hamper/Oven):
+              </div>
+              <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
+                <!-- Slot 1: Cookie Closeup -->
+                <div class="photo-slot">
+                  <span class="slot-title">1. Cookie</span>
+                  <img id="img1-${p.id}" class="thumb-preview" src="${img1}" alt="Cookie">
+                  <label class="btn-slot-upload">
+                    Change
+                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 1)">
+                  </label>
+                </div>
+                <!-- Slot 2: Sealed Box Pack -->
+                <div class="photo-slot">
+                  <span class="slot-title">2. Box Pack</span>
+                  <img id="img2-${p.id}" class="thumb-preview" src="${img2}" alt="Box Pack">
+                  <label class="btn-slot-upload">
+                    Change
+                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 2)">
+                  </label>
+                </div>
+                <!-- Slot 3: Hamper / Fresh Oven -->
+                <div class="photo-slot">
+                  <span class="slot-title">3. Oven/Hamper</span>
+                  <img id="img3-${p.id}" class="thumb-preview" src="${img3}" alt="Hamper">
+                  <label class="btn-slot-upload">
+                    Change
+                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 3)">
+                  </label>
                 </div>
               </div>
-              <label class="btn-file-label">
-                📷 Change Photo
-                <input type="file" accept="image/*" style="display:none;" onchange="handleProductImageReplace(event, '${p.id}')">
-              </label>
+              <small style="font-size:0.7rem; color:#7a6558; display:block; margin-top:6px; text-align:center;">
+                Auto-compressed to 600x600 & overwrites directly in database.
+              </small>
             </div>
 
             <div class="row">
@@ -406,8 +452,8 @@
       }).join('');
     }
 
-    /* 📸 PHOTO UPLOAD & OVERWRITE HANDLER WITH 600X600 CANVAS COMPRESSION */
-    function handleProductImageReplace(event, productId) {
+    /* 📸 HANDLE INDIVIDUAL SLOT PHOTO UPLOAD (1, 2, or 3) WITH AUTO-COMPRESSION */
+    function handleSinglePhotoUpload(event, productId, slot) {
       const file = event.target.files[0];
       if (!file) return;
 
@@ -417,8 +463,7 @@
         img.onload = async function() {
           const canvas = document.createElement('canvas');
           const MAX_SIZE = 600;
-          let width = img.width;
-          let height = img.height;
+          let width = img.width, height = img.height;
 
           if (width > height) {
             if (width > MAX_SIZE) {
@@ -437,21 +482,41 @@
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
-          const compressedBase64 = canvas.toDataURL('image/jpeg', 0.85);
+          const newBase64 = canvas.toDataURL('image/jpeg', 0.82);
 
-          // Update local preview immediately
-          const previewEl = document.getElementById(`img-preview-${productId}`);
-          if (previewEl) previewEl.src = compressedBase64;
+          // Find product to preserve other 2 slots
+          const p = allProducts.find(x => x.id === productId);
+          let currentSlots = ['', '', ''];
 
-          // Save directly to Cloudflare D1
-          await saveImageToDatabase(productId, compressedBase64);
+          if (p && p.image) {
+            if (p.image.includes('~SRIVARI~')) {
+              const parts = p.image.split('~SRIVARI~');
+              currentSlots[0] = parts[0] || '';
+              currentSlots[1] = parts[1] || '';
+              currentSlots[2] = parts[2] || '';
+            } else {
+              currentSlots[0] = p.image;
+            }
+          }
+
+          // Update the targeted slot
+          currentSlots[slot - 1] = newBase64;
+
+          const combinedImages = currentSlots.join('~SRIVARI~');
+
+          // Instant preview
+          const previewEl = document.getElementById(`img${slot}-${productId}`);
+          if (previewEl) previewEl.src = newBase64;
+
+          // Save to D1 Database
+          await saveCombinedImagesToDatabase(productId, combinedImages, slot);
         };
         img.src = e.target.result;
       };
       reader.readAsDataURL(file);
     }
 
-    async function saveImageToDatabase(productId, imageBase64) {
+    async function saveCombinedImagesToDatabase(productId, combinedImages, slotNumber) {
       try {
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
@@ -459,12 +524,12 @@
           body: JSON.stringify({
             secret: WORKER_SECRET,
             id: productId,
-            image: imageBase64
+            image: combinedImages
           })
         });
         const data = await res.json().catch(()=>({}));
         if (data.success) {
-          alert('✓ Photo successfully updated! Old photo delete aipoyi, kotha photo live lo save ayyindi.');
+          alert(`✓ Photo ${slotNumber} successfully updated & live database overwritten!`);
           loadProducts();
         } else {
           alert('Failed to update photo: ' + (data.error || 'Server error'));
@@ -638,7 +703,7 @@
       }
     }
 
-    /* ⭐ CUSTOMER REVIEWS & FEEDBACK MANAGER LOGIC */
+    /* ⭐ CUSTOMER REVIEWS & FEEDBACK MANAGER */
     function toggleReviewsBox() {
       const box = document.getElementById('reviewsBox');
       const isClosed = box.style.display === 'none';
