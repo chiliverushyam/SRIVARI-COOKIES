@@ -1,0 +1,175 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Srivari Cookies - Luxury Box QR Card</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: #f0e9df;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+  }
+
+  /* LUXURY BOX INSERT CARD (Print Size: ~3.5 x 4.5 inches) */
+  .card-container {
+    width: 360px;
+    background: #fffdfa;
+    border: 2px solid #c59b27;
+    border-radius: 20px;
+    padding: 26px 22px;
+    text-align: center;
+    box-shadow: 0 12px 35px rgba(90, 46, 16, 0.12);
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* DECORATIVE CORNER ACCENTS */
+  .card-container::before {
+    content: "❖";
+    position: absolute;
+    top: 8px;
+    left: 12px;
+    color: #c59b27;
+    font-size: 14px;
+  }
+  .card-container::after {
+    content: "❖";
+    position: absolute;
+    top: 8px;
+    right: 12px;
+    color: #c59b27;
+    font-size: 14px;
+  }
+
+  .brand-badge {
+    display: inline-block;
+    background: #5a2e10;
+    color: #f7e6c4;
+    font-size: 10px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+    padding: 3px 12px;
+    border-radius: 14px;
+    margin-bottom: 8px;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    color: #48230b;
+    font-size: 21px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+
+  p.tagline {
+    font-size: 11px;
+    color: #8b6e58;
+    letter-spacing: 0.8px;
+    margin-bottom: 16px;
+    text-transform: uppercase;
+  }
+
+  .qr-box {
+    background: #ffffff;
+    border: 1.5px solid #e2cb91;
+    border-radius: 16px;
+    padding: 12px;
+    display: inline-block;
+    box-shadow: 0 4px 15px rgba(197, 155, 39, 0.15);
+    margin-bottom: 14px;
+  }
+
+  .qr-box img {
+    width: 160px;
+    height: 160px;
+    display: block;
+    border-radius: 8px;
+  }
+
+  .offer-highlight {
+    background: linear-gradient(135deg, #faedcd 0%, #fff6ea 100%);
+    border: 1px dashed #c59b27;
+    border-radius: 12px;
+    padding: 10px 12px;
+    margin-bottom: 14px;
+  }
+
+  .offer-highlight b {
+    display: block;
+    color: #5a2e10;
+    font-size: 14px;
+    font-weight: 800;
+  }
+
+  .offer-highlight span {
+    font-size: 11.5px;
+    color: #6d4c35;
+  }
+
+  .trust-points {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+    font-size: 10.5px;
+    color: #5a2e10;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .footer-links {
+    border-top: 1px solid #ebdcd0;
+    padding-top: 10px;
+    font-size: 11px;
+    color: #7a6558;
+  }
+
+  .footer-links b {
+    color: #48230b;
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .card-container { box-shadow: none; }
+  }
+</style>
+</head>
+<body>
+
+<div class="card-container">
+  <span class="brand-badge">SRIVARI ROYAL SEAL</span>
+  <h1>SRIVARI COOKIES</h1>
+  <p class="tagline">Pure • Fresh • Artisanal Bakes</p>
+
+  <div class="qr-box">
+    <!-- Clean high-res vector QR Code auto-pointing to VIP ₹50 Reorder -->
+    <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&color=5a2e10&bgcolor=ffffff&data=https%3A%2F%2Fwa.me%2F917989816250%3Ftext%3DHi%2520Srivari%2520Cookies%252C%2520I%2520scanned%2520the%2520box%2520QR!%2520Please%2520apply%2520my%2520Flat%2520%25E2%2582%25B950%2520OFF%2520for%2520my%2520next%2520order." alt="Scan to re-order Srivari Cookies">
+  </div>
+
+  <div class="offer-highlight">
+    <b>🎁 SCAN FOR FLAT ₹50 OFF</b>
+    <span>Scan with any Camera / Google Lens on your next fresh oven order!</span>
+  </div>
+
+  <div class="trust-points">
+    <span>🌿 100% Veg</span>
+    <span>🧈 Pure Butter</span>
+    <span>👑 35+ Yrs Mentorship</span>
+  </div>
+
+  <div class="footer-links">
+    <div>Order Online: <b>srivaricookies.com</b></div>
+    <div>WhatsApp Support: <b>+91 79898 16250</b></div>
+  </div>
+</div>
+
+</body>
+</html>
