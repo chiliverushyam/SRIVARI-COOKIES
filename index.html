@@ -23,24 +23,28 @@ html, body {
   padding: 0;
 }
 
-/* TOPBAR & MOBILE HORIZONTAL SCROLL FIX */
+/* TOPBAR: FORCED VISIBLE ON BOTH DESKTOP & MOBILE */
 .topbar {
-  background: #3d1c08;
-  color: #faedcd;
-  padding: 8px 4%;
-  font-size: 12px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 20px;
+  background: #3d1c08 !important;
+  color: #faedcd !important;
+  padding: 8px 4% !important;
+  font-size: 12px !important;
+  display: flex !important;
+  visibility: visible !important;
+  justify-content: center !important;
+  align-items: center !important;
+  gap: 20px !important;
+  position: relative !important;
+  z-index: 9999 !important;
 }
-@media(max-width: 600px) {
+@media(max-width: 768px) {
   .topbar {
     display: flex !important;
+    visibility: visible !important;
     justify-content: flex-start !important;
     overflow-x: auto !important;
     white-space: nowrap !important;
-    padding: 8px 14px !important;
+    padding: 8px 12px !important;
     font-size: 11.5px !important;
     gap: 16px !important;
     -webkit-overflow-scrolling: touch !important;
@@ -90,14 +94,15 @@ html, body {
   display: block !important;
 }
 
-/* PRODUCT GRID CARDS CLICKABLE */
-#productGrid .card, #productGrid > div {
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+/* INTERACTIVE PRODUCT CARDS WITH CLICK BADGE */
+#productGrid > * {
+  cursor: pointer !important;
+  transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+  position: relative !important;
 }
-#productGrid .card:hover, #productGrid > div:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 24px rgba(90,46,16,0.12);
+#productGrid > *:hover {
+  transform: translateY(-3px) !important;
+  box-shadow: 0 10px 26px rgba(90,46,16,0.14) !important;
 }
 
 /* BUILD YOUR GIFT BOX SECTION */
@@ -217,13 +222,13 @@ html, body {
   box-shadow: none;
 }
 
-/* ROYAL PRODUCT DETAIL MODAL */
+/* DEDICATED TEMPLE HERITAGE PRODUCT MODAL */
 .product-modal-backdrop {
   display: none;
   position: fixed;
   top: 0; left: 0; width: 100%; height: 100%;
-  background: rgba(18, 10, 5, 0.78);
-  backdrop-filter: blur(5px);
+  background: rgba(18, 10, 5, 0.82);
+  backdrop-filter: blur(6px);
   z-index: 10001;
   align-items: center;
   justify-content: center;
@@ -236,7 +241,7 @@ html, body {
   max-height: 90vh;
   border-radius: 24px;
   border: 2px solid #c59b27;
-  box-shadow: 0 20px 60px rgba(90,46,16,0.35);
+  box-shadow: 0 20px 60px rgba(90,46,16,0.4);
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -783,7 +788,7 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
-<!-- SRIVARI SACRED PRODUCT DETAIL MODAL -->
+<!-- DEDICATED SACRED PRODUCT DETAIL MODAL -->
 <div class="product-modal-backdrop" id="productModal">
   <div class="product-modal-card">
     <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
@@ -918,9 +923,76 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- SCRIPT: GIFT BOX BUILDER & DYNAMIC DETAIL MODAL -->
+<!-- SCRIPT: GIFT BOX BUILDER & BULLETPROOF DETAIL MODAL -->
 <script>
 let selectedFlavors = [];
+
+const fallbackCatalog = {
+  'coconut': {
+    id: 'coconut',
+    name: 'Coconut Cookies',
+    desc: 'Handcrafted with real desiccated coconut flakes and 100% pure creamery butter. Crisp golden edges with a heavenly tropical aroma.',
+    image: 'assets/coconut.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'almond-cashew': {
+    id: 'almond-cashew',
+    name: 'Almond Cashew Cookies',
+    desc: 'Loaded with slow-roasted Californian almonds and golden cashews, blended in master butter dough.',
+    image: 'assets/almond-cashew.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'double-chocolate': {
+    id: 'double-chocolate',
+    name: 'Double Chocolate Cookies',
+    desc: 'Rich Dutch cocoa blended with pure melted dark chocolate and chocolate chunks for true indulgence.',
+    image: 'assets/double-chocolate.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'dry-fruit': {
+    id: 'dry-fruit',
+    name: 'Dry Fruit Special Cookies',
+    desc: 'Royal celebration recipe packed with premium pistachios, cashews, almonds and subtle cardamom.',
+    image: 'assets/dry-fruit.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'classic-chip': {
+    id: 'classic-chip',
+    name: 'Classic Choco Chip Cookies',
+    desc: 'Timeless golden crunch loaded with premium chocolate chips baked to crispy perfection.',
+    image: 'assets/classic-chip.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'butter': {
+    id: 'butter',
+    name: 'Pure Butter Cookies',
+    desc: 'Melt-in-mouth heritage recipe made with 100% genuine butter and zero palm oil. Golden and divine.',
+    image: 'assets/butter.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'red-velvet': {
+    id: 'red-velvet',
+    name: 'Red Velvet Cookies',
+    desc: 'Velvety crimson artisan cookies paired with smooth white cream drops. Luxurious festive favourite.',
+    image: 'assets/red-velvet.jpg',
+    price200: 250,
+    price400: 500
+  },
+  'oats-raisin': {
+    id: 'oats-raisin',
+    name: 'Oats & Raisin Cookies',
+    desc: 'Nutritious rolled oats paired with juicy golden raisins, roasted cinnamon and butter crunch.',
+    image: 'assets/oats-raisin.jpg',
+    price200: 250,
+    price400: 500
+  }
+};
 
 function toggleFlavor(btn, name) {
   const index = selectedFlavors.indexOf(name);
@@ -1047,21 +1119,34 @@ function addGiftBoxToCart() {
   }, 200);
 }
 
-/* ================= PRODUCT DETAIL MODAL SYSTEM ================= */
+/* ================== PRODUCT DETAIL MODAL SYSTEM ================== */
 let currentModalProdId = '';
 let currentModalPack = '200g';
 
 function openProductDetailModal(id) {
+  const cleanId = (id || '').toLowerCase().trim();
   const prods = (window.configuredProducts && window.configuredProducts.length)
     ? window.configuredProducts
-    : (window.products || []);
-  
-  let prod = prods.find(p => p.id === id);
+    : (window.products && window.products.length ? window.products : []);
+
+  let prod = prods.find(p => p.id === cleanId || p.id === cleanId.replace('-cookies', ''));
   if (!prod) {
-    prod = prods.find(p => (p.name || '').toLowerCase().includes(id.toLowerCase()));
+    prod = prods.find(p => (p.name || '').toLowerCase().includes(cleanId.split('-')[0]));
+  }
+  if (!prod) {
+    prod = fallbackCatalog[cleanId] || fallbackCatalog[cleanId.replace('-cookies', '')];
+  }
+  if (!prod) {
+    for (const k in fallbackCatalog) {
+      if (cleanId.includes(k) || k.includes(cleanId)) {
+        prod = fallbackCatalog[k];
+        break;
+      }
+    }
   }
 
   const titleEl = document.getElementById('modalTitle');
+  const descEl = document.getElementById('modalDesc');
   const mainImgEl = document.getElementById('modalMainImg');
   const thumb1El = document.getElementById('thumb1');
   const thumb2El = document.getElementById('thumb2');
@@ -1072,16 +1157,17 @@ function openProductDetailModal(id) {
   if (prod) {
     currentModalProdId = prod.id;
     titleEl.textContent = prod.name;
+    if (prod.desc) descEl.textContent = prod.desc;
     const imgSrc = prod.image || `assets/${prod.id}.jpg`;
     mainImgEl.src = imgSrc;
     thumb1El.src = imgSrc;
     pack200.textContent = `200g - ₹${prod.price200 || 250}`;
     pack400.textContent = `400g - ₹${prod.price400 || 500}`;
   } else {
-    currentModalProdId = id;
-    titleEl.textContent = id.replace(/-/g, ' ').toUpperCase() + ' COOKIES';
-    mainImgEl.src = `assets/${id}.jpg`;
-    thumb1El.src = `assets/${id}.jpg`;
+    currentModalProdId = cleanId;
+    titleEl.textContent = cleanId.replace(/-/g, ' ').toUpperCase();
+    mainImgEl.src = `assets/${cleanId}.jpg`;
+    thumb1El.src = `assets/${cleanId}.jpg`;
   }
 
   thumb2El.src = 'assets/srivari-divine-hero.jpg';
@@ -1173,29 +1259,46 @@ function submitReview() {
   alert("Dhanyavādhamulu! Mee feedback successfully add ayyindi.");
 }
 
-// Global click delegator: clicking product card opens detail view
-document.addEventListener('DOMContentLoaded', () => {
+/* GLOBAL BULLETPROOF CLICK LISTENER (WORKS EVEN AFTER D1 LOADS) */
+document.addEventListener('click', function(e) {
   const grid = document.getElementById('productGrid');
-  if (grid) {
-    grid.addEventListener('click', (e) => {
-      if (e.target.closest('button, select, input, a')) return;
-      const card = e.target.closest('.card, .product-card, [data-id], div');
-      if (card && grid.contains(card) && card !== grid) {
-        let pId = card.getAttribute('data-id') || card.getAttribute('data-product-id');
-        if (!pId) {
-          const btn = card.querySelector('button[onclick*="addToCart"]');
-          if (btn) {
-            const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
-            if (m) pId = m[1];
-          }
-        }
-        if (!pId) {
-          const title = card.querySelector('h3, h4, b');
-          if (title) pId = title.innerText.toLowerCase().replace(/cookies/g, '').trim().replace(/\s+/g, '-');
-        }
-        if (pId) openProductDetailModal(pId);
+  if (!grid) return;
+  if (e.target.closest('button, select, input, a, textarea')) return;
+
+  const card = e.target.closest('#productGrid > *');
+  if (card && grid.contains(card)) {
+    let pId = card.getAttribute('data-id') || card.getAttribute('data-product-id');
+    
+    if (!pId) {
+      const btn = card.querySelector("button[onclick*='addToCart']");
+      if (btn) {
+        const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
+        if (m && m[1]) pId = m[1];
       }
-    });
+    }
+    
+    if (!pId) {
+      const img = card.querySelector('img');
+      if (img && img.src) {
+        const fn = img.src.split('/').pop().replace(/\.[^.]+$/, '').toLowerCase();
+        if (fallbackCatalog[fn]) pId = fn;
+      }
+    }
+
+    if (!pId) {
+      const text = card.innerText.toLowerCase();
+      for (const key of Object.keys(fallbackCatalog)) {
+        const checkWord = key.replace(/-/g, ' ');
+        if (text.includes(checkWord) || text.includes(key.split('-')[0])) {
+          pId = key;
+          break;
+        }
+      }
+    }
+
+    if (pId) {
+      openProductDetailModal(pId);
+    }
   }
 });
 </script>
