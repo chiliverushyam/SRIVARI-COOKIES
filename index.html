@@ -227,6 +227,37 @@ html, body {
   box-shadow: none;
 }
 
+/* STEP 1: CART FREE DELIVERY PROGRESS BAR STYLES */
+.cart-progress-box {
+  background: #fff8eb;
+  border: 1.5px solid #d4a373;
+  border-radius: 14px;
+  padding: 11px 14px;
+  margin: 10px 14px 12px;
+  box-shadow: 0 2px 8px rgba(90,46,16,0.06);
+}
+.progress-label {
+  font-size: 12.5px;
+  color: #5a2e10;
+  margin-bottom: 6px;
+  text-align: center;
+  font-weight: 700;
+}
+.progress-track {
+  background: #ebdcd0;
+  height: 9px;
+  border-radius: 10px;
+  overflow: hidden;
+  position: relative;
+}
+.progress-bar-fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, #d4a373 0%, #15803d 100%);
+  border-radius: 10px;
+  transition: width 0.4s ease, background 0.3s ease;
+}
+
 /* PRODUCT MODAL */
 .product-modal-backdrop {
   display: none;
@@ -733,11 +764,23 @@ footer#contact {
   </div>
 </footer>
 
+<!-- SHOPPING CART DRAWER WITH STEP 2 PROGRESS BAR -->
 <aside class="drawer" id="drawer" aria-label="Shopping cart">
   <div class="drawerHead">
     <h2>Your Gourmet Cart</h2>
     <button id="closeCart" aria-label="Close cart">×</button>
   </div>
+
+  <!-- STEP 2: DYNAMIC FREE DELIVERY PROGRESS BAR -->
+  <div class="cart-progress-box" id="freeDeliveryProgressBox">
+    <div class="progress-label" id="freeDeliveryLabel">
+      🚚 Order <b>₹500</b> or more for <b>FREE Delivery</b>!
+    </div>
+    <div class="progress-track">
+      <div class="progress-bar-fill" id="freeDeliveryBarFill"></div>
+    </div>
+  </div>
+
   <div id="cartItems"></div>
   <div class="summary">
     <div><span>Subtotal</span><b id="cartSubtotal">₹0</b></div>
@@ -900,7 +943,7 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- PRODUCT DETAIL & PERSISTENCE SCRIPT -->
+<!-- SCRIPT: GIFT BOX BUILDER, PRODUCT DETAIL & LIVE CART SYNC -->
 <script>
 let selectedFlavors = [];
 
@@ -1112,7 +1155,7 @@ function addGiftBoxToCart() {
   }, 200);
 }
 
-/* ================== PRODUCT DETAIL MODAL SYSTEM ================== */
+/* ================== PRODUCT DETAIL MODAL SYSTEM (3 IMAGES SYNC) ================== */
 let currentModalProdId = '';
 let currentModalPack = '200g';
 
@@ -1152,10 +1195,17 @@ function openProductDetailModal(id) {
     titleEl.textContent = prod.name;
     if (prod.desc) descEl.textContent = prod.desc;
     
-    // 3 DISTINCT IMAGES (No Repetitions)
-    const cookieImg = prod.image || `assets/${prod.id}.jpg`;
-    const boxImg = prod.packImg || 'assets/srivari-divine-hero.jpg';
-    const ovenImg = prod.ovenImg || (prod.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg');
+    // 3 DISTINCT IMAGES (Auto-Parses ~SRIVARI~ from Admin Upload)
+    let cookieImg = prod.image || `assets/${prod.id}.jpg`;
+    let boxImg = prod.packImg || 'assets/srivari-divine-hero.jpg';
+    let ovenImg = prod.ovenImg || (prod.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg');
+
+    if (prod.image && prod.image.includes('~SRIVARI~')) {
+      const parts = prod.image.split('~SRIVARI~');
+      if (parts[0]) cookieImg = parts[0];
+      if (parts[1]) boxImg = parts[1];
+      if (parts[2]) ovenImg = parts[2];
+    }
 
     mainImgEl.src = cookieImg;
     thumb1El.src = cookieImg;
@@ -1179,9 +1229,7 @@ function openProductDetailModal(id) {
   selectModalPack('200g');
   document.getElementById('couponStatus').textContent = '';
   
-  // Load saved reviews from localStorage
   loadProductReviews(currentModalProdId);
-
   document.getElementById('productModal').style.display = 'flex';
 }
 
@@ -1295,9 +1343,50 @@ function submitReview() {
   alert("Dhanyavādhamulu! Mee review successfully add ayyindi.");
 }
 
+/* ================== STEP 3: DYNAMIC FREE DELIVERY SYNC LOGIC ================== */
+const FREE_DELIVERY_THRESHOLD = 500; // 2 Boxes of 200g = ₹500
+
+function updateFreeDeliveryProgress(subtotal) {
+  const box = document.getElementById('freeDeliveryProgressBox');
+  const label = document.getElementById('freeDeliveryLabel');
+  const fill = document.getElementById('freeDeliveryBarFill');
+  if (!box || !label || !fill) return;
+
+  if (!subtotal || subtotal === 0) {
+    label.innerHTML = `🚚 Order <b>₹${FREE_DELIVERY_THRESHOLD}</b> or more for <b>FREE Delivery</b>!`;
+    fill.style.width = '0%';
+    fill.style.background = '#d4a373';
+    return;
+  }
+
+  if (subtotal >= FREE_DELIVERY_THRESHOLD) {
+    fill.style.width = '100%';
+    fill.style.background = '#15803d';
+    label.innerHTML = `🎉 <b>Awesome! You Unlocked FREE Delivery!</b>`;
+  } else {
+    const needed = FREE_DELIVERY_THRESHOLD - subtotal;
+    const percentage = Math.min(100, Math.round((subtotal / FREE_DELIVERY_THRESHOLD) * 100));
+    fill.style.width = `${percentage}%`;
+    fill.style.background = 'linear-gradient(90deg, #d4a373 0%, #15803d 100%)';
+    label.innerHTML = `🚚 Inko <b>₹${needed}</b> add chēstē <b>FREE Delivery</b>!`;
+  }
+}
+
+// Automatic observer on #cartSubtotal so progress bar always stays in live sync!
+document.addEventListener('DOMContentLoaded', () => {
+  const subtotalEl = document.getElementById('cartSubtotal');
+  if (subtotalEl) {
+    const observer = new MutationObserver(() => {
+      const rawText = subtotalEl.innerText.replace(/[^\d]/g, '');
+      const num = parseInt(rawText, 10) || 0;
+      updateFreeDeliveryProgress(num);
+    });
+    observer.observe(subtotalEl, { childList: true, characterData: true, subtree: true });
+  }
+});
+
 /* EVENT DELEGATOR TO OPEN MODAL ON ANY PRODUCT CLICK */
 document.addEventListener('click', function(e) {
-  // If user clicked direct add to cart button or inputs, let it proceed
   if (e.target.closest('button, select, input, a, textarea')) return;
 
   const card = e.target.closest('#productGrid > *');
