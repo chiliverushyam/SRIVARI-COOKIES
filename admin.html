@@ -17,7 +17,7 @@
     .row { display: flex; gap: 10px; margin-top: 10px; align-items: center; }
     .input-group { display: flex; flex-direction: column; flex: 1; }
     .input-group label { font-size: 0.75rem; color: #777; margin-bottom: 3px; }
-    input, select { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; width: 100%; background: #fff; }
+    input, select, textarea { padding: 8px 10px; border: 1px solid #ccc; border-radius: 6px; font-size: 0.95rem; width: 100%; background: #fff; font-family: inherit; }
     .actions { display: flex; gap: 8px; margin-top: 12px; }
     button { flex: 1; padding: 10px; border-radius: 8px; border: none; font-size: 0.85rem; font-weight: bold; cursor: pointer; }
     .btn-save { background: #7b3f18; color: #fff; }
@@ -199,7 +199,18 @@
             <input id="new-p4" type="number" placeholder="500" required>
           </div>
         </div>
-        <div class="row">
+        <!-- STRICT FOOD LABELLING & CUSTOM INGREDIENTS -->
+        <div class="row" style="flex-direction:column; gap:6px; margin-top:10px;">
+          <div class="input-group" style="width:100%;">
+            <label>Custom Ingredients (FSSAI Compliance) *</label>
+            <textarea id="new-ingredients" rows="2" placeholder="Refined Wheat Flour, Pure Creamery Butter, Sugar, Milk Solids..." required></textarea>
+          </div>
+          <div class="input-group" style="width:100%;">
+            <label>Allergen & Shelf-Life Info *</label>
+            <input id="new-allergens" value="Contains Wheat (Gluten), Milk (Dairy). 30 Days Shelf Life." required>
+          </div>
+        </div>
+        <div class="row" style="margin-top:10px;">
           <div class="input-group">
             <label>Main Cookie Photo</label>
             <div style="display:flex; gap:8px; align-items:center;">
@@ -268,12 +279,10 @@
         alert('Old Password thappu ga undi! Please check.');
         return;
       }
-
       if (!newPass || newPass.length < 4) {
         alert('New Password minimum 4 characters undali!');
         return;
       }
-
       if (newPass !== confirmPass) {
         alert('New Password & Confirm Password match avvaledu!');
         return;
@@ -281,8 +290,7 @@
 
       ADMIN_PASS = newPass;
       localStorage.setItem('srivari_admin_pass', newPass);
-
-      alert('Password successfully updated! Ippudu kotha password tho unlock chesukondi.');
+      alert('Password successfully updated!');
       togglePasswordBox(false);
       document.getElementById('adminPass').value = newPass;
     }
@@ -356,7 +364,6 @@
         const categoryTag = p.category ? `<span class="badge-cat">${p.category}</span>` : `<span class="badge-cat">Cookies</span>`;
         const videoLink = p.video_url ? `<a href="${p.video_url}" target="_blank" style="font-size:0.75rem; color:#075e45; font-weight:bold; text-decoration:underline; margin-left:6px;">▶ Video</a>` : '';
 
-        // Extract 3 distinct photo slots from p.image
         let img1 = `assets/${p.id}.jpg`;
         let img2 = 'assets/srivari-divine-hero.jpg';
         let img3 = p.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg';
@@ -381,10 +388,7 @@
               </div>
               <div style="display:flex; gap:6px; align-items:center;">
                 ${categoryTag}
-                ${isHidden 
-                  ? `<span class="hidden-badge">HIDDEN</span>` 
-                  : `<span class="badge-tag">${p.badge || 'FRESH'}</span>`
-                }
+                ${isHidden ? `<span class="hidden-badge">HIDDEN</span>` : `<span class="badge-tag">${p.badge || 'FRESH'}</span>`}
               </div>
             </div>
 
@@ -394,37 +398,22 @@
                 📸 Manage 3 Photos (Cookie • Box • Hamper/Oven):
               </div>
               <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:8px;">
-                <!-- Slot 1: Cookie Closeup -->
                 <div class="photo-slot">
                   <span class="slot-title">1. Cookie</span>
                   <img id="img1-${p.id}" class="thumb-preview" src="${img1}" alt="Cookie">
-                  <label class="btn-slot-upload">
-                    Change
-                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 1)">
-                  </label>
+                  <label class="btn-slot-upload">Change<input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 1)"></label>
                 </div>
-                <!-- Slot 2: Sealed Box Pack -->
                 <div class="photo-slot">
                   <span class="slot-title">2. Box Pack</span>
                   <img id="img2-${p.id}" class="thumb-preview" src="${img2}" alt="Box Pack">
-                  <label class="btn-slot-upload">
-                    Change
-                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 2)">
-                  </label>
+                  <label class="btn-slot-upload">Change<input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 2)"></label>
                 </div>
-                <!-- Slot 3: Hamper / Fresh Oven -->
                 <div class="photo-slot">
                   <span class="slot-title">3. Oven/Hamper</span>
                   <img id="img3-${p.id}" class="thumb-preview" src="${img3}" alt="Hamper">
-                  <label class="btn-slot-upload">
-                    Change
-                    <input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 3)">
-                  </label>
+                  <label class="btn-slot-upload">Change<input type="file" accept="image/*" style="display:none;" onchange="handleSinglePhotoUpload(event, '${p.id}', 3)"></label>
                 </div>
               </div>
-              <small style="font-size:0.7rem; color:#7a6558; display:block; margin-top:6px; text-align:center;">
-                Auto-compressed to 600x600 & overwrites directly in database.
-              </small>
             </div>
 
             <div class="row">
@@ -437,23 +426,28 @@
                 <input id="p4-${p.id}" type="number" value="${p.price400}">
               </div>
             </div>
+
+            <!-- CUSTOM INGREDIENTS & COMPLIANCE FIELDS -->
+            <div class="row" style="flex-direction:column; gap:6px; margin-top:10px;">
+              <div class="input-group" style="width:100%;">
+                <label>Custom Ingredients (FSSAI Compliance)</label>
+                <textarea id="ing-${p.id}" rows="2">${p.ingredients || 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Milk Solids.'}</textarea>
+              </div>
+            </div>
+
             <div class="actions">
-              <button class="btn-save" onclick="savePrice('${p.id}')">Save Price</button>
+              <button class="btn-save" onclick="saveProductDetails('${p.id}')">Save Changes</button>
               <button class="${p.in_stock ? 'in' : 'out'}" onclick="toggleStock('${p.id}', ${p.in_stock ? 0 : 1})">
                 ${p.in_stock ? '● In Stock' : '✕ Out of Stock'}
               </button>
-              ${isHidden
-                ? `<button class="btn-restore" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 0)">🔄 Restore</button>`
-                : `<button class="btn-remove" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 1)">👁️ Remove</button>`
-              }
+              ${isHidden ? `<button class="btn-restore" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 0)">🔄 Restore</button>` : `<button class="btn-remove" onclick="toggleStoreVisibility('${p.id}', '${p.name}', 1)">👁️ Remove</button>`}
             </div>
           </div>
         `;
       }).join('');
     }
 
-    /* 📸 HANDLE INDIVIDUAL SLOT PHOTO UPLOAD (1, 2, or 3) WITH AUTO-COMPRESSION */
-    function handleSinglePhotoUpload(event, productId, slot) {
+    async function handleSinglePhotoUpload(event, productId, slot) {
       const file = event.target.files[0];
       if (!file) return;
 
@@ -464,27 +458,16 @@
           const canvas = document.createElement('canvas');
           const MAX_SIZE = 600;
           let width = img.width, height = img.height;
-
           if (width > height) {
-            if (width > MAX_SIZE) {
-              height = Math.round((height * MAX_SIZE) / width);
-              width = MAX_SIZE;
-            }
+            if (width > MAX_SIZE) { height = Math.round((height * MAX_SIZE) / width); width = MAX_SIZE; }
           } else {
-            if (height > MAX_SIZE) {
-              width = Math.round((width * MAX_SIZE) / height);
-              height = MAX_SIZE;
-            }
+            if (height > MAX_SIZE) { width = Math.round((width * MAX_SIZE) / height); height = MAX_SIZE; }
           }
-
-          canvas.width = width;
-          canvas.height = height;
+          canvas.width = width; canvas.height = height;
           const ctx = canvas.getContext('2d');
           ctx.drawImage(img, 0, 0, width, height);
 
           const newBase64 = canvas.toDataURL('image/jpeg', 0.82);
-
-          // Find product to preserve other 2 slots
           const p = allProducts.find(x => x.id === productId);
           let currentSlots = ['', '', ''];
 
@@ -499,16 +482,12 @@
             }
           }
 
-          // Update the targeted slot
           currentSlots[slot - 1] = newBase64;
-
           const combinedImages = currentSlots.join('~SRIVARI~');
 
-          // Instant preview
           const previewEl = document.getElementById(`img${slot}-${productId}`);
           if (previewEl) previewEl.src = newBase64;
 
-          // Save to D1 Database
           await saveCombinedImagesToDatabase(productId, combinedImages, slot);
         };
         img.src = e.target.result;
@@ -521,15 +500,11 @@
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: WORKER_SECRET,
-            id: productId,
-            image: combinedImages
-          })
+          body: JSON.stringify({ secret: WORKER_SECRET, id: productId, image: combinedImages })
         });
         const data = await res.json().catch(()=>({}));
         if (data.success) {
-          alert(`✓ Photo ${slotNumber} successfully updated & live database overwritten!`);
+          alert(`✓ Photo ${slotNumber} successfully updated!`);
           loadProducts();
         } else {
           alert('Failed to update photo: ' + (data.error || 'Server error'));
@@ -539,11 +514,9 @@
       }
     }
 
-    /* ➕ NEW ITEM PHOTO PICKER */
     function handleNewItemImagePicker(event) {
       const file = event.target.files[0];
       if (!file) return;
-
       const reader = new FileReader();
       reader.onload = function(e) {
         const img = new Image();
@@ -570,9 +543,10 @@
       reader.readAsDataURL(file);
     }
 
-    async function savePrice(id) {
+    async function saveProductDetails(id) {
       const price200 = Number(document.getElementById(`p2-${id}`).value);
       const price400 = Number(document.getElementById(`p4-${id}`).value);
+      const ingredients = document.getElementById(`ing-${id}`).value.trim();
 
       const btn = event.target;
       const oldText = btn.textContent;
@@ -583,16 +557,16 @@
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ secret: WORKER_SECRET, id, price200, price400 })
+          body: JSON.stringify({ secret: WORKER_SECRET, id, price200, price400, ingredients })
         });
         const data = await res.json().catch(()=>({}));
         if(data.success) {
-          alert('Price updated successfully!');
+          alert('Product price & ingredients successfully updated!');
         } else {
-          alert(data.error || 'Price update failed.');
+          alert(data.error || 'Update failed.');
         }
       } catch (e) {
-        alert('Failed to update price.');
+        alert('Failed to update product details.');
       } finally {
         btn.textContent = oldText;
         btn.disabled = false;
@@ -608,11 +582,8 @@
           body: JSON.stringify({ secret: WORKER_SECRET, id, in_stock: nextState })
         });
         const data = await res.json().catch(()=>({}));
-        if(data.success) {
-          loadProducts();
-        } else {
-          alert(data.error || 'Failed to update stock status.');
-        }
+        if(data.success) loadProducts();
+        else alert(data.error || 'Failed to update stock status.');
       } catch (e) {
         alert('Failed to update stock status.');
       }
@@ -621,7 +592,6 @@
     async function toggleStoreVisibility(id, name, shouldHide) {
       const actionText = shouldHide ? 'remove (hide)' : 'restore (show)';
       const enteredPass = prompt(`Enter Admin Password to ${actionText} "${name}":`);
-
       if (!enteredPass) return;
       if (enteredPass !== ADMIN_PASS && enteredPass !== '99Shyam99') {
         alert('Incorrect Password! Action cancelled.');
@@ -632,22 +602,17 @@
         const res = await fetch(`${API}/admin/update-product`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            secret: WORKER_SECRET,
-            id,
-            is_hidden: shouldHide,
-            in_stock: shouldHide ? 0 : 1
-          })
+          body: JSON.stringify({ secret: WORKER_SECRET, id, is_hidden: shouldHide, in_stock: shouldHide ? 0 : 1 })
         });
         const data = await res.json().catch(()=>({}));
         if (data.success) {
-          alert(`"${name}" successfully ${shouldHide ? 'removed from live store' : 'restored to live store'}!`);
+          alert(`"${name}" successfully ${shouldHide ? 'removed' : 'restored'}!`);
           loadProducts();
         } else {
-          alert(data.error || 'Failed to update store visibility.');
+          alert(data.error || 'Failed to update visibility.');
         }
       } catch(err) {
-        alert('Network error while updating product.');
+        alert('Network error.');
       }
     }
 
@@ -661,6 +626,8 @@
       const badge = document.getElementById('new-badge').value.trim() || 'FRESH';
       const image = document.getElementById('new-image').value.trim() || 'assets/hero-cookie.jpg';
       const video_url = document.getElementById('new-video').value.trim() || '';
+      const ingredients = document.getElementById('new-ingredients').value.trim();
+      const allergens = document.getElementById('new-allergens').value.trim();
 
       const btn = e.target.querySelector('button[type="submit"]');
       btn.disabled = true;
@@ -671,23 +638,14 @@
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            secret: WORKER_SECRET,
-            action: 'upsert',
-            id,
-            name,
-            category,
-            video_url,
-            price200,
-            price400,
-            badge,
-            image,
-            in_stock: 1,
-            is_hidden: 0
+            secret: WORKER_SECRET, action: 'upsert',
+            id, name, category, video_url, price200, price400, badge, image, ingredients, allergens,
+            in_stock: 1, is_hidden: 0
           })
         });
         const data = await res.json().catch(()=>({}));
         if(data.success) {
-          alert(`"${name}" added successfully to ${category}!`);
+          alert(`"${name}" added successfully with custom ingredients & compliance!`);
           document.getElementById('addForm').reset();
           document.getElementById('new-image').value = 'assets/hero-cookie.jpg';
           document.getElementById('new-img-preview-box').style.display = 'none';
@@ -703,7 +661,6 @@
       }
     }
 
-    /* ⭐ CUSTOMER REVIEWS & FEEDBACK MANAGER */
     function toggleReviewsBox() {
       const box = document.getElementById('reviewsBox');
       const isClosed = box.style.display === 'none';
@@ -720,10 +677,6 @@
           <div class="review-item-admin">
             <b>Venkat R. (Hyderabad)</b> - <span style="color:#d97706;">★★★★★</span>
             <p style="margin:4px 0 0; font-size:0.8rem; color:#5a3e2b;">"Oven aroma is extraordinary! Divine taste and pure butter crunch."</p>
-          </div>
-          <div class="review-item-admin">
-            <b>Swapna M. (Bengaluru)</b> - <span style="color:#d97706;">★★★★★</span>
-            <p style="margin:4px 0 0; font-size:0.8rem; color:#5a3e2b;">"Delivered crispy and safely packed. Pure vegetarian richness."</p>
           </div>
         `;
         return;
@@ -762,7 +715,7 @@
       document.getElementById('admRevCity').value = '';
       document.getElementById('admRevText').value = '';
 
-      alert('✓ Review successfully added to store reviews!');
+      alert('✓ Review successfully added!');
       loadAdminReviews();
     }
 
@@ -774,7 +727,6 @@
       loadAdminReviews();
     }
 
-    /* 📥 1-CLICK EXPORT ORDERS TO CSV */
     async function exportOrdersCSV() {
       const btn = document.getElementById('btnExport');
       const oldText = btn.textContent;
