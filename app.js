@@ -48,27 +48,27 @@ function renderProducts() {
     const badgeBg = isOutOfStock ? '#c5221f' : '#075e45';
 
     return `
-      <article class="card" data-product="${p.id}">
+      <article class="card" data-product="${p.id}" onclick="openProductDetailModal('${p.id}')">
         <div class="photo">
           <img src="${p.image}" alt="${p.name}" loading="lazy" onerror="this.src='assets/hero-cookie.jpg'">
           <span class="badge" style="background:${badgeBg}; color:#fff; font-weight:bold;">${badgeText}</span>
         </div>
 
-        <div class="info">
+        <div class="info" onclick="event.stopPropagation()">
           <h3>${p.name}</h3>
 
           <div class="weightChoices" role="group">
             <button type="button"
               class="weightBtn active"
               data-weight="200"
-              onclick="selectWeight('${p.id}', 200)">
+              onclick="selectWeight('${p.id}', 200); event.stopPropagation();">
               200g
             </button>
 
             <button type="button"
               class="weightBtn"
               data-weight="400"
-              onclick="selectWeight('${p.id}', 400)">
+              onclick="selectWeight('${p.id}', 400); event.stopPropagation();">
               400g
             </button>
           </div>
@@ -78,8 +78,8 @@ function renderProducts() {
           </div>
 
           ${isOutOfStock 
-            ? `<button class="add" disabled style="background:#888; color:#fff; cursor:not-allowed;">✕ Out of Stock</button>`
-            : `<button class="add" onclick="addToCart('${p.id}')">🛒 Add to Cart</button>`
+            ? `<button class="add" disabled style="background:#888; color:#fff; cursor:not-allowed;" onclick="event.stopPropagation()">✕ Out of Stock</button>`
+            : `<button class="add" onclick="addToCart('${p.id}'); event.stopPropagation();">🛒 Add to Cart</button>`
           }
         </div>
       </article>
@@ -316,13 +316,9 @@ function autoFillCustomerDetails() {
   } catch (e) {}
 }
 
-/* ==========================================================================
-   SRIVARI ACCOUNT HUB & ZERO-PASSWORD LOGIN ENGINE (LIVE PRODUCTION)
-   ========================================================================== */
 window.renderAccountHub = function() {
   const hub = document.getElementById('accountHubView');
   if (!hub) return;
-
   const profile = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
 
   if (profile.phone) {
@@ -333,7 +329,6 @@ window.renderAccountHub = function() {
         <div class="account-details" style="flex:1;">
           <h3>${profile.name || 'Valued Customer'}</h3>
           <p>+91 ${profile.phone}</p>
-          ${profile.address ? `<div style="font-size:11px; opacity:0.8; margin-top:4px;">📍 ${profile.address.slice(0, 32)}...</div>` : ''}
         </div>
       </div>
       <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
@@ -359,16 +354,13 @@ window.renderAccountHub = function() {
 window.loginWithPhone = function() {
   const input = document.getElementById('loginMobileInput');
   const phone = input ? input.value.replace(/\D/g, '') : '';
-
   if (phone.length !== 10) {
     alert('Dhayachesi valid 10-digit mobile number enter cheyandi.');
     return;
   }
-
   const existing = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
   existing.phone = phone;
   if (!existing.name) existing.name = 'Valued Customer';
-
   localStorage.setItem('srivari_customer_profile', JSON.stringify(existing));
   renderAccountHub();
 };
@@ -376,9 +368,7 @@ window.loginWithPhone = function() {
 window.logoutCustomer = function() {
   localStorage.removeItem('srivari_customer_profile');
   const container = document.getElementById('ordersListContainer');
-  if (container) {
-    container.innerHTML = '<div style="text-align: center; padding: 20px; color: #777; font-size: 13px;">Login ayyaka mee orders ikkada kanipisthayi.</div>';
-  }
+  if (container) container.innerHTML = '<div style="text-align: center; padding: 20px; color: #777; font-size: 13px;">Login ayyaka mee orders ikkada kanipisthayi.</div>';
   renderAccountHub();
 };
 
@@ -393,22 +383,12 @@ window.closeOrdersModal = function() {
   if (modal) modal.style.display = 'none';
 };
 
-/* ==========================================================================
-   4-STAGE VISUAL TRACKING STEPPER GENERATOR
-   ========================================================================== */
 function generateOrderTimelineHTML(o) {
-  let stage = 2; // Real Confirmed Order starts at Stage 2
+  let stage = 2;
   const statusStr = (o.delivery_status || o.payment_status || '').toLowerCase();
-
-  if (statusStr.includes('deliver')) {
-    stage = 4;
-  } else if (o.awb || statusStr.includes('transit') || statusStr.includes('shipped') || statusStr.includes('dispatch')) {
-    stage = 3;
-  } else if (statusStr.includes('paid') || statusStr.includes('success') || statusStr.includes('captured')) {
-    stage = 2;
-  } else {
-    stage = 1;
-  }
+  if (statusStr.includes('deliver')) stage = 4;
+  else if (o.awb || statusStr.includes('transit') || statusStr.includes('shipped')) stage = 3;
+  else if (statusStr.includes('paid') || statusStr.includes('success')) stage = 2;
 
   const steps = [
     { title: 'Order Received', desc: 'Order confirmed & queued' },
@@ -425,7 +405,6 @@ function generateOrderTimelineHTML(o) {
         const isActive = stepNum === stage && stage !== 4;
         const stateClass = isCompleted ? 'completed' : (isActive ? 'active' : '');
         const dotText = isCompleted ? '✓' : (isActive ? '●' : stepNum);
-
         return `
           <div class="step-item ${stateClass}">
             <div class="step-dot">${dotText}</div>
@@ -442,7 +421,7 @@ function generateOrderTimelineHTML(o) {
 
 function renderOrderCards(ordersList) {
   return ordersList.map(o => {
-    const waHelpMessage = encodeURIComponent(`Hi Srivari Cookies, I need assistance regarding my Order #${o.id}.`);
+    const waMsg = encodeURIComponent(`Hi Srivari Cookies, I need assistance regarding my Order #${o.id}.`);
     return `
       <div class="order-tracking-card">
         <div class="order-header-row">
@@ -455,20 +434,10 @@ function renderOrderCards(ordersList) {
             <div style="font-size:13px;font-weight:700;color:#12352e;margin-top:2px;">₹${o.total}</div>
           </div>
         </div>
-
         ${generateOrderTimelineHTML(o)}
-
         <div class="order-actions-row">
-          ${o.awb ? `
-            <a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" rel="noopener" class="track-delhivery-btn">
-              🚚 Delhivery Track
-            </a>
-          ` : `
-            <span style="font-size:11px;color:#697a75;display:inline-flex;align-items:center;">⏳ Courier tracking updating...</span>
-          `}
-          <a href="https://wa.me/917989816250?text=${waHelpMessage}" target="_blank" rel="noopener" class="order-wa-help-btn">
-            💬 Order Help
-          </a>
+          ${o.awb ? `<a href="https://www.delhivery.com/track/package/${o.awb}" target="_blank" rel="noopener" class="track-delhivery-btn">🚚 Delhivery Track</a>` : `<span style="font-size:11px;color:#697a75;">⏳ Courier tracking updating...</span>`}
+          <a href="https://wa.me/917989816250?text=${waMsg}" target="_blank" rel="noopener" class="order-wa-help-btn">💬 Order Help</a>
         </div>
       </div>
     `;
@@ -479,10 +448,8 @@ window.fetchCustomerOrders = async function(customPhone) {
   const container = document.getElementById('ordersListContainer');
   const profile = JSON.parse(localStorage.getItem('srivari_customer_profile') || '{}');
   let phone = customPhone || profile.phone || '';
-
   phone = phone.replace(/\D/g, '');
   if (phone.length > 10) phone = phone.slice(-10);
-
   if (!phone || phone.length < 10) return;
 
   if (container) container.innerHTML = '<div style="text-align:center;padding:15px;color:#666;font-size:13px;">Searching your orders...</div>';
@@ -496,31 +463,18 @@ window.fetchCustomerOrders = async function(customPhone) {
       container.innerHTML = renderOrderCards(data.orders);
       return;
     }
-
-    // REAL EMPTY STATE: Clean messaging when no orders are found in database
-    container.innerHTML = `
-      <div style="text-align:center;padding:26px 14px;color:#697a75;font-size:13px;line-height:1.6;">
-        Ee mobile number tho inthavaraku orders emi levu.<br>
-        <a href="#shop" onclick="closeOrdersModal()" style="display:inline-block;margin-top:10px;background:#005448;color:#fff;padding:8px 16px;border-radius:8px;text-decoration:none;font-weight:700;font-size:12px;">
-          🛒 Order Gourmet Cookies
-        </a>
-      </div>
-    `;
-
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:#777;font-size:13px;">Ee mobile number tho orders emi levu.</div>';
   } catch (e) {
-    if (container) {
-      container.innerHTML = '<div style="text-align:center;padding:18px;color:#c5221f;font-size:13px;">Orders load cheyadam kudaraledu. Dhayachesi malli try cheyandi.</div>';
-    }
+    if (container) container.innerHTML = '<div style="text-align:center;padding:18px;color:#c5221f;font-size:13px;">Orders load kaledu.</div>';
   }
 };
 
 function openRazorpayCheckout(orderInfo, rzpOrderData) {
   return new Promise((resolve, reject) => {
     if (typeof Razorpay === 'undefined') {
-      reject(new Error('Razorpay Checkout could not load. Please refresh the page.'));
+      reject(new Error('Razorpay not loaded.'));
       return;
     }
-
     const options = {
       key: rzpOrderData.key || rzpOrderData.keyId,
       amount: rzpOrderData.amount,
@@ -528,22 +482,13 @@ function openRazorpayCheckout(orderInfo, rzpOrderData) {
       name: 'SRIVARI COOKIES',
       description: 'Cookie Order Payment',
       order_id: rzpOrderData.razorpay_order_id || rzpOrderData.orderId,
-      prefill: {
-        name: orderInfo.name,
-        contact: orderInfo.phone,
-        email: orderInfo.email || undefined
-      },
+      prefill: { name: orderInfo.name, contact: orderInfo.phone, email: orderInfo.email || undefined },
       theme: { color: '#7b3f18' },
       handler: response => resolve(response),
-      modal: {
-        ondismiss: () => reject(new Error('Payment window closed before payment was completed.'))
-      }
+      modal: { ondismiss: () => reject(new Error('Payment window closed.')) }
     };
-
     const rzp = new Razorpay(options);
-    rzp.on('payment.failed', response => {
-      reject(new Error(response?.error?.description || 'Payment failed. Please try again.'));
-    });
+    rzp.on('payment.failed', response => reject(new Error(response?.error?.description || 'Payment failed.')));
     rzp.open();
   });
 }
@@ -551,10 +496,7 @@ function openRazorpayCheckout(orderInfo, rzpOrderData) {
 document.getElementById('checkout')?.addEventListener('submit', async e => {
   e.preventDefault();
   if (checkoutBusy) return;
-  if (!cart.length) {
-    alert('Please add cookies to cart.');
-    return;
-  }
+  if (!cart.length) { alert('Cart is empty.'); return; }
 
   const name = document.getElementById('cname').value.trim();
   const phone = document.getElementById('phone').value.trim();
@@ -563,12 +505,11 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   const pincode = document.getElementById('pincode').value.trim();
 
   if (!name || !phone || !address || !/^\d{6}$/.test(pincode)) {
-    alert('Please fill all required details and enter a valid 6-digit pincode.');
+    alert('Please fill all details and 6-digit pincode.');
     return;
   }
 
   localStorage.setItem('srivari_customer_profile', JSON.stringify({ name, phone, email, address, pincode }));
-
   const ready = await calculateDelivery();
   if (!ready) return;
 
@@ -579,11 +520,7 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
   checkoutBusy = true;
   const button = document.querySelector('.checkoutBtn');
   const oldText = button?.textContent || 'Pay Now';
-
-  if (button) {
-    button.disabled = true;
-    button.textContent = 'Creating secure order…';
-  }
+  if (button) { button.disabled = true; button.textContent = 'Creating order…'; }
 
   try {
     const createRes = await fetch(ORDERS_API, {
@@ -596,32 +533,18 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
         total: total,
         items: cart.map(i => {
           const p = configuredProducts.find(x => x.id === i.id);
-          return {
-            product_id: i.id,
-            product_name: p?.name || i.id,
-            weight_g: i.weight,
-            quantity: i.qty,
-            unit_price: priceFor(p, i.weight),
-            line_total: priceFor(p, i.weight) * i.qty
-          };
+          return { product_id: i.id, product_name: p?.name || i.id, weight_g: i.weight, quantity: i.qty, unit_price: priceFor(p, i.weight), line_total: priceFor(p, i.weight) * i.qty };
         })
       })
     });
 
     const rzpOrderData = await createRes.json();
-    if (!createRes.ok || !rzpOrderData.success) {
-      throw new Error(rzpOrderData.error || 'Could not create order.');
-    }
+    if (!createRes.ok || !rzpOrderData.success) throw new Error(rzpOrderData.error || 'Could not create order.');
 
     if (button) button.textContent = 'Opening Razorpay…';
+    const paymentResponse = await openRazorpayCheckout({ name, phone, email }, rzpOrderData);
 
-    const paymentResponse = await openRazorpayCheckout(
-      { name, phone, email },
-      rzpOrderData
-    );
-
-    if (button) button.textContent = 'Verifying payment…';
-
+    if (button) button.textContent = 'Verifying…';
     let verifyResponse = {};
     try {
       const vRes = await fetch(ORDERS_API, {
@@ -633,18 +556,11 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
           razorpay_order_id: paymentResponse.razorpay_order_id,
           razorpay_payment_id: paymentResponse.razorpay_payment_id,
           razorpay_signature: paymentResponse.razorpay_signature,
-          customer_name: name,
-          name: name,
-          phone: phone,
-          mobile: phone,
-          address: fullAddressText,
-          total: total
+          customer_name: name, name, phone, mobile: phone, address: fullAddressText, total
         })
       });
       verifyResponse = await vRes.json();
-    } catch (err) {
-      console.warn('Verification warning:', err);
-    }
+    } catch (err) {}
 
     let shipmentAwb = verifyResponse.awb || '';
     if (!shipmentAwb) {
@@ -652,18 +568,11 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
         const shipRes = await fetch(`${DELHIVERY_API}/create-shipment`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            orderId: rzpOrderData.order_id,
-            weight: cartWeightGrams()
-          })
+          body: JSON.stringify({ orderId: rzpOrderData.order_id, weight: cartWeightGrams() })
         });
         const shipData = await shipRes.json().catch(() => ({}));
-        if (shipRes.ok && shipData.success) {
-          shipmentAwb = shipData.awb;
-        }
-      } catch (shipErr) {
-        console.warn('Delhivery booking:', shipErr);
-      }
+        if (shipRes.ok && shipData.success) shipmentAwb = shipData.awb;
+      } catch (shipErr) {}
     }
 
     const paidOrder = {
@@ -671,13 +580,7 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
       name, phone, email, address, pincode,
       items: cart.map(i => {
         const p = configuredProducts.find(x => x.id === i.id);
-        return {
-          id: i.id,
-          name: p?.name || i.id,
-          weight: i.weight,
-          qty: i.qty,
-          amount: priceFor(p, i.weight) * i.qty
-        };
+        return { id: i.id, name: p?.name || i.id, weight: i.weight, qty: i.qty, amount: priceFor(p, i.weight) * i.qty };
       }),
       subtotal, deliveryCharge, total,
       paymentId: paymentResponse.razorpay_payment_id,
@@ -685,26 +588,19 @@ document.getElementById('checkout')?.addEventListener('submit', async e => {
     };
 
     localStorage.setItem('srivari_pending_order', JSON.stringify(paidOrder));
-
     cart = [];
     deliveryCharge = null;
     lastDeliveryPincode = '';
     saveCart();
-
     document.getElementById('checkout').reset();
     closeDrawer();
-
     window.location.href = 'receipt.html';
 
   } catch (error) {
-    console.error('Checkout error:', error);
-    alert(error.message || 'Payment could not be completed. Please try again.');
+    alert(error.message || 'Payment could not be completed.');
   } finally {
     checkoutBusy = false;
-    if (button) {
-      button.disabled = false;
-      button.textContent = oldText;
-    }
+    if (button) { button.disabled = false; button.textContent = oldText; }
   }
 });
 
@@ -725,16 +621,12 @@ async function syncFromAdmin() {
           if (p.price400) item.price400 = Number(p.price400);
           if (p.mrp200) item.mrp200 = Number(p.mrp200);
           if (p.mrp400) item.mrp400 = Number(p.mrp400);
-          if (p.in_stock !== undefined && p.in_stock !== null) {
-            item.in_stock = Number(p.in_stock);
-          }
+          if (p.in_stock !== undefined && p.in_stock !== null) item.in_stock = Number(p.in_stock);
         }
       });
       renderProducts();
     }
-  } catch (e) {
-    console.warn('Sync fallback: default list active.');
-  }
+  } catch (e) {}
 }
 
 syncFromAdmin();
