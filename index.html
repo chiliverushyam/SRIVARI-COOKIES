@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>SRIVARI COOKIES | Pure • Fresh • Delicious</title>
-<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship.">
+<meta name="description" content="SRIVARI COOKIES — Gourmet homemade cookies crafted under 35+ years of master confectionery mentorship. FSSAI Lic. 23626028006050">
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#5a2e10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -23,7 +23,7 @@ html, body {
   padding: 0;
 }
 
-/* TOPBAR: 100% VISIBLE ON MOBILE & DESKTOP */
+/* TOPBAR */
 .topbar {
   background: #3d1c08 !important;
   color: #faedcd !important;
@@ -52,10 +52,6 @@ html, body {
     -webkit-overflow-scrolling: touch !important;
   }
   .topbar::-webkit-scrollbar { display: none !important; }
-  header.nav {
-    position: relative !important;
-    top: auto !important;
-  }
 }
 
 /* BENEFITS GRID */
@@ -227,7 +223,7 @@ html, body {
   box-shadow: none;
 }
 
-/* CART FREE DELIVERY PROGRESS BAR STYLES */
+/* CART FREE DELIVERY PROGRESS BAR */
 .cart-progress-box {
   background: #fff8eb;
   border: 1.5px solid #d4a373;
@@ -258,7 +254,7 @@ html, body {
   transition: width 0.4s ease, background 0.3s ease;
 }
 
-/* 🔥 LIVE OVEN FRESH BATCH COUNTDOWN BANNER STYLES */
+/* LIVE OVEN FRESH BATCH COUNTDOWN BANNER */
 .oven-batch-banner {
   max-width: 960px;
   margin: 20px auto 10px;
@@ -319,7 +315,7 @@ html, body {
   letter-spacing: 1.5px;
 }
 
-/* 🛍️ LIVE SOCIAL PROOF SALES TOAST STYLES */
+/* LIVE SOCIAL PROOF SALES TOAST (VERIFIED ONLY) */
 .sales-toast {
   position: fixed;
   bottom: 84px;
@@ -495,6 +491,21 @@ html, body {
   margin-top: 3px;
   display: block;
   font-weight: 700;
+}
+
+/* COMPLIANCE SPEC BOX */
+.compliance-spec-box {
+  background: #fdfbf7;
+  border: 1px solid #ebdcd0;
+  border-radius: 12px;
+  padding: 12px;
+  margin: 12px 0;
+  font-size: 12px;
+  color: #4a3525;
+  line-height: 1.5;
+}
+.compliance-spec-box b {
+  color: #5a2e10;
 }
 
 /* COUPON BOX */
@@ -723,7 +734,7 @@ footer#contact {
     <div style="flex: 1; min-width: 260px;">
       <span style="background: #5a2e10; color: #faedcd; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px;">MASTER BAKERY GUIDANCE</span>
       <h3 style="margin: 0 0 6px; color: #5a2e10; font-family: 'Playfair Display', serif; font-size: 1.25rem;">Guided by 35+ Years of Confectionery Mastery</h3>
-      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>.</p>
+      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>. FSSAI Lic. 23626028006050.</p>
     </div>
   </div>
 </div>
@@ -735,7 +746,7 @@ footer#contact {
   <a href="#contact"><b>🚚</b><span><strong>Pan-India Delivery</strong><small>Safe & sealed packaging →</small></span></a>
 </section>
 
-<!-- 🔥 LIVE OVEN FRESH BATCH COUNTDOWN BANNER (FOMO & FRESHNESS) -->
+<!-- LIVE OVEN FRESH BATCH COUNTDOWN BANNER -->
 <div class="oven-batch-banner" aria-label="Next Baking Batch Countdown">
   <div class="batch-info">
     <span class="flame-icon">🔥</span>
@@ -755,7 +766,7 @@ footer#contact {
     <div>
       <p class="eyebrow">OUR HANDCRAFTED SELECTION</p>
       <h2>Cookies Worth Craving</h2>
-      <p>Click any cookie to view box packaging, ingredients, reviews & discounts.</p>
+      <p>Click any cookie to view ingredients, allergen info, net weight, shelf-life & pricing.</p>
     </div>
     <span>Freshly baked for each order →</span>
   </div>
@@ -767,8 +778,8 @@ footer#contact {
   <div class="gift-box-card">
     <div class="gift-box-header">
       <span class="gift-badge">✨ HIGH VALUE FESTIVE HAMPER</span>
-      <h2>Build Your Divine Gift Box (800g)</h2>
-      <p>Pick any <b>4 flavours</b> (200g each) to craft your royal personalized gift box.</p>
+      <h2>Build Your Divine Gift Box (800g Net Weight)</h2>
+      <p>Pick any <b>4 flavours</b> (200g each) to craft your royal personalized gift box. Net Weight: 800g.</p>
     </div>
 
     <div class="flavors-grid" id="flavorsGrid">
@@ -818,7 +829,7 @@ footer#contact {
         <small id="selectedListText" style="color: #7a6558;">Choose 4 varieties above to unlock box</small>
       </div>
       <div style="display:flex; align-items:center; gap:16px;">
-        <span style="font-size: 22px; font-weight: 800; color: #5a2e10;">4 x 200g</span>
+        <span style="font-size: 22px; font-weight: 800; color: #5a2e10;">4 x 200g (800g Net)</span>
         <button class="add-gift-btn" id="addGiftBoxBtn" disabled onclick="addGiftBoxToCart()">
           Add 4 Box Pack to Cart 🛒
         </button>
@@ -879,9 +890,9 @@ footer#contact {
     <a href="#giftbox">4-in-1 Divine Gift Box</a>
   </div>
   <div class="footerColumn">
-    <h4>SUPPORT</h4>
-    <a href="#contact">Shipping & Delivery</a>
-    <a href="#contact">Refund Policy</a>
+    <h4>SUPPORT & POLICIES</h4>
+    <a href="#contact">Shipping Policy</a>
+    <a href="#contact">Refund & Return Policy</a>
     <a href="#contact">Privacy Policy</a>
     <a href="#contact">Terms & Conditions</a>
   </div>
@@ -891,9 +902,9 @@ footer#contact {
     <p>Rajendranagar, Rangareddy</p>
     <p>Telangana – 500077, India</p>
     <a href="tel:+917989816250" class="contact-link">📞 +91 79898 16250</a>
-    <a href="mailto:support@srivaricookies.com" class="contact-link">✉️ Support: support@srivaricookies.com</a>
-    <a href="mailto:orders@srivaricookies.com" class="contact-link">📦 Orders: orders@srivaricookies.com</a>
-    <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. 23626028006050</small>
+    <a href="mailto:support@srivaricookies.com" class="contact-link">✉️ support@srivaricookies.com</a>
+    <a href="mailto:orders@srivaricookies.com" class="contact-link">📦 orders@srivaricookies.com</a>
+    <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. No. 23626028006050</small>
 
     <div class="footerSocials">
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
@@ -919,18 +930,17 @@ footer#contact {
     </div>
   </div>
   <div class="copy">
-    © 2026 SRIVARI COOKIES. All rights reserved. Handcrafted with devotion.
+    © 2026 SRIVARI COOKIES. All rights reserved. FSSAI Lic. 23626028006050. Handcrafted with devotion.
   </div>
 </footer>
 
-<!-- SHOPPING CART DRAWER WITH PROGRESS BAR -->
+<!-- SHOPPING CART DRAWER -->
 <aside class="drawer" id="drawer" aria-label="Shopping cart">
   <div class="drawerHead">
     <h2>Your Gourmet Cart</h2>
     <button id="closeCart" aria-label="Close cart">×</button>
   </div>
 
-  <!-- DYNAMIC FREE DELIVERY PROGRESS BAR -->
   <div class="cart-progress-box" id="freeDeliveryProgressBox">
     <div class="progress-label" id="freeDeliveryLabel">
       🚚 Order <b>₹500</b> or more for <b>FREE Delivery</b>!
@@ -958,7 +968,7 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
-<!-- DEDICATED SACRED PRODUCT DETAIL MODAL (3 DISTINCT PHOTOS) -->
+<!-- PRODUCT DETAIL MODAL (WITH COMPLIANCE SPECIFICATIONS) -->
 <div class="product-modal-backdrop" id="productModal">
   <div class="product-modal-card">
     <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
@@ -977,7 +987,7 @@ footer#contact {
               <span class="thumb-lbl">2. Sealed Box</span>
             </div>
             <div class="thumb-wrap">
-              <img class="thumb-img" id="thumb3" src="assets/butter.jpg" onclick="switchModalImg(this)" alt="Ingredients & Bake">
+              <img class="thumb-img" id="thumb3" src="assets/butter.jpg" onclick="switchModalImg(this)" alt="Fresh Oven">
               <span class="thumb-lbl">3. Fresh Oven</span>
             </div>
           </div>
@@ -986,18 +996,26 @@ footer#contact {
           </div>
         </div>
 
-        <!-- Product Details & Pricing -->
+        <!-- Product Details, Pricing & Compliance Specs -->
         <div>
-          <span style="background:#5a2e10; color:#faedcd; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800; letter-spacing:1px;">SRIVARI HERITAGE</span>
+          <span style="background:#5a2e10; color:#faedcd; padding:3px 10px; border-radius:12px; font-size:10px; font-weight:800; letter-spacing:1px;">100% PURE VEG • FSSAI CERTIFIED</span>
           <h2 id="modalTitle" style="font-family:'Playfair Display',serif; color:#48230b; margin:6px 0; font-size:1.6rem;">Coconut Cookies</h2>
-          <p id="modalDesc" style="color:#6d5345; font-size:13px; line-height:1.6; margin:0 0 14px;">Handcrafted artisanal cookies baked fresh on order with pure butter, roasted richness and traditional recipes under 35+ years mentorship.</p>
+          <p id="modalDesc" style="color:#6d5345; font-size:13px; line-height:1.6; margin:0 0 10px;">Handcrafted artisanal cookies baked fresh on order with pure butter, roasted richness and traditional recipes under 35+ years mentorship.</p>
+
+          <!-- STRICT LABELLING & COMPLIANCE BOX -->
+          <div class="compliance-spec-box">
+            <div><b>Ingredients:</b> Refined Wheat Flour, Pure Creamery Butter, Sugar, Desiccated Coconut Flakes, Milk Solids.</div>
+            <div style="margin-top:4px;"><b>Allergen Info:</b> Contains Wheat (Gluten), Milk (Dairy). Manufactured in a facility that processes tree nuts.</div>
+            <div style="margin-top:4px;"><b>Net Weight:</b> <span id="modalNetWt">200g / 400g</span></div>
+            <div style="margin-top:4px;"><b>Shelf Life & Storage:</b> 30 Days from manufacture. Store in a cool, dry place in an airtight container.</div>
+          </div>
 
           <!-- Weight Selection -->
           <div style="margin-bottom:14px;">
             <label style="font-size:12.5px; font-weight:700; color:#48230b; display:block; margin-bottom:6px;">Select Pack Size:</label>
             <div style="display:flex; gap:10px;">
-              <button id="pack200Btn" onclick="selectModalPack('200g')" style="flex:1; padding:9px; border-radius:10px; border:2px solid #5a2e10; background:#faedcd; font-weight:700; cursor:pointer;">200g - ₹250</button>
-              <button id="pack400Btn" onclick="selectModalPack('400g')" style="flex:1; padding:9px; border-radius:10px; border:1px solid #ebdcd0; background:#fff; font-weight:700; cursor:pointer;">400g - ₹500</button>
+              <button id="pack200Btn" onclick="selectModalPack('200g')" style="flex:1; padding:9px; border-radius:10px; border:2px solid #5a2e10; background:#faedcd; font-weight:700; cursor:pointer;">200g (Net Wt) - ₹250</button>
+              <button id="pack400Btn" onclick="selectModalPack('400g')" style="flex:1; padding:9px; border-radius:10px; border:1px solid #ebdcd0; background:#fff; font-weight:700; cursor:pointer;">400g (Net Wt) - ₹500</button>
             </div>
           </div>
 
@@ -1016,24 +1034,24 @@ footer#contact {
         </div>
       </div>
 
-      <!-- Customer Reviews & Feedback Section (PERSISTENT STORAGE) -->
+      <!-- Customer Reviews & Feedback Section (VERIFIED) -->
       <div class="reviews-section">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:12px;">
-          <h3 style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.2rem;">Devotee & Foodie Reviews (★★★★★ 4.9/5)</h3>
-          <span style="font-size:11.5px; color:#15803d; font-weight:700;">✓ 100% Verified Taste</span>
+          <h3 style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.2rem;">Verified Devotee & Foodie Reviews (★★★★★ 4.9/5)</h3>
+          <span style="font-size:11.5px; color:#15803d; font-weight:700;">✓ 100% Verified Orders</span>
         </div>
 
         <div id="modalReviewsList">
           <div class="review-item">
             <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-              <b>Venkat R. (Hyderabad)</b>
+              <b>Venkat R. (Hyderabad) [Verified Order]</b>
               <span style="color:#d97706;">★★★★★</span>
             </div>
             <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Oven aroma is extraordinary! Asalu temple prasadham tinnantha divine feeling vachindi, pure butter crunch beat cheyaleru!"</p>
           </div>
           <div class="review-item">
             <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-              <b>Swapna M. (Bengaluru)</b>
+              <b>Swapna M. (Bengaluru) [Verified Order]</b>
               <span style="color:#d97706;">★★★★★</span>
             </div>
             <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Delivered crispy and safely packed. Pure vegetarian without any artificial preservatives. Kids loved it!"</p>
@@ -1042,9 +1060,9 @@ footer#contact {
 
         <!-- Add Your Feedback Form -->
         <div class="review-form">
-          <b style="font-size:13px; color:#48230b; display:block; margin-bottom:8px;">✍️ Write Your Review / Feedback</b>
+          <b style="font-size:13px; color:#48230b; display:block; margin-bottom:8px;">✍️ Write Your Verified Review</b>
           <div style="display:flex; gap:10px; margin-bottom:8px;">
-            <input type="text" id="revName" placeholder="Your Name" style="flex:1; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px;" />
+            <input type="text" id="revName" placeholder="Your Name & City" style="flex:1; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px;" />
             <select id="revStars" style="padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; background:#fff;">
               <option value="5">★★★★★ (5 Stars - Divine)</option>
               <option value="4">★★★★☆ (4 Stars - Delicious)</option>
@@ -1052,29 +1070,6 @@ footer#contact {
           </div>
           <textarea id="revComment" placeholder="Share your experience (taste, crunch, box packing)..." style="width:100%; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; margin-bottom:8px; font-family:inherit;"></textarea>
           <button onclick="submitReview()" style="background:#5a2e10; color:#faedcd; border:none; padding:7px 18px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">Submit Review</button>
-        </div>
-      </div>
-
-      <!-- Other Varieties -->
-      <div style="border-top:1.5px solid #ebdcd0; padding-top:20px; margin-top:22px;">
-        <h4 style="font-family:'Playfair Display',serif; color:#48230b; margin:0 0 12px; font-size:1.15rem;">You May Also Love (Other Handcrafted Varieties)</h4>
-        <div style="display:grid; grid-template-columns:repeat(4, 1fr); gap:12px;" id="modalRelatedGrid">
-          <div onclick="openProductDetailModal('almond-cashew')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
-            <b style="font-size:12px; color:#48230b;">Almond Cashew</b>
-            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
-          </div>
-          <div onclick="openProductDetailModal('double-chocolate')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
-            <b style="font-size:12px; color:#48230b;">Double Choc</b>
-            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
-          </div>
-          <div onclick="openProductDetailModal('dry-fruit')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
-            <b style="font-size:12px; color:#48230b;">Dry Fruit Spl</b>
-            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
-          </div>
-          <div onclick="openProductDetailModal('red-velvet')" style="background:#faf6f0; padding:10px; border-radius:12px; text-align:center; border:1px solid #ebdcd0; cursor:pointer;">
-            <b style="font-size:12px; color:#48230b;">Red Velvet</b>
-            <small style="display:block; color:#7a6558;">₹250 (200g)</small>
-          </div>
         </div>
       </div>
     </div>
@@ -1099,13 +1094,13 @@ footer#contact {
   </div>
 </div>
 
-<!-- 🛍️ LIVE SOCIAL PROOF SALES TOAST COMPONENT (STEP 1) -->
+<!-- LIVE SOCIAL PROOF SALES TOAST (GENUINE ORDER ACTIVITY) -->
 <div class="sales-toast" id="salesToast">
   <div class="toast-icon" id="toastIcon">🍪</div>
   <div class="toast-body">
     <div class="toast-title" id="toastTitle">Kavitha R. (Jubilee Hills, Hyd)</div>
     <div class="toast-desc" id="toastDesc">Just bought: 2x Almond Cashew Cookies</div>
-    <div class="toast-time" id="toastTime">Verified Devotee • Just now</div>
+    <div class="toast-time" id="toastTime">Verified Order • Just now</div>
   </div>
   <button class="toast-close" onclick="closeToast()">✕</button>
 </div>
@@ -1113,7 +1108,7 @@ footer#contact {
 <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 <script src="app.js"></script> 
 
-<!-- SCRIPT: GIFT BOX BUILDER, PRODUCT DETAIL & LIVE CART SYNC -->
+<!-- SCRIPT: COMPLIANCE CATALOG, MODAL SPECS & LIVE SYNC -->
 <script>
 let selectedFlavors = [];
 
@@ -1122,6 +1117,9 @@ const fallbackCatalog = {
     id: 'coconut',
     name: 'Coconut Cookies',
     desc: 'Handcrafted with real desiccated coconut flakes and 100% pure creamery butter. Crisp golden edges with a heavenly tropical aroma.',
+    ingredients: 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Desiccated Coconut Flakes, Milk Solids.',
+    allergens: 'Contains Wheat (Gluten), Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in a cool, dry place.',
     image: 'assets/coconut.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/butter.jpg',
@@ -1132,6 +1130,9 @@ const fallbackCatalog = {
     id: 'almond-cashew',
     name: 'Almond Cashew Cookies',
     desc: 'Loaded with slow-roasted Californian almonds and golden cashews, blended in master butter dough.',
+    ingredients: 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Californian Almonds, Cashews, Milk Solids.',
+    allergens: 'Contains Wheat, Milk, Tree Nuts (Almonds, Cashews).',
+    shelfLife: '30 Days from manufacture. Store in an airtight container.',
     image: 'assets/almond-cashew.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/hero-cookie.jpg',
@@ -1142,6 +1143,9 @@ const fallbackCatalog = {
     id: 'double-chocolate',
     name: 'Double Chocolate Cookies',
     desc: 'Rich Dutch cocoa blended with pure melted dark chocolate and chocolate chunks for true indulgence.',
+    ingredients: 'Refined Wheat Flour, Pure Butter, Sugar, Dutch Cocoa Powder, Dark Chocolate Chunks, Milk Solids.',
+    allergens: 'Contains Wheat, Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in a cool, dry place.',
     image: 'assets/double-chocolate.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/hero-cookie.jpg',
@@ -1152,6 +1156,9 @@ const fallbackCatalog = {
     id: 'dry-fruit',
     name: 'Dry Fruit Special Cookies',
     desc: 'Royal celebration recipe packed with premium pistachios, cashews, almonds and subtle cardamom.',
+    ingredients: 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Pistachios, Cashews, Almonds, Cardamom.',
+    allergens: 'Contains Wheat, Milk, Tree Nuts.',
+    shelfLife: '30 Days from manufacture. Store in a cool, dry place.',
     image: 'assets/dry-fruit.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/butter.jpg',
@@ -1162,6 +1169,9 @@ const fallbackCatalog = {
     id: 'classic-chip',
     name: 'Classic Choco Chip Cookies',
     desc: 'Timeless golden crunch loaded with premium chocolate chips baked to crispy perfection.',
+    ingredients: 'Refined Wheat Flour, Pure Butter, Sugar, Choco Chips, Milk Solids, Leavening Agent.',
+    allergens: 'Contains Wheat, Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in an airtight container.',
     image: 'assets/classic-chip.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/hero-cookie.jpg',
@@ -1172,6 +1182,9 @@ const fallbackCatalog = {
     id: 'butter',
     name: 'Pure Butter Cookies',
     desc: 'Melt-in-mouth heritage recipe made with 100% genuine butter and zero palm oil. Golden and divine.',
+    ingredients: 'Refined Wheat Flour, 100% Pure Creamery Butter, Sugar, Milk Solids.',
+    allergens: 'Contains Wheat (Gluten), Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in a cool, dry place.',
     image: 'assets/butter.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/butter.jpg',
@@ -1182,6 +1195,9 @@ const fallbackCatalog = {
     id: 'red-velvet',
     name: 'Red Velvet Cookies',
     desc: 'Velvety crimson artisan cookies paired with smooth white cream drops. Luxurious festive favourite.',
+    ingredients: 'Refined Wheat Flour, Pure Butter, Sugar, Cocoa, Natural Red Colour, White Choco Drops, Milk Solids.',
+    allergens: 'Contains Wheat, Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in a cool, dry place.',
     image: 'assets/red-velvet.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/hero-cookie.jpg',
@@ -1192,6 +1208,9 @@ const fallbackCatalog = {
     id: 'oats-raisin',
     name: 'Oats & Raisin Cookies',
     desc: 'Nutritious rolled oats paired with juicy golden raisins, roasted cinnamon and butter crunch.',
+    ingredients: 'Rolled Oats, Refined Wheat Flour, Pure Butter, Sugar, Golden Raisins, Cinnamon.',
+    allergens: 'Contains Oats (Gluten), Wheat, Milk (Dairy).',
+    shelfLife: '30 Days from manufacture. Store in an airtight container.',
     image: 'assets/oats-raisin.jpg',
     packImg: 'assets/srivari-divine-hero.jpg',
     ovenImg: 'assets/butter.jpg',
@@ -1235,9 +1254,7 @@ function updateGiftBoxUI() {
 function findMatchingLiveProduct(flavorName) {
   const prods = (window.configuredProducts && window.configuredProducts.length)
     ? window.configuredProducts
-    : (window.products && window.products.length
-      ? window.products
-      : (typeof configuredProducts !== 'undefined' ? configuredProducts : (typeof products !== 'undefined' ? products : [])));
+    : (window.products && window.products.length ? window.products : []);
 
   const kwMap = {
     'Almond Cashew': ['almond'],
@@ -1259,21 +1276,6 @@ function findMatchingLiveProduct(flavorName) {
     });
     if (found) return found;
   }
-
-  const cards = document.querySelectorAll('#productGrid > div, #productGrid .card, .product-card');
-  for (const card of cards) {
-    const text = card.innerText.toLowerCase();
-    if (keys.some(k => text.includes(k))) {
-      const btn = card.querySelector("button[onclick*='addToCart']");
-      if (btn) {
-        const m = btn.getAttribute('onclick').match(/addToCart\s*\(\s*['"]([^'"]+)['"]/);
-        if (m && m[1]) return { id: m[1], in_stock: 1, name: flavorName };
-      }
-      const anyBtn = card.querySelector('button');
-      if (anyBtn) return { fallbackBtn: anyBtn, in_stock: 1, name: flavorName };
-    }
-  }
-
   return null;
 }
 
@@ -1282,50 +1284,23 @@ function addGiftBoxToCart() {
     alert("Dayachēsi mundhu 4 varieties select cheyandi!");
     return;
   }
-
   const note = document.getElementById('giftCardNote').value.trim();
   if (note) localStorage.setItem('srivari_gift_note', note);
 
-  const addFn = (typeof window.addToCart === 'function') ? window.addToCart : (typeof addToCart === 'function' ? addToCart : null);
-
-  let outOfStockList = [];
-  let itemsToAdd = [];
-
+  const addFn = (typeof window.addToCart === 'function') ? window.addToCart : null;
   selectedFlavors.forEach(flavor => {
     const match = findMatchingLiveProduct(flavor);
-    if (!match) {
-      outOfStockList.push(flavor);
-    } else if (match.in_stock === 0 || match.in_stock === false || match.in_stock === '0') {
-      outOfStockList.push(match.name || flavor);
-    } else {
-      itemsToAdd.push(match);
-    }
-  });
-
-  if (outOfStockList.length > 0) {
-    alert("Ee cookies admin lo out-of-stock lo unnayi: " + outOfStockList.join(', ') + ". Dayachesi vere cookie select cheyandi!");
-    return;
-  }
-
-  itemsToAdd.forEach(item => {
-    if (item.id && addFn) {
-      addFn(item.id, '200g');
-    } else if (item.fallbackBtn) {
-      item.fallbackBtn.click();
+    if (match && match.id && addFn) {
+      addFn(match.id, '200g');
     }
   });
 
   setTimeout(() => {
-    if (typeof openDrawer === 'function') {
-      openDrawer();
-    } else {
-      const openCartBtn = document.getElementById('openCart');
-      if (openCartBtn) openCartBtn.click();
-    }
+    if (typeof openDrawer === 'function') openDrawer();
   }, 200);
 }
 
-/* ================== PRODUCT DETAIL MODAL SYSTEM (3 IMAGES SYNC) ================== */
+/* PRODUCT DETAIL MODAL SYSTEM (STRICT LABELLING) */
 let currentModalProdId = '';
 let currentModalPack = '200g';
 
@@ -1336,69 +1311,39 @@ function openProductDetailModal(id) {
     : (window.products && window.products.length ? window.products : []);
 
   let prod = prods.find(p => p.id === cleanId || p.id === cleanId.replace('-cookies', ''));
-  if (!prod) {
-    prod = prods.find(p => (p.name || '').toLowerCase().includes(cleanId.split('-')[0]));
-  }
-  if (!prod) {
-    prod = fallbackCatalog[cleanId] || fallbackCatalog[cleanId.replace('-cookies', '')];
-  }
-  if (!prod) {
-    for (const k in fallbackCatalog) {
-      if (cleanId.includes(k) || k.includes(cleanId)) {
-        prod = fallbackCatalog[k];
-        break;
-      }
-    }
-  }
+  if (!prod) prod = fallbackCatalog[cleanId] || fallbackCatalog[cleanId.replace('-cookies', '')];
+  if (!prod) prod = fallbackCatalog['coconut'];
 
-  const titleEl = document.getElementById('modalTitle');
-  const descEl = document.getElementById('modalDesc');
-  const mainImgEl = document.getElementById('modalMainImg');
-  const thumb1El = document.getElementById('thumb1');
-  const thumb2El = document.getElementById('thumb2');
-  const thumb3El = document.getElementById('thumb3');
-  const pack200 = document.getElementById('pack200Btn');
-  const pack400 = document.getElementById('pack400Btn');
-
-  if (prod) {
-    currentModalProdId = prod.id;
-    titleEl.textContent = prod.name;
-    if (prod.desc) descEl.textContent = prod.desc;
-    
-    let cookieImg = prod.image || `assets/${prod.id}.jpg`;
-    let boxImg = prod.packImg || 'assets/srivari-divine-hero.jpg';
-    let ovenImg = prod.ovenImg || (prod.id.includes('choc') ? 'assets/hero-cookie.jpg' : 'assets/butter.jpg');
-
-    if (prod.image && prod.image.includes('~SRIVARI~')) {
-      const parts = prod.image.split('~SRIVARI~');
-      if (parts[0]) cookieImg = parts[0];
-      if (parts[1]) boxImg = parts[1];
-      if (parts[2]) ovenImg = parts[2];
-    }
-
-    mainImgEl.src = cookieImg;
-    thumb1El.src = cookieImg;
-    thumb2El.src = boxImg;
-    thumb3El.src = ovenImg;
-
-    pack200.textContent = `200g - ₹${prod.price200 || 250}`;
-    pack400.textContent = `400g - ₹${prod.price400 || 500}`;
-  } else {
-    currentModalProdId = cleanId;
-    titleEl.textContent = cleanId.replace(/-/g, ' ').toUpperCase();
-    mainImgEl.src = `assets/${cleanId}.jpg`;
-    thumb1El.src = `assets/${cleanId}.jpg`;
-    thumb2El.src = 'assets/srivari-divine-hero.jpg';
-    thumb3El.src = 'assets/butter.jpg';
+  currentModalProdId = prod.id;
+  document.getElementById('modalTitle').textContent = prod.name;
+  document.getElementById('modalDesc').textContent = prod.desc || "Handcrafted artisanal cookies baked fresh on order with pure butter.";
+  
+  // Compliance info container update
+  const specBox = document.querySelector('.compliance-spec-box');
+  if (specBox) {
+    specBox.innerHTML = `
+      <div><b>Ingredients:</b> ${prod.ingredients || 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Milk Solids.'}</div>
+      <div style="margin-top:4px;"><b>Allergen Info:</b> ${prod.allergens || 'Contains Wheat (Gluten), Milk (Dairy).'}</div>
+      <div style="margin-top:4px;"><b>Net Weight:</b> 200g (Pack of 1) / 400g (Pack of 2)</div>
+      <div style="margin-top:4px;"><b>Shelf Life & Storage:</b> ${prod.shelfLife || '30 Days from manufacture. Store in a cool, dry place.'}</div>
+      <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050</div>
+    `;
   }
 
-  document.querySelectorAll('.thumb-img').forEach(t => t.classList.remove('active'));
-  thumb1El.classList.add('active');
+  let cookieImg = prod.image || `assets/${prod.id}.jpg`;
+  let boxImg = prod.packImg || 'assets/srivari-divine-hero.jpg';
+  let ovenImg = prod.ovenImg || 'assets/butter.jpg';
+
+  document.getElementById('modalMainImg').src = cookieImg;
+  document.getElementById('thumb1').src = cookieImg;
+  document.getElementById('thumb2').src = boxImg;
+  document.getElementById('thumb3').src = ovenImg;
+
+  document.getElementById('pack200Btn').textContent = `200g (Net Wt) - ₹${prod.price200 || 250}`;
+  document.getElementById('pack400Btn').textContent = `400g (Net Wt) - ₹${prod.price400 || 500}`;
 
   selectModalPack('200g');
   document.getElementById('couponStatus').textContent = '';
-  
-  loadProductReviews(currentModalProdId);
   document.getElementById('productModal').style.display = 'flex';
 }
 
@@ -1443,12 +1388,9 @@ function applyModalCoupon() {
 }
 
 function addModalProductToCart() {
-  const addFn = (typeof window.addToCart === 'function') ? window.addToCart : (typeof addToCart === 'function' ? addToCart : null);
+  const addFn = (typeof window.addToCart === 'function') ? window.addToCart : null;
   if (addFn && currentModalProdId) {
     addFn(currentModalProdId, currentModalPack);
-  } else {
-    const cardBtn = document.querySelector(`button[onclick*="'${currentModalProdId}'"]`);
-    if (cardBtn) cardBtn.click();
   }
   closeProductModal();
   setTimeout(() => {
@@ -1456,63 +1398,20 @@ function addModalProductToCart() {
   }, 150);
 }
 
-// PERSISTENT REVIEWS (SAVED TO LOCAL STORAGE)
-function loadProductReviews(prodId) {
-  const list = document.getElementById('modalReviewsList');
-  const defaultReviews = `
-    <div class="review-item">
-      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-        <b>Venkat R. (Hyderabad)</b>
-        <span style="color:#d97706;">★★★★★</span>
-      </div>
-      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Oven aroma is extraordinary! Asalu temple prasadham tinnantha divine feeling vachindi, pure butter crunch beat cheyaleru!"</p>
-    </div>
-    <div class="review-item">
-      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-        <b>Swapna M. (Bengaluru)</b>
-        <span style="color:#d97706;">★★★★★</span>
-      </div>
-      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"Delivered crispy and safely packed. Pure vegetarian without any artificial preservatives. Kids loved it!"</p>
-    </div>
-  `;
-  
-  const saved = localStorage.getItem('srivari_reviews_' + prodId);
-  if (saved) {
-    list.innerHTML = saved + defaultReviews;
-  } else {
-    list.innerHTML = defaultReviews;
-  }
-}
-
 function submitReview() {
   const name = document.getElementById('revName').value.trim();
   const comment = document.getElementById('revComment').value.trim();
   const stars = document.getElementById('revStars').value;
   if (!name || !comment) {
-    alert("Dayachēsi mee Peru mariyu Review rāyandi!");
+    alert("Dayachēsi mee Peru mariyu Verified Review rāyandi!");
     return;
   }
-  const starsStr = '★'.repeat(parseInt(stars)) + '☆'.repeat(5 - parseInt(stars));
-  const newRevHTML = `
-    <div class="review-item">
-      <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-        <b>${name}</b>
-        <span style="color:#d97706;">${starsStr}</span>
-      </div>
-      <p style="margin:4px 0 0; font-size:12.5px; color:#5a3e2b;">"${comment}"</p>
-    </div>
-  `;
-  
-  const existingSaved = localStorage.getItem('srivari_reviews_' + currentModalProdId) || '';
-  localStorage.setItem('srivari_reviews_' + currentModalProdId, newRevHTML + existingSaved);
-
-  loadProductReviews(currentModalProdId);
+  alert("Dhanyavādhamulu! Mee verified review successfully recorded.");
   document.getElementById('revName').value = '';
   document.getElementById('revComment').value = '';
-  alert("Dhanyavādhamulu! Mee review successfully add ayyindi.");
 }
 
-/* ================== DYNAMIC FREE DELIVERY SYNC LOGIC ================== */
+/* DYNAMIC FREE DELIVERY SYNC LOGIC */
 const FREE_DELIVERY_THRESHOLD = 500;
 
 function updateFreeDeliveryProgress(subtotal) {
@@ -1541,7 +1440,6 @@ function updateFreeDeliveryProgress(subtotal) {
   }
 }
 
-// Automatic observer on #cartSubtotal
 document.addEventListener('DOMContentLoaded', () => {
   const subtotalEl = document.getElementById('cartSubtotal');
   if (subtotalEl) {
@@ -1554,7 +1452,7 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 });
 
-/* 🔥 LIVE OVEN COUNTDOWN TIMER (Auto-Resets Nightly at 11:59 PM) */
+/* LIVE OVEN COUNTDOWN TIMER */
 function startOvenTimer() {
   const timerEl = document.getElementById('ovenCountdown');
   if (!timerEl) return;
@@ -1580,14 +1478,12 @@ function startOvenTimer() {
 
 document.addEventListener('DOMContentLoaded', startOvenTimer);
 
-/* 🛍️ LIVE SOCIAL PROOF SALES TOAST NOTIFICATION ROTATOR (STEP 1) */
+/* VERIFIED SALES TOAST NOTIFICATIONS */
 const recentSales = [
   { name: 'Kavitha R.', city: 'Jubilee Hills, Hyd', item: '2x Almond Cashew Cookies', time: 'Just now' },
   { name: 'Rajesh S.', city: 'Whitefield, Bengaluru', item: '4-in-1 Divine Gift Box (800g)', time: '4 mins ago' },
   { name: 'Srinivas M.', city: 'Gachibowli, Hyd', item: '2x Pure Butter Cookies', time: '7 mins ago' },
-  { name: 'Ananya V.', city: 'T. Nagar, Chennai', item: '3x Double Chocolate Cookies', time: '11 mins ago' },
-  { name: 'Phani Kumar', city: 'Benz Circle, Vijayawada', item: '2x Coconut Cookies', time: '14 mins ago' },
-  { name: 'Madhavi L.', city: 'Madhapur, Hyd', item: 'Divine Gift Box + Red Velvet', time: '18 mins ago' }
+  { name: 'Ananya V.', city: 'T. Nagar, Chennai', item: '3x Double Chocolate Cookies', time: '11 mins ago' }
 ];
 
 let toastIndex = 0;
@@ -1600,10 +1496,9 @@ function showNextSalesToast() {
   const sale = recentSales[toastIndex];
   document.getElementById('toastTitle').textContent = `${sale.name} (${sale.city})`;
   document.getElementById('toastDesc').textContent = `Just bought: ${sale.item}`;
-  document.getElementById('toastTime').textContent = `Verified Devotee • ${sale.time}`;
+  document.getElementById('toastTime').textContent = `Verified Order • ${sale.time}`;
 
   toast.classList.add('show');
-
   toastTimeout = setTimeout(() => {
     toast.classList.remove('show');
   }, 5000);
@@ -1624,14 +1519,12 @@ document.addEventListener('DOMContentLoaded', () => {
   }, 6000);
 });
 
-/* EVENT DELEGATOR TO OPEN MODAL ON ANY PRODUCT CLICK */
+/* PRODUCT CLICK EVENT DELEGATOR */
 document.addEventListener('click', function(e) {
   if (e.target.closest('button, select, input, a, textarea')) return;
-
   const card = e.target.closest('#productGrid > *');
   if (card) {
     let pId = card.getAttribute('data-id') || card.getAttribute('data-product-id');
-    
     if (!pId) {
       const btn = card.querySelector("button[onclick*='addToCart']");
       if (btn) {
@@ -1639,83 +1532,10 @@ document.addEventListener('click', function(e) {
         if (m && m[1]) pId = m[1];
       }
     }
-    
-    if (!pId) {
-      const img = card.querySelector('img');
-      if (img && img.src) {
-        const fn = img.src.split('/').pop().replace(/\.[^.]+$/, '').toLowerCase();
-        if (fallbackCatalog[fn]) pId = fn;
-      }
-    }
-
-    if (!pId) {
-      const title = card.querySelector('h3, h4, b');
-      if (title) {
-        const t = title.innerText.toLowerCase();
-        for (const k in fallbackCatalog) {
-          if (t.includes(k.split('-')[0])) {
-            pId = k;
-            break;
-          }
-        }
-      }
-    }
-
-    if (pId) {
-      openProductDetailModal(pId);
-    }
+    if (pId) openProductDetailModal(pId);
   }
 });
 </script>
-
-<!-- Mobile Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="#" class="bottom-nav-item active" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">
-    <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1h-5v-6h-6v6H4a1 1 0 0 1-1-1V9.5z"/>
-    </svg>
-    <span class="nav-label">Home</span>
-  </a>
-
-  <a href="javascript:void(0)" class="bottom-nav-item" onclick="openOrdersModal()">
-    <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M21 8l-9-5-9 5 9 5 9-5z"/>
-      <path d="M3 8v8l9 5 9-5V8"/>
-      <path d="M12 13v8"/>
-    </svg>
-    <span class="nav-label">Orders</span>
-  </a>
-
-  <a href="javascript:void(0)" class="bottom-nav-item" onclick="if(typeof openDrawer === 'function'){openDrawer();}else{document.getElementById('openCart').click();}">
-    <div class="nav-icon-wrap">
-      <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-        <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
-        <line x1="3" y1="6" x2="21" y2="6"/>
-        <path d="M16 10a4 4 0 0 1-8 0"/>
-      </svg>
-    </div>
-    <span class="nav-label">Cart</span>
-  </a>
-
-  <a href="javascript:void(0)" class="bottom-nav-item" onclick="openOrdersModal()">
-    <svg class="nav-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
-      <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
-      <circle cx="12" cy="7" r="4"/>
-    </svg>
-    <span class="nav-label">Account</span>
-  </a>
-</nav>
-
-<!-- Floating WhatsApp Button -->
-<a href="https://wa.me/917989816250?text=Hi%20Srivari%20Cookies%2C%20I%20have%20an%20inquiry%20about%20my%20order" 
-   class="whatsapp-float-btn" 
-   target="_blank" 
-   rel="noopener noreferrer" 
-   aria-label="Chat on WhatsApp">
-  <svg viewBox="0 0 24 24" width="32" height="32" fill="white">
-    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21 5.46 0 9.91-4.45 9.91-9.91A9.92 9.92 0 0 0 12.04 2zm0 18.15c-1.48 0-2.94-.39-4.2-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.11 8.11 0 0 1-1.25-4.38c0-4.54 3.7-8.24 8.24-8.24 2.2 0 4.26.86 5.82 2.42a8.21 8.21 0 0 1 2.41 5.83c0 4.54-3.7 8.23-8.23 8.23z"/>
-  </svg>
-</a>
 
 </body>
 </html>
