@@ -315,7 +315,7 @@ html, body {
   letter-spacing: 1.5px;
 }
 
-/* LIVE SOCIAL PROOF SALES TOAST (VERIFIED ONLY) */
+/* LIVE BRAND TASTE INVITATION TOAST (REPLACED ORDER TOAST) */
 .sales-toast {
   position: fixed;
   bottom: 84px;
@@ -1094,13 +1094,15 @@ footer#contact {
   </div>
 </div>
 
-<!-- LIVE SOCIAL PROOF SALES TOAST (GENUINE ORDER ACTIVITY) -->
+<!-- LIVE BRAND TASTE INVITATION TOAST (REPLACED ORDER TOAST) -->
 <div class="sales-toast" id="salesToast">
-  <div class="toast-icon" id="toastIcon">🍪</div>
+  <div class="toast-icon">
+    <img src="assets/srivari-logo.jpg" alt="Srivari Logo" style="width:38px; height:38px; border-radius:50%; object-fit:cover; border:1px solid #c59b27;">
+  </div>
   <div class="toast-body">
-    <div class="toast-title" id="toastTitle">Kavitha R. (Jubilee Hills, Hyd)</div>
-    <div class="toast-desc" id="toastDesc">Just bought: 2x Almond Cashew Cookies</div>
-    <div class="toast-time" id="toastTime">Verified Order • Just now</div>
+    <div class="toast-title" style="color:#5a2e10; font-weight:800; font-size:12.5px;">SRIVARI COOKIES 👑</div>
+    <div class="toast-desc" style="color:#4a3525; font-size:12px; margin:2px 0; line-height:1.4;">"Mana pure butter cookies okkasari try cheyandi... taste chusthe miku 100% nachuthundi!" 🙏</div>
+    <div class="toast-time" style="color:#15803d; font-size:10.5px; font-weight:700;">✨ Baked Fresh with 35+ Yrs Mastery</div>
   </div>
   <button class="toast-close" onclick="closeToast()">✕</button>
 </div>
@@ -1478,45 +1480,56 @@ function startOvenTimer() {
 
 document.addEventListener('DOMContentLoaded', startOvenTimer);
 
-/* VERIFIED SALES TOAST NOTIFICATIONS */
-const recentSales = [
-  { name: 'Kavitha R.', city: 'Jubilee Hills, Hyd', item: '2x Almond Cashew Cookies', time: 'Just now' },
-  { name: 'Rajesh S.', city: 'Whitefield, Bengaluru', item: '4-in-1 Divine Gift Box (800g)', time: '4 mins ago' },
-  { name: 'Srinivas M.', city: 'Gachibowli, Hyd', item: '2x Pure Butter Cookies', time: '7 mins ago' },
-  { name: 'Ananya V.', city: 'T. Nagar, Chennai', item: '3x Double Chocolate Cookies', time: '11 mins ago' }
+/* LIVE BRAND TASTE INVITATION ROTATOR */
+const brandInvites = [
+  { 
+    title: "SRIVARI COOKIES 👑", 
+    desc: "Mana pure butter cookies okkasari try cheyandi... taste chusthe miku 100% nachuthundi! 🙏", 
+    time: "✨ Baked Fresh with 35+ Yrs Mastery" 
+  },
+  { 
+    title: "100% Pure & Fresh 🌿", 
+    desc: "Zero preservatives, pure cow butter & real roasted almonds tho tayarainavi. Order now!", 
+    time: "📦 Pan-India Express Delivery" 
+  },
+  { 
+    title: "Traditional Taste 🍪", 
+    desc: "Prathi bite lo daivika ruchulu. Family tho enjoy cheyadaniki perfect choice!", 
+    time: "⭐ 4.9/5 Rated Artisanal Bakes" 
+  }
 ];
 
-let toastIndex = 0;
-let toastTimeout;
+let inviteIndex = 0;
+let inviteTimeout;
 
-function showNextSalesToast() {
+function showNextBrandToast() {
   const toast = document.getElementById('salesToast');
   if (!toast) return;
 
-  const sale = recentSales[toastIndex];
-  document.getElementById('toastTitle').textContent = `${sale.name} (${sale.city})`;
-  document.getElementById('toastDesc').textContent = `Just bought: ${sale.item}`;
-  document.getElementById('toastTime').textContent = `Verified Order • ${sale.time}`;
+  const inv = brandInvites[inviteIndex];
+  toast.querySelector('.toast-title').textContent = inv.title;
+  toast.querySelector('.toast-desc').textContent = `"${inv.desc}"`;
+  toast.querySelector('.toast-time').textContent = inv.time;
 
   toast.classList.add('show');
-  toastTimeout = setTimeout(() => {
+  inviteTimeout = setTimeout(() => {
     toast.classList.remove('show');
-  }, 5000);
+  }, 6000);
 
-  toastIndex = (toastIndex + 1) % recentSales.length;
+  inviteIndex = (inviteIndex + 1) % brandInvites.length;
 }
 
 function closeToast() {
   const toast = document.getElementById('salesToast');
   if (toast) toast.classList.remove('show');
-  if (toastTimeout) clearTimeout(toastTimeout);
+  if (inviteTimeout) clearTimeout(inviteTimeout);
 }
 
 document.addEventListener('DOMContentLoaded', () => {
   setTimeout(() => {
-    showNextSalesToast();
-    setInterval(showNextSalesToast, 18000);
-  }, 6000);
+    showNextBrandToast();
+    setInterval(showNextBrandToast, 20000);
+  }, 4000);
 });
 
 /* PRODUCT CLICK EVENT DELEGATOR */
