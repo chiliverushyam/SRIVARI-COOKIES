@@ -19,14 +19,19 @@ let deliveryCharge = null;
 let lastDeliveryPincode = '';
 let checkoutBusy = false;
 
+// 100g nunchi 100kgs (100000g) varaku proportional price calculation
 function priceFor(p, w) { 
-  return w === 200 ? p.price200 : p.price400; 
+  const weight = Number(w) || 200;
+  if (weight === 200) return Number(p.price200) || 250;
+  if (weight === 400) return Number(p.price400) || 500;
+  const baseRatePerGram = (Number(p.price200) || 250) / 200;
+  return Math.round(baseRatePerGram * weight);
 }
 
 function mrpFor(p, w) {
   const currentPrice = priceFor(p, w);
-  const baseMrp = w === 200 ? (p.mrp200 || 0) : (p.mrp400 || 0);
-  if (baseMrp > currentPrice) return baseMrp;
+  if (w === 200 && p.mrp200 && p.mrp200 > currentPrice) return p.mrp200;
+  if (w === 400 && p.mrp400 && p.mrp400 > currentPrice) return p.mrp400;
   return Math.round(currentPrice * 1.25);
 }
 
@@ -118,17 +123,25 @@ function selectWeight(id, w) {
   if (priceEl) priceEl.innerHTML = priceBlock(p, w);
 }
 
-function addToCart(id) {
+// Custom weight (100g nunchi 100kg varaku) modal direct call support
+function addToCart(id, customWeight) {
   const p = configuredProducts.find(x => x.id === id);
   const card = document.querySelector(`[data-product="${id}"]`);
 
-  if (!p || !card || Number(p.in_stock) === 0) {
+  if (!p || Number(p.in_stock) === 0) {
     alert('Sorry, this cookie is currently out of stock!');
     return;
   }
 
-  const active = card.querySelector('.weightBtn.active');
-  const w = Number(active?.dataset.weight || 200);
+  let w;
+  if (customWeight !== undefined && customWeight !== null) {
+    w = Number(customWeight);
+  } else {
+    const active = card ? card.querySelector('.weightBtn.active') : null;
+    w = Number(active?.dataset.weight || 200);
+  }
+
+  if (!w || w < 50) w = 200;
 
   const key = `${id}-${w}`;
   const x = cart.find(i => i.key === key);
@@ -184,13 +197,14 @@ function renderCart() {
 
     const price = priceFor(p, i.weight);
     subtotal += price * i.qty;
+    const weightLabel = Number(i.weight) >= 1000 ? `${Number(i.weight) / 1000}kg` : `${i.weight}g`;
 
     return `
       <div class="cartLine">
         <img src="${p.image}" alt="">
         <div>
           <b>${p.name}</b>
-          <small>${i.weight}g • ₹${price} × ${i.qty}</small>
+          <small>${weightLabel} • ₹${price} × ${i.qty}</small>
         </div>
         <div class="qty">
           <button onclick="changeQty('${i.key}', -1)">−</button>
@@ -630,3 +644,9 @@ async function syncFromAdmin() {
 }
 
 syncFromAdmin();
+
+// Window exports modal & external triggers kosam
+window.addToCart = addToCart;
+window.priceFor = priceFor;
+window.configuredProducts = configuredProducts;
+window.openDrawer = openDrawer;
