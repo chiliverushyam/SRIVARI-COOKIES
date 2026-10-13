@@ -541,7 +541,7 @@ html, body {
   border: none;
   outline: none;
   font-family: inherit;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 600;
   color: #48230b;
 }
@@ -594,7 +594,7 @@ html, body {
   background: #fdfbf7;
   border: 1px solid #ebdcd0;
   border-radius: 14px;
-  padding: 12px;
+  padding: 14px;
   margin-top: 12px;
 }
 
@@ -804,7 +804,7 @@ footer#contact {
     <div>
       <p class="eyebrow">OUR HANDCRAFTED SELECTION</p>
       <h2>Cookies Worth Craving</h2>
-      <p>Click any cookie to view ingredients, custom weight options (100g to 100kg) & pricing.</p>
+      <p>Click any cookie to customize weight in Grams or Kilograms (kg).</p>
     </div>
     <span>Freshly baked for each order →</span>
   </div>
@@ -1006,7 +1006,7 @@ footer#contact {
 </aside>
 <div class="shade" id="shade"></div>
 
-<!-- PRODUCT DETAIL MODAL (CUSTOM WEIGHTS 100g TO 100kg & STRICT COMPLIANCE) -->
+<!-- PRODUCT DETAIL MODAL (CUSTOM GRAMS & KGS + REAL REVIEWS + WELCOME NOTE) -->
 <div class="product-modal-backdrop" id="productModal">
   <div class="product-modal-card">
     <button class="modal-close-btn" onclick="closeProductModal()">✕</button>
@@ -1049,23 +1049,27 @@ footer#contact {
             <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050[cite: 3]</div>
           </div>
 
-          <!-- DYNAMIC CUSTOM WEIGHT SELECTOR (100g TO 100KGS) -->
+          <!-- DYNAMIC CUSTOM WEIGHT SELECTOR (GRAMS & KILOGRAMS DUAL INPUT) -->
           <div style="margin-bottom:14px;">
-            <label style="font-size:12.5px; font-weight:700; color:#48230b; display:block; margin-bottom:6px;">Select Weight or Type Custom Grams:</label>
+            <label style="font-size:12.5px; font-weight:700; color:#48230b; display:block; margin-bottom:6px;">Select Quick Weight or Custom Quantity:</label>
             
             <div class="weight-pills-wrap">
               <button type="button" class="weight-pill-btn active" onclick="setModalPillWeight(200, this)">200g</button>
               <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(400, this)">400g</button>
               <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(500, this)">500g (½ kg)</button>
-              <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(1000, this)">1kg (1000g)</button>
+              <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(1000, this)">1kg</button>
               <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(2000, this)">2kg</button>
               <button type="button" class="weight-pill-btn" onclick="setModalPillWeight(5000, this)">5kg</button>
             </div>
 
+            <!-- DUAL UNIT (GRAMS & KGS) CUSTOM INPUT -->
             <div class="custom-input-row">
-              <span style="font-size:13px;">⚖️</span>
-              <input type="number" id="modalCustomGramsInput" min="100" max="100000" placeholder="Type custom weight (e.g. 250, 750, 1500, 10000g)..." oninput="handleModalCustomGramsInput()">
-              <span style="font-size:12px; font-weight:700; color:#5a2e10;">Grams</span>
+              <span style="font-size:14px;">⚖️</span>
+              <input type="number" id="modalCustomWeightVal" min="0.1" step="any" placeholder="Type custom value (e.g. 250, 1.5, 3)..." oninput="handleDualWeightInput()">
+              <select id="modalCustomUnit" onchange="handleDualWeightInput()" style="border:1px solid #d4a373; border-radius:6px; padding:6px 10px; font-weight:700; color:#5a2e10; background:#fff; font-size:12.5px; cursor:pointer;">
+                <option value="g">Grams (g)</option>
+                <option value="kg">Kilograms (kg)</option>
+              </select>
             </div>
 
             <div style="display:flex; justify-content:space-between; align-items:center; background:#faf6f0; border:1px solid #ebdcd0; border-radius:10px; padding:8px 12px;">
@@ -1089,28 +1093,43 @@ footer#contact {
         </div>
       </div>
 
-      <!-- Customer Reviews & Feedback Section -->
+      <!-- REAL CUSTOMER REVIEWS & FEEDBACK SECTION -->
       <div class="reviews-section">
         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
-          <h3 style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.15rem;">Customer Devotee Reviews (★★★★★ 4.9/5)</h3>
-          <span style="font-size:11.5px; color:#15803d; font-weight:700;">✓ 100% Genuine Taste</span>
+          <h3 id="modalReviewsHeaderTitle" style="font-family:'Playfair Display',serif; color:#48230b; margin:0; font-size:1.15rem;">Customer Reviews & Feedback</h3>
+          <span style="font-size:11.5px; color:#15803d; font-weight:700;">✓ Verified Feedbacks</span>
         </div>
 
         <div id="modalReviewsList"></div>
 
+        <!-- 1 TO 5 STARS CUSTOMER REVIEW SUBMISSION FORM -->
         <div class="review-form">
-          <b style="font-size:12.5px; color:#48230b; display:block; margin-bottom:6px;">✍️ Write Your Review & Feedback</b>
-          <div style="display:flex; gap:10px; margin-bottom:8px;">
-            <input type="text" id="revName" placeholder="Your Name & City" style="flex:1; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px;" />
-            <select id="revStars" style="padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; background:#fff;">
-              <option value="5">★★★★★ (5 Stars)</option>
-              <option value="4">★★★★☆ (4 Stars)</option>
+          <b style="font-size:12.5px; color:#48230b; display:block; margin-bottom:8px;">✍️ Share Your Feedback & Review</b>
+          <div style="display:flex; gap:10px; margin-bottom:8px; flex-wrap:wrap;">
+            <input type="text" id="revName" placeholder="Your Name & City" style="flex:1; min-width:180px; padding:8px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12.5px;" />
+            <select id="revStars" style="flex:0.8; min-width:150px; padding:8px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12.5px; background:#fff; font-weight:600; color:#5a2e10;">
+              <option value="5">★★★★★ (5 Stars - Excellent)</option>
+              <option value="4">★★★★☆ (4 Stars - Very Good)</option>
+              <option value="3">★★★☆☆ (3 Stars - Good)</option>
+              <option value="2">★★☆☆☆ (2 Stars - Fair)</option>
+              <option value="1">★☆☆☆☆ (1 Star - Needs Improvement)</option>
             </select>
           </div>
-          <textarea id="revComment" placeholder="Share your experience (taste, crunch, freshness)..." style="width:100%; padding:7px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; margin-bottom:8px; font-family:inherit;"></textarea>
-          <button onclick="submitReview()" style="background:#5a2e10; color:#faedcd; border:none; padding:7px 18px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">Submit Review</button>
+          <textarea id="revComment" rows="2" placeholder="Share your experience (taste, crunch, aroma, packaging)..." style="width:100%; padding:8px 10px; border:1px solid #d4a373; border-radius:8px; font-size:12px; margin-bottom:8px; font-family:inherit;"></textarea>
+          <button onclick="submitReview()" style="background:#5a2e10; color:#faedcd; border:none; padding:8px 20px; border-radius:6px; font-size:12px; font-weight:700; cursor:pointer;">Submit Review</button>
         </div>
       </div>
+
+      <!-- HEARTFELT THANK YOU & WELCOME NOTE -->
+      <div style="margin-top:20px; padding:16px; background:linear-gradient(135deg, #fffbf5 0%, #faedcd 100%); border:1.5px solid #d4a373; border-radius:14px; text-align:center;">
+        <p style="margin:0; font-size:13.5px; font-weight:800; color:#5a2e10;">
+          🙏 Thank You for Supporting Srivari Artisanal Bakery!
+        </p>
+        <p style="margin:5px 0 0; font-size:12px; color:#5a3e2b; line-height:1.5;">
+          Welcome to the Srivari Family! Prathī batch pure cow butter, handpicked roasted nuts, mariyu 35+ years guided confectionery recipe tho mee kosam devotion tho oven-fresh ga bake chestham. Warm celebrations to your loved ones! 🍪❤️
+        </p>
+      </div>
+
     </div>
   </div>
 </div>
@@ -1309,7 +1328,7 @@ function addGiftBoxToCart() {
   }, 200);
 }
 
-/* PRODUCT DETAIL MODAL SYSTEM (WITH 100g TO 100kg SELECTION) */
+/* PRODUCT DETAIL MODAL SYSTEM */
 function openProductDetailModal(id) {
   const cleanId = (id || '').toLowerCase().trim();
   const prods = (window.configuredProducts && window.configuredProducts.length)
@@ -1331,9 +1350,9 @@ function openProductDetailModal(id) {
     specBox.innerHTML = `
       <div><b>Ingredients:</b> ${prod.ingredients || 'Refined Wheat Flour, Pure Creamery Butter, Sugar, Milk Solids.'}</div>
       <div style="margin-top:4px;"><b>Allergen Info:</b> ${prod.allergens || 'Contains Wheat (Gluten), Milk (Dairy).'}</div>
-      <div style="margin-top:4px;"><b>Net Weight:</b> <span id="modalNetWtText">200g (Customizable 100g - 100kg)</span></div>
+      <div style="margin-top:4px;"><b>Net Weight:</b> <span id="modalNetWtText">200g (Customizable)</span></div>
       <div style="margin-top:4px;"><b>Shelf Life & Storage:</b> ${prod.shelfLife || '30 Days from manufacture. Store in a cool, dry place.'}</div>
-      <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050[cite: 3]</div>
+      <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050</div>
     `;
   }
 
@@ -1346,8 +1365,9 @@ function openProductDetailModal(id) {
   document.getElementById('thumb2').src = boxImg;
   document.getElementById('thumb3').src = ovenImg;
 
-  // Reset inputs
-  document.getElementById('modalCustomGramsInput').value = '';
+  // Reset weight inputs
+  document.getElementById('modalCustomWeightVal').value = '';
+  document.getElementById('modalCustomUnit').value = 'g';
   document.querySelectorAll('.weight-pill-btn').forEach(b => b.classList.remove('active'));
   const firstPill = document.querySelector('.weight-pill-btn');
   if (firstPill) firstPill.classList.add('active');
@@ -1370,18 +1390,26 @@ function switchModalImg(thumb) {
 
 function setModalPillWeight(grams, btn) {
   currentModalSelectedWeight = Number(grams);
-  document.getElementById('modalCustomGramsInput').value = '';
+  document.getElementById('modalCustomWeightVal').value = '';
   document.querySelectorAll('.weight-pill-btn').forEach(b => b.classList.remove('active'));
   if (btn) btn.classList.add('active');
   updateModalPriceCalculation();
 }
 
-function handleModalCustomGramsInput() {
-  const val = Number(document.getElementById('modalCustomGramsInput').value);
-  if (val && val >= 50) {
-    currentModalSelectedWeight = val;
+/* DUAL GRAMS & KGS CONVERSION HANDLER */
+function handleDualWeightInput() {
+  const val = parseFloat(document.getElementById('modalCustomWeightVal').value);
+  const unit = document.getElementById('modalCustomUnit').value;
+
+  if (val && val > 0) {
+    if (unit === 'kg') {
+      currentModalSelectedWeight = Math.round(val * 1000);
+    } else {
+      currentModalSelectedWeight = Math.round(val);
+    }
+    // Uncheck quick pills when custom value is typed
     document.querySelectorAll('.weight-pill-btn').forEach(b => b.classList.remove('active'));
-  } else if (!val) {
+  } else {
     currentModalSelectedWeight = 200;
   }
   updateModalPriceCalculation();
@@ -1397,7 +1425,14 @@ function updateModalPriceCalculation() {
   const priceFn = (typeof window.priceFor === 'function') ? window.priceFor : ((p, w) => Math.round((Number(p.price200 || 250) / 200) * w));
   const calcPrice = priceFn(prod, currentModalSelectedWeight);
 
-  const weightDisplay = currentModalSelectedWeight >= 1000 ? `${(currentModalSelectedWeight / 1000).toFixed(1).replace('.0','')}kg (${currentModalSelectedWeight}g)` : `${currentModalSelectedWeight}g`;
+  // Format weight display (e.g. 1.5kg or 250g)
+  let weightDisplay = '';
+  if (currentModalSelectedWeight >= 1000) {
+    const kgVal = (currentModalSelectedWeight / 1000).toFixed(2).replace(/\.?0+$/, '');
+    weightDisplay = `${kgVal}kg (${currentModalSelectedWeight}g)`;
+  } else {
+    weightDisplay = `${currentModalSelectedWeight}g`;
+  }
 
   const weightLbl = document.getElementById('modalSelectedWeightSummary');
   const priceLbl = document.getElementById('modalPriceSummary');
@@ -1432,31 +1467,38 @@ function applyModalCoupon() {
   }
 }
 
+/* REAL REVIEWS & RATINGS LOGIC */
 function loadModalReviews() {
   const container = document.getElementById('modalReviewsList');
+  const titleEl = document.getElementById('modalReviewsHeaderTitle');
   if (!container) return;
+
   const reviews = JSON.parse(localStorage.getItem('srivari_global_reviews') || '[]');
 
-  if (!reviews.length) {
+  if (!reviews || reviews.length === 0) {
+    if (titleEl) titleEl.textContent = 'Customer Reviews & Feedback';
     container.innerHTML = `
-      <div class="review-item">
-        <div style="display:flex; justify-content:space-between; font-size:12.5px;">
-          <b>Venkat R. (Hyderabad)</b>
-          <span style="color:#d97706;">★★★★★</span>
-        </div>
-        <p style="margin:4px 0 0; font-size:12px; color:#5a3e2b;">"Oven aroma is extraordinary! Asalu pure butter crunch beat cheyaleru!"</p>
+      <div style="text-align:center; padding:18px; color:#7a6558; font-size:12.5px; background:#faf6f0; border-radius:12px; border:1px dashed #d4a373;">
+        ✨ Be the first verified customer to share your review below!
       </div>
     `;
     return;
   }
 
-  container.innerHTML = reviews.slice(0, 3).map(r => `
+  // Calculate real average rating
+  const avgRating = (reviews.reduce((sum, r) => sum + (Number(r.stars) || 5), 0) / reviews.length).toFixed(1);
+  if (titleEl) {
+    titleEl.textContent = `Customer Reviews (${avgRating}/5 ★ • ${reviews.length} Verified)`;
+  }
+
+  container.innerHTML = reviews.slice(0, 5).map(r => `
     <div class="review-item">
       <div style="display:flex; justify-content:space-between; font-size:12.5px;">
         <b>${r.name} (${r.city || 'India'})</b>
-        <span style="color:#d97706;">${'★'.repeat(r.stars)}</span>
+        <span style="color:#d97706;">${'★'.repeat(Number(r.stars) || 5)}${'☆'.repeat(5 - (Number(r.stars) || 5))}</span>
       </div>
       <p style="margin:4px 0 0; font-size:12px; color:#5a3e2b;">"${r.text}"</p>
+      ${r.date ? `<small style="font-size:10px; color:#999; display:block; margin-top:2px;">${r.date}</small>` : ''}
     </div>
   `).join('');
 }
@@ -1472,10 +1514,16 @@ function submitReview() {
   }
 
   const reviews = JSON.parse(localStorage.getItem('srivari_global_reviews') || '[]');
-  reviews.unshift({ name, city: 'India', stars, text: comment, date: new Date().toLocaleDateString() });
+  reviews.unshift({ 
+    name, 
+    city: 'India', 
+    stars: stars, 
+    text: comment, 
+    date: new Date().toLocaleDateString('en-IN', { day:'numeric', month:'short', year:'numeric' }) 
+  });
   localStorage.setItem('srivari_global_reviews', JSON.stringify(reviews));
 
-  alert("Dhanyavādhamulu! Mee review successfully record ayindi.");
+  alert("Dhanyavādhamulu! Mee review successfully live lo record ayindi.");
   document.getElementById('revName').value = '';
   document.getElementById('revComment').value = '';
   loadModalReviews();
@@ -1546,7 +1594,7 @@ document.addEventListener('DOMContentLoaded', startOvenTimer);
 const brandInvites = [
   { title: "SRIVARI COOKIES 👑", desc: "Mana pure butter cookies okkasari try cheyandi... taste chusthe miku 100% nachuthundi! 🙏", time: "✨ Baked Fresh with 35+ Yrs Mastery" },
   { title: "100% Pure & Fresh 🌿", desc: "Zero preservatives, pure cow butter & real roasted almonds tho tayarainavi. Order now!", time: "📦 Pan-India Express Delivery" },
-  { title: "Traditional Taste 🍪", desc: "Prathi bite lo daivika ruchulu. Family tho enjoy cheyadaniki perfect choice!", time: "⭐ 4.9/5 Rated Artisanal Bakes" }
+  { title: "Traditional Taste 🍪", desc: "Prathi bite lo daivika ruchulu. Family tho enjoy cheyadaniki perfect choice!", time: "⭐ 100% Pure Vegetarian" }
 ];
 let inviteIndex = 0;
 let inviteTimeout;
