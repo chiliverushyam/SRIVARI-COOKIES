@@ -772,7 +772,7 @@ footer#contact {
     <div style="flex: 1; min-width: 260px;">
       <span style="background: #5a2e10; color: #faedcd; font-size: 11px; font-weight: 700; letter-spacing: 1px; padding: 3px 10px; border-radius: 20px; display: inline-block; margin-bottom: 6px;">MASTER BAKERY GUIDANCE</span>
       <h3 style="margin: 0 0 6px; color: #5a2e10; font-family: 'Playfair Display', serif; font-size: 1.25rem;">Guided by 35+ Years of Confectionery Mastery</h3>
-      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>. FSSAI Lic. 23626028006050[cite: 3].</p>
+      <p style="margin: 0; color: #4a3525; font-size: 0.92rem; line-height: 1.6;">Every batch of <b>SRIVARI COOKIES</b> is crafted under the direct mentorship of a senior confectionery specialist with more than <b>35 years of commercial industry expertise</b>. FSSAI Lic. 23626028006050.</p>
     </div>
   </div>
 </div>
@@ -901,7 +901,7 @@ footer#contact {
   </div>
   <div class="benefit">
     <span class="benefitIcon">♧</span>
-    <div><b>FSSAI Certified</b><small>Lic. 23626028006050[cite: 3]</small></div>
+    <div><b>FSSAI Certified</b><small>Lic. 23626028006050</small></div>
   </div>
   <div class="benefit">
     <span class="benefitIcon">🚚</span>
@@ -936,13 +936,13 @@ footer#contact {
   </div>
   <div class="footerColumn footerContact">
     <h4>CONTACT & BAKERY</h4>
-    <p>HNO 8-6-3/1/A/2[cite: 3]</p>
-    <p>Rajendranagar, Rangareddy[cite: 3]</p>
-    <p>Telangana – 500077, India[cite: 3]</p>
+    <p>📍 HNO 8-6-3/1/A/2</p>
+    <p>🏡 Rajendranagar, Rangareddy</p>
+    <p>📌 Telangana – 500077, India</p>
     <a href="tel:+917989816250" class="contact-link">📞 +91 79898 16250</a>
     <a href="mailto:support@srivaricookies.com" class="contact-link">✉️ support@srivaricookies.com</a>
     <a href="mailto:orders@srivaricookies.com" class="contact-link">📦 orders@srivaricookies.com</a>
-    <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. No. 23626028006050[cite: 3]</small>
+    <small style="display:block;margin-top:8px;color:#a4beba;">FSSAI Lic. No. 23626028006050</small>
 
     <div class="footerSocials">
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
@@ -968,7 +968,7 @@ footer#contact {
     </div>
   </div>
   <div class="copy">
-    © 2026 SRIVARI COOKIES. All rights reserved. FSSAI Lic. 23626028006050[cite: 3]. Handcrafted with devotion.
+    © 2026 SRIVARI COOKIES. All rights reserved. FSSAI Lic. 23626028006050. Handcrafted with devotion.
   </div>
 </footer>
 
@@ -1046,7 +1046,7 @@ footer#contact {
             <div style="margin-top:4px;"><b>Allergen Info:</b> Contains Wheat (Gluten), Milk (Dairy). Manufactured in a facility that processes tree nuts.</div>
             <div style="margin-top:4px;"><b>Net Weight:</b> <span id="modalNetWtText">200g (Customizable)</span></div>
             <div style="margin-top:4px;"><b>Shelf Life & Storage:</b> 30 Days from manufacture. Store in a cool, dry place in an airtight container.</div>
-            <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050[cite: 3]</div>
+            <div style="margin-top:4px; color:#5a2e10; font-weight:700;"><b>FSSAI Lic. No:</b> 23626028006050</div>
           </div>
 
           <!-- DYNAMIC CUSTOM WEIGHT SELECTOR (GRAMS & KILOGRAMS DUAL INPUT) -->
@@ -1407,7 +1407,6 @@ function handleDualWeightInput() {
     } else {
       currentModalSelectedWeight = Math.round(val);
     }
-    // Uncheck quick pills when custom value is typed
     document.querySelectorAll('.weight-pill-btn').forEach(b => b.classList.remove('active'));
   } else {
     currentModalSelectedWeight = 200;
@@ -1425,7 +1424,6 @@ function updateModalPriceCalculation() {
   const priceFn = (typeof window.priceFor === 'function') ? window.priceFor : ((p, w) => Math.round((Number(p.price200 || 250) / 200) * w));
   const calcPrice = priceFn(prod, currentModalSelectedWeight);
 
-  // Format weight display (e.g. 1.5kg or 250g)
   let weightDisplay = '';
   if (currentModalSelectedWeight >= 1000) {
     const kgVal = (currentModalSelectedWeight / 1000).toFixed(2).replace(/\.?0+$/, '');
@@ -1485,7 +1483,6 @@ function loadModalReviews() {
     return;
   }
 
-  // Calculate real average rating
   const avgRating = (reviews.reduce((sum, r) => sum + (Number(r.stars) || 5), 0) / reviews.length).toFixed(1);
   if (titleEl) {
     titleEl.textContent = `Customer Reviews (${avgRating}/5 ★ • ${reviews.length} Verified)`;
