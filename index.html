@@ -9,7 +9,7 @@
 <meta name="theme-color" content="#5a2e10">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&family=Cinzel:wght@700;800&family=Tiro+Telugu:ital@0;1&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
 <style>
 * { box-sizing: border-box; }
@@ -21,6 +21,205 @@ html, body {
   font-family: 'Plus Jakarta Sans', sans-serif;
   margin: 0;
   padding: 0;
+}
+
+/* 🕉️ FULL SCREEN DIVINE PRASADAM SPLASH SCREEN */
+#divine-splash-screen {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, #3B0910 0%, #120205 100%);
+  z-index: 999999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 24px;
+  transition: opacity 0.7s ease, visibility 0.7s ease;
+}
+#divine-splash-screen.splash-closed {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+.divine-namam-icon {
+  width: 95px;
+  height: 95px;
+  margin-bottom: 22px;
+  filter: drop-shadow(0 0 25px rgba(255, 215, 0, 0.9));
+  animation: divineGlowAnim 2.5s infinite alternate ease-in-out;
+}
+@keyframes divineGlowAnim {
+  0% { transform: scale(0.96); filter: drop-shadow(0 0 15px rgba(255, 215, 0, 0.6)); }
+  100% { transform: scale(1.06); filter: drop-shadow(0 0 35px rgba(255, 215, 0, 1)); }
+}
+.divine-main-title {
+  font-family: 'Cinzel', 'Tiro Telugu', serif;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-weight: 800;
+  background: linear-gradient(135deg, #FFF9E6 0%, #FFD700 45%, #FFA000 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 0 0 40px rgba(255, 215, 0, 0.4);
+  margin-bottom: 12px;
+  line-height: 1.25;
+}
+.divine-sub-title {
+  font-family: 'Tiro Telugu', 'Plus Jakarta Sans', sans-serif;
+  font-size: clamp(1.1rem, 2.5vw, 1.45rem);
+  color: #FFE082;
+  margin-bottom: 28px;
+  font-weight: 500;
+  max-width: 650px;
+}
+.divine-enter-btn {
+  background: linear-gradient(135deg, #FFB300 0%, #E65100 100%);
+  color: #1A0508;
+  border: 2px solid #FFE082;
+  padding: 14px 40px;
+  font-size: 1.15rem;
+  font-weight: 800;
+  border-radius: 40px;
+  cursor: pointer;
+  box-shadow: 0 0 30px rgba(255, 179, 0, 0.6);
+  transition: transform 0.25s, box-shadow 0.25s;
+}
+.divine-enter-btn:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 45px rgba(255, 179, 0, 0.9);
+}
+
+/* 🪔 DIWALI LAUNCH & WAITLIST FEEDBACK SECTION */
+.diwali-launch-section {
+  padding: 40px 6% 30px;
+  background: linear-gradient(180deg, #fff7ea 0%, #faf6f0 100%);
+  border-bottom: 2px solid #e8d5c4;
+}
+.diwali-card {
+  max-width: 1040px;
+  margin: 0 auto;
+  background: linear-gradient(145deg, #ffffff 0%, #fdfbf7 100%);
+  border: 2px solid #d4a373;
+  border-radius: 24px;
+  padding: 34px 28px;
+  box-shadow: 0 16px 40px rgba(90,46,16,0.09);
+  text-align: center;
+}
+.diwali-badge {
+  background: linear-gradient(90deg, #d97706, #b45309);
+  color: #ffffff;
+  padding: 6px 20px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.8px;
+  display: inline-block;
+  margin-bottom: 14px;
+}
+.diwali-card h2 {
+  font-family: 'Playfair Display', 'Tiro Telugu', serif;
+  color: #5a2e10;
+  font-size: clamp(1.8rem, 3.5vw, 2.5rem);
+  margin: 0 0 12px;
+}
+.diwali-card p.lead {
+  color: #6d5345;
+  font-size: 1.05rem;
+  max-width: 780px;
+  margin: 0 auto 24px;
+  line-height: 1.6;
+}
+.diwali-perks-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 28px;
+  text-align: left;
+}
+.diwali-perk {
+  background: #fff8eb;
+  border: 1.5px solid #ebdcd0;
+  border-radius: 14px;
+  padding: 16px;
+}
+.diwali-perk b {
+  display: block;
+  color: #5a2e10;
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+.diwali-perk small {
+  color: #7a6558;
+  font-size: 12.5px;
+  line-height: 1.45;
+  display: block;
+}
+.waitlist-form-wrap {
+  background: #faf6f0;
+  border: 1.5px dashed #c59b27;
+  border-radius: 16px;
+  padding: 24px 20px;
+  max-width: 680px;
+  margin: 0 auto;
+  text-align: left;
+}
+.waitlist-form-wrap h3 {
+  margin: 0 0 6px;
+  color: #5a2e10;
+  font-size: 1.25rem;
+}
+.waitlist-form-wrap p {
+  margin: 0 0 16px;
+  font-size: 13px;
+  color: #6d5345;
+}
+.waitlist-inputs-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.waitlist-inputs-grid input, .waitlist-form-wrap textarea {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1.5px solid #d4a373;
+  border-radius: 10px;
+  font-family: inherit;
+  font-size: 13.5px;
+  background: #ffffff;
+  outline: none;
+}
+.waitlist-submit-btn {
+  width: 100%;
+  background: #5a2e10;
+  color: #faedcd;
+  border: none;
+  padding: 13px;
+  border-radius: 30px;
+  font-size: 14.5px;
+  font-weight: 800;
+  cursor: pointer;
+  box-shadow: 0 6px 18px rgba(90,46,16,0.25);
+  transition: transform 0.2s;
+}
+.waitlist-submit-btn:hover {
+  transform: translateY(-2px);
+}
+.waitlist-success {
+  display: none;
+  padding: 14px;
+  background: #e8f5e9;
+  border: 1.5px solid #4caf50;
+  border-radius: 10px;
+  color: #1b5e20;
+  font-size: 13.5px;
+  font-weight: 700;
+  text-align: center;
+}
+
+@media(max-width: 768px) {
+  .diwali-perks-grid { grid-template-columns: 1fr; }
+  .waitlist-inputs-grid { grid-template-columns: 1fr; }
 }
 
 /* TOPBAR */
@@ -715,6 +914,19 @@ footer#contact {
 </head>
 <body>
 
+<!-- 🕉️ FULL SCREEN DIVINE PRASADAM WELCOME SPLASH SCREEN -->
+<div id="divine-splash-screen" role="dialog" aria-modal="true" aria-label="Divine Welcome">
+  <svg class="divine-namam-icon" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M25 15 C25 50, 35 75, 43 85 C43 65, 38 35, 38 15 Z" fill="#FFFFFF" />
+    <path d="M75 15 C75 50, 65 75, 57 85 C57 65, 62 35, 62 15 Z" fill="#FFFFFF" />
+    <path d="M47 30 L53 30 L51 90 L49 90 Z" fill="#D84315" />
+    <circle cx="50" cy="22" r="5" fill="#FFD700" />
+  </svg>
+  <h1 class="divine-main-title">గోవింద! శ్రీ వేంకటేశ్వర ప్రసాదం</h1>
+  <p class="divine-sub-title">పవిత్రమైన శ్రీవారి ఆశీస్సులతో... స్వచ్ఛమైన నెయ్యి మరియు శ్రేష్ఠమైన డ్రై ఫ్రూట్స్ దివ్య రుచులు ✨</p>
+  <button class="divine-enter-btn" onclick="dismissDivineSplash()">దర్శించండి / Enter Website 🙏</button>
+</div>
+
 <div class="topbar">
   <span><b style="color:#ffd54f;">🎖️ 35+ Years Master Confectionery Mentorship</b></span>
   <span style="color:#52e185;font-weight:bold;">● 100% Pure Vegetarian</span>
@@ -742,6 +954,53 @@ footer#contact {
   <button class="cartBtn" id="openCart" aria-label="Open cart">🛒 <span id="cartCount">0</span></button>
   <a class="orderBtn" href="#shop">Order Now</a>
 </header>
+
+<!-- 🪔 DIWALI LAUNCH & WAITLIST/FEEDBACK SPECIAL OFFERS SECTION -->
+<section class="diwali-launch-section" id="diwali-launch">
+  <div class="diwali-card">
+    <span class="diwali-badge">🪔 దీపావళి పర్వదిన శుభాకాంక్షలు 🪔</span>
+    <h2>మన SRIVARI COOKIES వెబ్‌సైట్ త్వరలోనే ప్రారంభం కాబోతోంది!</h2>
+    <p class="lead">
+      శ్రీ వెంకటేశ్వర స్వామి దివ్య ప్రసాద పవిత్రతతో, 100% ప్యూర్ బటర్ మరియు తాజా డ్రై ఫ్రూట్స్‌తో మీకోసం ప్రత్యేకంగా తయారుచేస్తున్నాము. మా కుకీస్ కోసం ఎదురుచూస్తున్న ప్రియమైన కస్టమర్ల కోసం ఈ ప్రత్యేక అవకాశం!
+    </p>
+
+    <div class="diwali-perks-grid">
+      <div class="diwali-perk">
+        <b>🎁 Special Launch Pack</b>
+        <small>వెబ్‌సైట్ లాంచ్ కాగానే ముందస్తుగా రిజిస్టర్ చేసుకున్న వారికోసం ఎక్స్‌క్లూజివ్ స్పెషల్ ప్యాక్ అందించబడుతుంది.</small>
+      </div>
+      <div class="diwali-perk">
+        <b>🏷️ Special Discounts & Coupons</b>
+        <small>ఫీడ్‌బ్యాక్ / రిక్వెస్ట్ ఇచ్చిన కస్టమర్ల మొబైల్‌కు లాంచ్ రోజున భారీ డిస్కౌంట్ కూపన్ కోడ్‌లు పంపుతాము.</small>
+      </div>
+      <div class="diwali-perk">
+        <b>🍪 Fresh Artisanal Quality</b>
+        <small>35+ ఏళ్ల కాన్ఫెక్షనరీ అనుభవంతో ప్రతి ఆర్డర్‌కు తాజాగా ఓవెన్ నుండి బేక్ చేసి హోమ్ డెలివరీ చేస్తాము.</small>
+      </div>
+    </div>
+
+    <!-- WAITLIST & FEEDBACK FORM -->
+    <div class="waitlist-form-wrap">
+      <h3>📢 మీ రిక్వెస్ట్ & ఫీడ్‌బ్యాక్ తెలియజేయండి</h3>
+      <p>మీరు మా కుకీస్ కోసం వేచి చూస్తున్నట్లయితే వివరాలు నమోదు చేసుకోండి. లాంచ్ అవ్వగానే స్పెషల్ కూపన్ అందుతుంది:</p>
+
+      <form id="diwaliFeedbackForm" onsubmit="handleWaitlistSubmit(event)">
+        <div class="waitlist-inputs-grid">
+          <input type="text" id="wlName" required placeholder="మీ పూర్తి పేరు (Full Name) *">
+          <input type="tel" id="wlPhone" required pattern="[0-9+ ]{10,15}" placeholder="మొబైల్ / WhatsApp నంబర్ *">
+        </div>
+        <div style="margin-bottom:12px;">
+          <textarea id="wlMsg" rows="2" placeholder="మీకు ఏ రకం కుకీస్ ఇష్టం? మీ అమూల్యమైన సలహా లేదా ఫీడ్‌బ్యాక్ ఇక్కడ రాయండి..."></textarea>
+        </div>
+        <button type="submit" class="waitlist-submit-btn">రిజిస్టర్ చేసుకోండి & స్పెషల్ కూపన్ పొందండి 🎟️</button>
+      </form>
+
+      <div class="waitlist-success" id="wlSuccess">
+        🙏 ధన్యవాదాలు! మీ వివరాలు రికార్డ్ అయ్యాయి. వెబ్‌సైట్ లాంచ్ అవ్వగానే మీ WhatsApp నంబర్‌కు స్పెషల్ డిస్కౌంట్ కూపన్ మరియు ఎక్స్‌క్లూజివ్ స్పెషల్ ప్యాక్ వివరాలు పంపుతాము! ✨
+      </div>
+    </div>
+  </div>
+</section>
 
 <section class="hero" id="home">
   <div class="heroCopy">
@@ -947,7 +1206,7 @@ footer#contact {
     <div class="footerSocials">
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689-.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -1169,6 +1428,40 @@ footer#contact {
 <script src="app.js"></script>
 
 <script>
+/* 🕉️ DISMISS SPLASH LOGIC */
+function dismissDivineSplash() {
+  const splash = document.getElementById('divine-splash-screen');
+  if (splash) {
+    splash.classList.add('splash-closed');
+  }
+}
+
+/* 🪔 DIWALI WAITLIST & FEEDBACK SUBMISSION */
+function handleWaitlistSubmit(e) {
+  e.preventDefault();
+  const name = document.getElementById('wlName').value.trim();
+  const phone = document.getElementById('wlPhone').value.trim();
+  const msg = document.getElementById('wlMsg').value.trim();
+
+  if (!name || !phone) {
+    alert("Dayachesi mee Peru mariyu Mobile Number ivvandi!");
+    return;
+  }
+
+  const entries = JSON.parse(localStorage.getItem('srivari_diwali_waitlist') || '[]');
+  entries.unshift({
+    name,
+    phone,
+    feedback: msg,
+    timestamp: new Date().toISOString(),
+    source: 'Diwali Launch Waitlist'
+  });
+  localStorage.setItem('srivari_diwali_waitlist', JSON.stringify(entries));
+
+  document.getElementById('diwaliFeedbackForm').style.display = 'none';
+  document.getElementById('wlSuccess').style.display = 'block';
+}
+
 let selectedFlavors = [];
 let currentModalProdId = '';
 let currentModalSelectedWeight = 200;
