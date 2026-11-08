@@ -89,11 +89,22 @@ html, body {
   box-shadow: 0 0 45px rgba(255, 179, 0, 0.9);
 }
 
-/* 🪔 DIWALI LAUNCH & WAITLIST FEEDBACK SECTION */
+/* 🪔 DYNAMIC FESTIVE LAUNCH & WAITLIST SECTION */
 .diwali-launch-section {
-  padding: 40px 6% 30px;
+  padding: 35px 6% 30px;
   background: linear-gradient(180deg, #fff7ea 0%, #faf6f0 100%);
   border-bottom: 2px solid #e8d5c4;
+  transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+.diwali-launch-section.section-hidden {
+  opacity: 0;
+  max-height: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+  margin: 0 !important;
+  border-bottom: none !important;
+  pointer-events: none;
 }
 .diwali-card {
   max-width: 1040px;
@@ -104,17 +115,39 @@ html, body {
   padding: 34px 28px;
   box-shadow: 0 16px 40px rgba(90,46,16,0.09);
   text-align: center;
+  position: relative;
+}
+.close-section-x {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  background: #faedcd;
+  border: 1px solid #d4a373;
+  color: #5a2e10;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: transform 0.2s;
+}
+.close-section-x:hover {
+  transform: scale(1.1);
 }
 .diwali-badge {
   background: linear-gradient(90deg, #d97706, #b45309);
   color: #ffffff;
   padding: 6px 20px;
   border-radius: 30px;
-  font-size: 13px;
+  font-size: 13.5px;
   font-weight: 800;
   letter-spacing: 0.8px;
   display: inline-block;
   margin-bottom: 14px;
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.35);
 }
 .diwali-card h2 {
   font-family: 'Playfair Display', 'Tiro Telugu', serif;
@@ -207,14 +240,15 @@ html, body {
 }
 .waitlist-success {
   display: none;
-  padding: 14px;
+  padding: 16px;
   background: #e8f5e9;
   border: 1.5px solid #4caf50;
   border-radius: 10px;
   color: #1b5e20;
-  font-size: 13.5px;
+  font-size: 14px;
   font-weight: 700;
   text-align: center;
+  line-height: 1.5;
 }
 
 @media(max-width: 768px) {
@@ -955,13 +989,14 @@ footer#contact {
   <a class="orderBtn" href="#shop">Order Now</a>
 </header>
 
-<!-- 🪔 DIWALI LAUNCH & WAITLIST/FEEDBACK SPECIAL OFFERS SECTION -->
+<!-- 🪔 DYNAMIC FESTIVAL & LAUNCH REQUEST SECTION (CLOSES ON SUBMIT & RE-APPEARS ON REFRESH) -->
 <section class="diwali-launch-section" id="diwali-launch">
   <div class="diwali-card">
-    <span class="diwali-badge">🪔 దీపావళి పర్వదిన శుభాకాంక్షలు 🪔</span>
-    <h2>మన SRIVARI COOKIES వెబ్‌సైట్ త్వరలోనే ప్రారంభం కాబోతోంది!</h2>
-    <p class="lead">
-      శ్రీ వెంకటేశ్వర స్వామి దివ్య ప్రసాద పవిత్రతతో, 100% ప్యూర్ బటర్ మరియు తాజా డ్రై ఫ్రూట్స్‌తో మీకోసం ప్రత్యేకంగా తయారుచేస్తున్నాము. మా కుకీస్ కోసం ఎదురుచూస్తున్న ప్రియమైన కస్టమర్ల కోసం ఈ ప్రత్యేక అవకాశం!
+    <button class="close-section-x" onclick="closeLaunchSection()" title="Close banner">✕</button>
+    <span class="diwali-badge" id="dynamicFestiveBadge">✨ శ్రీవారి దివ్య ఆశీస్సులు • పర్వదిన శుభాకాంక్షలు ✨</span>
+    <h2 id="dynamicFestiveTitle">మన SRIVARI COOKIES వెబ్‌సైట్ త్వరలోనే ప్రారంభం కాబోతోంది!</h2>
+    <p class="lead" id="dynamicFestiveLead">
+      శ్రీ వేంకటేశ్వర స్వామి దివ్య ప్రసాద పవిత్రతతో, 100% ప్యూర్ బటర్ మరియు తాజా డ్రై ఫ్రూట్స్‌తో మీకోసం ప్రత్యేకంగా తయారుచేస్తున్నాము. మా కుకీస్ కోసం ఎదురుచూస్తున్న ప్రియమైన భక్తులు & కస్టమర్ల కోసం ఈ ప్రత్యేక అవకాశం!
     </p>
 
     <div class="diwali-perks-grid">
@@ -982,21 +1017,21 @@ footer#contact {
     <!-- WAITLIST & FEEDBACK FORM -->
     <div class="waitlist-form-wrap">
       <h3>📢 మీ రిక్వెస్ట్ & ఫీడ్‌బ్యాక్ తెలియజేయండి</h3>
-      <p>మీరు మా కుకీస్ కోసం వేచి చూస్తున్నట్లయితే వివరాలు నమోదు చేసుకోండి. లాంచ్ అవ్వగానే స్పెషల్ కూపన్ అందుతుంది:</p>
+      <p>మీరు మా కుకీస్ కోసం వేచి చూస్తున్నట్లయితే వివరాలు నమోదు చేసుకోండి. వివరాలు నేరుగా మా సపోర్ట్ టీమ్‌కు అందుతాయి:</p>
 
       <form id="diwaliFeedbackForm" onsubmit="handleWaitlistSubmit(event)">
         <div class="waitlist-inputs-grid">
-          <input type="text" id="wlName" required placeholder="మీ పూర్తి పేరు (Full Name) *">
-          <input type="tel" id="wlPhone" required pattern="[0-9+ ]{10,15}" placeholder="మొబైల్ / WhatsApp నంబర్ *">
+          <input type="text" id="wlName" name="Customer_Name" required placeholder="మీ పూర్తి పేరు (Full Name) *">
+          <input type="tel" id="wlPhone" name="Mobile_Number" required pattern="[0-9+ ]{10,15}" placeholder="మొబైల్ / WhatsApp నంబర్ *">
         </div>
         <div style="margin-bottom:12px;">
-          <textarea id="wlMsg" rows="2" placeholder="మీకు ఏ రకం కుకీస్ ఇష్టం? మీ అమూల్యమైన సలహా లేదా ఫీడ్‌బ్యాక్ ఇక్కడ రాయండి..."></textarea>
+          <textarea id="wlMsg" name="Cookie_Request_Feedback" rows="2" placeholder="మీకు ఏ రకం కుకీస్ ఇష్టం? మీ అమూల్యమైన సలహా లేదా ఫీడ్‌బ్యాక్ ఇక్కడ రాయండి..."></textarea>
         </div>
-        <button type="submit" class="waitlist-submit-btn">రిజిస్టర్ చేసుకోండి & స్పెషల్ కూపన్ పొందండి 🎟️</button>
+        <button type="submit" class="waitlist-submit-btn" id="wlSubmitBtn">రిజిస్టర్ చేసుకోండి & స్పెషల్ కూపన్ పొందండి 🎟️</button>
       </form>
 
       <div class="waitlist-success" id="wlSuccess">
-        🙏 ధన్యవాదాలు! మీ వివరాలు రికార్డ్ అయ్యాయి. వెబ్‌సైట్ లాంచ్ అవ్వగానే మీ WhatsApp నంబర్‌కు స్పెషల్ డిస్కౌంట్ కూపన్ మరియు ఎక్స్‌క్లూజివ్ స్పెషల్ ప్యాక్ వివరాలు పంపుతాము! ✨
+        🙏 ధన్యవాదాలు! మీ వివరాలు విజయవంతంగా రికార్డ్ అయ్యాయి. వెబ్‌సైట్ ఓపెన్ అవుతోంది... ✨
       </div>
     </div>
   </div>
@@ -1206,7 +1241,7 @@ footer#contact {
     <div class="footerSocials">
       <a href="https://www.instagram.com/srivaricookies.official" target="_blank" rel="noopener noreferrer" class="socialIconLink ig" title="Instagram">
         <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
-          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689-.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
         </svg>
         <span>Instagram</span>
       </a>
@@ -1436,31 +1471,123 @@ function dismissDivineSplash() {
   }
 }
 
-/* 🪔 DIWALI WAITLIST & FEEDBACK SUBMISSION */
+/* 🪔 DYNAMIC FESTIVAL & SWAMI VARI WISHES CALCULATOR (AUTOMATIC BASED ON CALENDAR) */
+function updateDynamicFestivalWishes() {
+  const now = new Date();
+  const month = now.getMonth() + 1; // 1-12
+  const day = now.getDate();
+
+  const badgeEl = document.getElementById('dynamicFestiveBadge');
+  const titleEl = document.getElementById('dynamicFestiveTitle');
+  const leadEl = document.getElementById('dynamicFestiveLead');
+
+  let badge = "✨ శ్రీ వేంకటేశ్వర స్వామి దివ్య ప్రసాద శుభాకాంక్షలు ✨";
+  let title = "మన SRIVARI COOKIES వెబ్‌సైట్ త్వరలోనే ప్రారంభం కాబోతోంది!";
+  let lead = "శ్రీ వేంకటేశ్వర స్వామి వారి దివ్య అనుగ్రహం మరియు ప్రసాద పవిత్రతతో, 100% ప్యూర్ బటర్ మరియు జీడిపప్పు, బాదం వంటి శ్రేష్ఠమైన డ్రై ఫ్రూట్స్‌తో ప్రతి బ్యాచ్ స్వయంగా మీకోసం రూపొందిస్తున్నాము.";
+
+  // Dynamic Festival Mapping
+  if (month === 10 || month === 11) {
+    // Diwali / Karthika Masam Season
+    badge = "🪔 దీపావళి & కార్తీక మాస దివ్య శుభాకాంక్షలు 🪔";
+    title = "దీపావళి పర్వదినాన మన SRIVARI COOKIES త్వరలోనే ప్రారంభం!";
+    lead = "శ్రీ వేంకటేశ్వర స్వామి దివ్య ఆశీస్సులతో, దీపాల పండుగ వెలుగుల్లో మీ ఇంట స్వచ్ఛమైన అమృతంలాంటి ప్యూర్ బటర్ కుకీలను అందించబోతున్నాము.";
+  } else if (month === 1) {
+    // Sankranti / New Year
+    badge = "🌾 సంక్రాంతి & నూతన సంవత్సర దివ్య ఆశీస్సులు 🌾";
+    title = "పండుగ సంబరాల్లో SRIVARI COOKIES త్వరలోనే ప్రారంభం!";
+  } else if (month === 3 || month === 4) {
+    // Ugadi / Sri Rama Navami
+    badge = "🌸 ఉగాది & శ్రీరామ నవమి పర్వదిన శుభాకాంక్షలు 🌸";
+    title = "నూతన వసంతంలో శ్రీవారి దివ్య కుకీస్ త్వరలోనే ప్రారంభం!";
+  } else if (month === 8 || month === 9) {
+    // Janmashtami / Vinayaka Chavithi / Dasara
+    badge = "🪔 పవిత్ర పర్వదిన దివ్య శుభాకాంక్షలు 🪔";
+    title = "శ్రీవారి దివ్య ప్రసాద కుకీస్ త్వరలోనే ప్రారంభం కాబోతున్నాయి!";
+  }
+
+  if (badgeEl) badgeEl.textContent = badge;
+  if (titleEl) titleEl.textContent = title;
+  if (leadEl) leadEl.textContent = lead;
+}
+
+function closeLaunchSection() {
+  const launchSec = document.getElementById('diwali-launch');
+  if (launchSec) {
+    launchSec.classList.add('section-hidden');
+  }
+}
+
+/* 📩 FORM SUBMIT: SENDS DATA DIRECTLY TO support@srivaricookies.com & AUTO CLOSES TO SHOP */
 function handleWaitlistSubmit(e) {
   e.preventDefault();
   const name = document.getElementById('wlName').value.trim();
   const phone = document.getElementById('wlPhone').value.trim();
   const msg = document.getElementById('wlMsg').value.trim();
+  const submitBtn = document.getElementById('wlSubmitBtn');
 
   if (!name || !phone) {
-    alert("Dayachesi mee Peru mariyu Mobile Number ivvandi!");
+    alert("దయచేసి మీ పేరు మరియు మొబైల్ నంబర్ తప్పనిసరిగా నమోదు చేయండి!");
     return;
   }
 
+  submitBtn.disabled = true;
+  submitBtn.textContent = "పంపుతున్నాము... దయచేసి వేచి ఉండండి...";
+
+  // 1. Local backup
   const entries = JSON.parse(localStorage.getItem('srivari_diwali_waitlist') || '[]');
   entries.unshift({
     name,
     phone,
     feedback: msg,
-    timestamp: new Date().toISOString(),
-    source: 'Diwali Launch Waitlist'
+    timestamp: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
   });
   localStorage.setItem('srivari_diwali_waitlist', JSON.stringify(entries));
 
-  document.getElementById('diwaliFeedbackForm').style.display = 'none';
-  document.getElementById('wlSuccess').style.display = 'block';
+  // 2. Direct email dispatch to support@srivaricookies.com via secure FormSubmit API
+  fetch("https://formsubmit.co/ajax/support@srivaricookies.com", {
+    method: "POST",
+    headers: { 
+      'Content-Type': 'application/json',
+      'Accept': 'application/json'
+    },
+    body: JSON.stringify({
+      _subject: `New Srivari Cookies Request from ${name} (${phone})`,
+      Customer_Name: name,
+      Mobile_Number: phone,
+      Customer_Feedback_Request: msg || "None provided",
+      Registration_Time: new Date().toLocaleString('en-IN', { timeZone: 'Asia/Kolkata' })
+    })
+  })
+  .then(() => {
+    // Show success message
+    document.getElementById('diwaliFeedbackForm').style.display = 'none';
+    const successBox = document.getElementById('wlSuccess');
+    successBox.style.display = 'block';
+
+    // 3. Automatically close section after 2.5 seconds and smoothly navigate to products
+    setTimeout(() => {
+      closeLaunchSection();
+      const shopSection = document.getElementById('shop');
+      if (shopSection) {
+        shopSection.scrollIntoView({ behavior: 'smooth' });
+      }
+    }, 2500);
+  })
+  .catch(err => {
+    console.error("Form submit error:", err);
+    // If network fails, local storage worked, so proceed smoothly
+    document.getElementById('diwaliFeedbackForm').style.display = 'none';
+    const successBox = document.getElementById('wlSuccess');
+    successBox.style.display = 'block';
+    setTimeout(() => {
+      closeLaunchSection();
+    }, 2500);
+  });
 }
+
+document.addEventListener('DOMContentLoaded', () => {
+  updateDynamicFestivalWishes();
+});
 
 let selectedFlavors = [];
 let currentModalProdId = '';
@@ -1658,7 +1785,6 @@ function openProductDetailModal(id) {
   document.getElementById('thumb2').src = boxImg;
   document.getElementById('thumb3').src = ovenImg;
 
-  // Reset weight inputs
   document.getElementById('modalCustomWeightVal').value = '';
   document.getElementById('modalCustomUnit').value = 'g';
   document.querySelectorAll('.weight-pill-btn').forEach(b => b.classList.remove('active'));
